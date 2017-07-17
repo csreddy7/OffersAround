@@ -1,0 +1,337 @@
+*{
+	box-sizing:border-box;
+}
+html,body{
+	height:100%;
+	width:100%;
+	font-size:1rem;
+	margin:0px;
+	background-color:#fff;
+	color:#635a5a;
+	font-family:san
+}
+.offersAround{
+height:100%;
+width:100%;
+}
+
+.header{
+	background-color:rgba(33, 150, 243, 0.71);
+	color:#fff;
+	text-align:center;
+	width:100%;
+	padding:10px;
+	font-size:1.5rem;
+}
+
+.location{
+	float:right;
+}
+
+.main-content{
+	width: 100%;
+	   margin-top: 5px;
+	       height: 90%;
+}
+.searchTab{
+	width:70%;
+	margin: auto;
+    position: relative;
+}
+
+.searchOffer{
+	width:95%;
+	border:1px solid #ddd;
+	 border-radius: 2px;
+    height: 34px;
+	padding-left: 5px;
+    border-right: none !important;
+}
+.add-comment{
+	position:relative;
+	display:none;
+}
+.comment-box{
+	width: 90%;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    height: 32px;
+    padding-left: 5px;
+    border-right: none !important;
+    margin: 10px 0px 10px 10px;
+}
+.add-button{
+	padding:10px;
+	background-color:#2196F3;
+}
+.searchOffer:focus,.comment-box:focus{
+	outline:none;
+}
+.searchButton{
+	width:30px;
+}
+.fa-search::before {
+    content: "\f002";
+    border: 1px solid #ddd;
+    padding: 8px;
+    position: absolute;
+    top: 0;
+	color:rgba(99, 90, 90, 0.82);
+	cursor:pointer;
+}
+.fa-plus:before{
+    padding: 9px;
+    position: absolute;
+    top: 10px;
+    background-color: #2196F3;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+}
+.fa-tags::before{
+    padding: 6px;
+	position:relative;
+	top:2px;
+	color:#2196F3;
+	font-size:22px;
+}
+.fa-map-marker::before{
+    padding: 6px;
+	position:relative;
+	top:2px;
+color:#2196F3;
+margin-right:8px;
+font-size:22px;
+}
+.fa-window-close:before {
+    content: "\f2d3";
+	color:rgba(99, 90, 90, 0.82);
+	cursor:pointer;
+}
+.offer-details-dialog .fa-window-close:before {
+    content: "\f2d3";
+	color:#fff;
+	cursor:pointer;
+}
+.offerListWrapper{
+	height: 90%;
+    overflow-y: auto;
+	
+}
+.offersList{
+	width:60%;
+	margin:auto;
+	margin-top:20px;
+}
+.offer{
+	width:100%;
+	height:auto;
+	border:1px solid #ddd;
+	margin-top:5px;
+	border-radius:2px;
+	padding:5px;
+}
+.offer-name,.offer-location{
+	padding:6px;
+}
+.offerLeftPart{
+	width:auto;
+	height:80px;
+	display:inline-block;
+}
+.offerRightPart{
+	width:auto;
+	display:inline-block;
+	float:right;
+}
+.offerRightTop{
+	height:50px;
+	line-height:40px;
+}
+.offerRightBottom{
+	height:30px;
+	line-height:30px;
+}
+.offerRightTop .close-offer,.close-comments{
+	float:right;
+}
+.offerlink{
+	color:#2196F3;
+	padding-right:25px;
+	cursor:pointer;
+}
+.offerlink:hover{
+	text-decoration:underline;
+}
+.expire-time{
+	padding-left: 20px;
+    font-size: 22px;
+    color: red;
+}
+.comment-list{
+	display:none;
+	height: 110px;
+    border: 1px solid #ddd;
+    width: 97%;
+    margin: 10px;
+	padding:5px;
+}
+.username{
+	margin-right:5px;
+	color:#2196F3;
+}
+#comment-content{
+	overflow: auto;
+    height: 90px;
+    clear: both;
+}
+.offer-comment{
+	margin-bottom:10px;
+}
+
+.offer-details-dialog{
+	z-index: 100;
+        min-height: 100px;
+    min-width: 400px;
+    background-color: #fff;
+    position: fixed;
+    left: 30%;
+    top: 20%;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    box-shadow: 2px 2px 2px #eee;
+}
+.offer-dialog-header{
+	padding: 5px;
+    color: #fff;
+    background-color: rgba(33, 150, 243, 0.71);
+    text-align: center;
+    font-size: 1rem;
+}
+.offerName,.location-name,.offer-details{
+	    padding: 5px;
+    color: #2196F3;
+    width: 80px;
+    display: inline-block;
+    text-align: right;
+}
+.offer-details{
+vertical-align:top;	
+}
+.close-dialog{
+	float:right;
+}
+#offer-content{
+	width: 300px;
+    height: 190px;
+    border: 1px solid #ddd;
+    display: inline-block;
+    overflow: auto;
+    border-radius: 2px;
+    margin-top: 10px;
+}
+.logo{
+    float: left;
+    font-size: 2.5rem;
+    line-height: 25px;
+    color: rgba(0, 0, 255, 0.92);
+    letter-spacing: -8px;
+}
+.logo::first-letter{
+	color:rgba(255, 0, 0, 0.75);
+}
+#menu-icon{
+	float:right;
+	cursor:pointer;
+}
+.rotate-menu{
+	transform:rotate(90deg);
+}
+.menu-list{
+	height:80px;
+	border: 1px solid #ddd;
+	padding:5px;
+	list-style: none;
+    margin: 0;
+}
+.menu-list .fa-plus::before{
+	    padding: 4px;
+    position: absolute;
+    top: 10px;
+    background-color: #2196F3;
+    color: #fff;
+    cursor: pointer;
+    font-size: 10px;
+}
+.menu-list li{
+	padding:5px;
+	cursor:pointer;
+}
+.menu-list li:hover{
+	background-color:#ddd;
+}
+.menu-list li span{
+	vertical-align: top;
+}
+    
+.menu-add-offer{
+	margin-right:25px;
+}
+.menu-list .fa-sign-out:before,.menu-list .fa-sign-in:before{
+	color:#2196F3;
+	font-size:1.2rem;
+	margin-right:10px;
+}
+
+.menu-wrapper{
+	position:relative;
+}
+.offer-menu{
+	width: 120px;
+    height: 0px;
+    position: absolute;
+    right: 7px;
+	overflow:hidden;
+	z-index:200;
+	background-color:rgba(238, 238, 238, 0.45);
+}
+.show-menu{
+	animation:expand-menu 1s  forwards;
+}
+.hide-menu{
+	animation:shrink-menu 1s forwards;
+}
+@keyframes expand-menu{
+	0%{
+		height:0px;
+	}
+	100%{
+		height:80px;
+	}
+}
+@keyframes shrink-menu{
+	0%{
+		height:80px;
+	}
+	100%{
+		height:0px;
+	}
+}
+
+.valid-login{
+	display:none;
+}
+.register{
+	width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.button{
+	padding:5px;
+	border-radius:2px;
+	min-width:50px;
+	min-height:20px;
+	text-align:center;
+	border:1px solid #ddd;
+}

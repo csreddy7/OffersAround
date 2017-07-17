@@ -1,0 +1,1 @@
+1)why padding is not working properly for icons created using ::before puesdo elements?

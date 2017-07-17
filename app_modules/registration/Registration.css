@@ -1,0 +1,28 @@
+.container{
+	width:calc(100%);
+	height:calc(100%);
+	padding:20px;
+}
+.label-name{
+	color:rgba(33, 150, 243, 0.71);
+	text-align:right;
+	width:calc(35%);
+	padding:5px;
+	display:inline-block;
+}
+
+.form-input{
+	width:calc(60%);
+	padding:5px;
+	display:inline-block;
+}
+.form-input input{
+	border:1px solid #ddd;
+	min-width:100px;
+	outline:none;
+	width:calc(90%);
+	    height: 30px;
+    border-radius: 2px;
+	padding-left:2px;
+}
+
