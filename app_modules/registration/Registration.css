@@ -10,7 +10,14 @@
 	padding:5px;
 	display:inline-block;
 }
-
+.register-logo{
+	background:url("../../resources/images/Register.png");
+	display: inline-block;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 18px;
+    width: 18px;
+}
 .form-input{
 	width:calc(60%);
 	padding:5px;

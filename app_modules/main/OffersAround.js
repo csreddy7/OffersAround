@@ -1,7 +1,10 @@
 import CreateOffer from "utilities/offer";
 import dialog from "utilities/dialog";
+import 'main/OffersAround.css';
+import 'css/font-awesome.css';
+import 'registration/Registration.css';
 var offers = 0;
-window.onload = function() {
+window.onload = function () {
   /*var location=document.getElementsByClassName("location"),locationName="";
 	navigator.geolocation.getCurrentPosition(function(data){
 	location[0].innerHTML="Location coordinates:"+data.coords.latitude+","+data.coords.longitude;
@@ -14,7 +17,7 @@ window.onload = function() {
   var menuIcon = document.getElementById("menu-icon"),
     menu = document.getElementById("offer-menu");
 
-  menuIcon.addEventListener("click", function() {
+  menuIcon.addEventListener("click", function () {
     if (menuIcon.className.indexOf("rotate-menu") != -1) {
       menuIcon.setAttribute("class", "menu-icon");
     } else {
@@ -28,16 +31,16 @@ window.onload = function() {
   });
 
 
-  document.getElementsByClassName("main-content")[0].addEventListener("click", function() {
+  document.getElementsByClassName("main-content")[0].addEventListener("click", function () {
     if (menuIcon.className.indexOf("rotate-menu") != -1) {
-      	menuIcon.setAttribute("class", "menu-icon");
+      menuIcon.setAttribute("class", "menu-icon");
     }
     if (menu.className.indexOf("show-menu") != -1) {
-      	menu.setAttribute("class", "offer-menu hide-menu");
+      menu.setAttribute("class", "offer-menu hide-menu");
     }
   });
 
-  document.getElementById("register").addEventListener("click", function() {
+  document.getElementById("register").addEventListener("click", function () {
     this.dialog = new dialog({
       title: "User Registration",
       templateUrl: "Registration.html"
