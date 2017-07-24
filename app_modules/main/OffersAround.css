@@ -3,9 +3,19 @@
 	Global Styles
 ***********************/
 
+article,section,header,footer,aside,nav{
+	display: block;
+}
+
+html,body,div,p,h1,h2{
+	margin:0;
+	padding:0;
+}
+
 html {
   box-sizing: border-box;
 }
+
 *, *:before, *:after {
   box-sizing: inherit;
 }
@@ -24,6 +34,7 @@ header{
 	width: 100%;
 	font-size: 0;
 	padding: 0.5rem;
+	border-bottom: 1px solid #ccc;
 }
 
 header div{
@@ -61,18 +72,58 @@ header .menu-icon i{
 /*********************
 	nav Styles
 ***********************/
+
 nav{
 	display: none;
 }
 
+
+
 /*********************
-	Main Styles
+	Main Article Styles
 ***********************/
+.searchTab{
+	padding: 10px;
+	position: relative;
+}
+.searchTab input[type="text"]{
+	border: 1px solid #ccc;
+    border-radius: 2px;
+    height: 30px;
+	padding-left: 10px;
+	width: 88%;
+	font-size: 1rem;
+}
 
+.searchTab .fa-search::before {
+    content: "\f002";
+    border: 1px solid #ddd;
+    padding: 6px;
+    color: rgba(99, 90, 90, 0.82);
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    margin-left: -5px;
+}
 
-
+.mainContent h1{
+	    text-align: center;
+    font-size: 1.5rem;
+    color: #9E9E9E;
+}
 
 
 /*********************
 	Footer Styles
 ***********************/
+footer{
+	padding: 0.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #9E9E9E;
+    border-top: 1px solid #ccc;
+    position: absolute;
+    bottom: 0;
+    width: 95%;
+    margin: 0 auto;
+}
