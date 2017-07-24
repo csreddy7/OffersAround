@@ -1,8 +1,9 @@
 import CreateOffer from "utilities/offer";
 import dialog from "utilities/dialog";
-import 'main/OffersAround.css';
-import 'css/font-awesome.css';
-import 'registration/Registration.css';
+// import 'css/reset.css';
+// import 'main/OffersAround.css';
+ import 'css/font-awesome.css';
+// import 'registration/Registration.css';
 var offers = 0;
 window.onload = function () {
   /*var location=document.getElementsByClassName("location"),locationName="";

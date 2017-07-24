@@ -27,5 +27,8 @@
   "scripts": {
     "start": "http-server ./ -d false -a localhost -p 7697",
     "build": "webpack --config webpack.config.js"
+  },
+  "dependencies": {
+    
   }
 }
