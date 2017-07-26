@@ -22,9 +22,18 @@ html {
 
 body{
 	margin:0 auto;
-	width:95%;
+	width:100%;
 }
 
+.clear-fix::before{
+	content: "";
+	display: table;
+}
+.clear-fix::after{
+	content: "";
+	display: table;
+	clear: both;
+}
 /*********************
 	Header Styles
 ***********************/
@@ -69,9 +78,8 @@ header .menu-icon i{
 	float: right;
 }
 
-/*********************
-	nav Styles
-***********************/
+
+/***** nav Styles *****/
 
 nav{
 	display: none;
@@ -82,6 +90,11 @@ nav{
 /*********************
 	Main Article Styles
 ***********************/
+
+
+
+/***** search tab styles *****/
+
 .searchTab{
 	padding: 10px;
 	position: relative;
@@ -89,7 +102,7 @@ nav{
 .searchTab input[type="text"]{
 	border: 1px solid #ccc;
     border-radius: 2px;
-    height: 30px;
+    height: 40px;
 	padding-left: 10px;
 	width: 88%;
 	font-size: 1rem;
@@ -98,7 +111,7 @@ nav{
 .searchTab .fa-search::before {
     content: "\f002";
     border: 1px solid #ddd;
-    padding: 6px;
+    padding: 11px;
     color: rgba(99, 90, 90, 0.82);
     cursor: pointer;
     position: absolute;
@@ -112,7 +125,54 @@ nav{
     color: #9E9E9E;
 }
 
+/*** offer style ****/
+#offersList{
+	height: 350px;
+	overflow: auto;
+}
+.offer{
+	width: 80%;
+    margin: 0 auto;
+	border: 1px solid #ccc;
+	margin-top: 10px;
+}
 
+.offer div:first-of-type{
+	border-bottom: 1px solid #ccc;
+	padding: 5px;
+}
+
+.offerName{
+	display: inline-block;
+    width: 80%;
+    text-align: center;
+}
+.closeIcon{
+	display: inline-block;
+    width: 20%;
+	text-align: right;
+	padding: 2px;
+}
+
+.offerContent{
+	margin: 0 auto;
+    padding: 10px;
+	line-height: 1.5rem;
+	width:calc(100% - 40px);
+	float: left;
+}
+
+.sideBar{
+	float: left;
+    border-left: 1px solid #ccc;
+	width:40px;
+}
+
+.sideBar span{
+	padding: 10px;
+	display: block;
+}
+ 
 /*********************
 	Footer Styles
 ***********************/
@@ -124,6 +184,22 @@ footer{
     border-top: 1px solid #ccc;
     position: absolute;
     bottom: 0;
-    width: 95%;
+    width: 100%;
     margin: 0 auto;
+}
+
+
+/*********************
+	Third Party Styles
+***********************/
+
+.fa-window-close:before {
+    content: "\f2d3";
+	color:rgba(99, 90, 90, 0.82);
+	cursor:pointer;
+	font-size: 1.3rem;
+}
+.fa-pencil-square-o::before,.fa-plus::before,.fa-eye::before{
+	font-size: 1.3rem;
+    color: #2196F3;
 }

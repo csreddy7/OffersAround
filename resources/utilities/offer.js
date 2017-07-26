@@ -1,37 +1,25 @@
 var offerNumber=0;
 import dialog from "utilities/dialog";
-export default function CreateOffer(offerName,locationName,offerDetails,comments){
-	this.offerName=offerName;
-	this.offerLocation=locationName;
-	this.offerDetails=offerDetails || "No offer details";
-	this.comments= comments || [];
+export default function CreateOffer(offerName,offerDetails){
+	offerDetails=offerDetails || "No offer details";
 	this.id="offer-item-"+(++offerNumber);
 	this.init=function(){
-		var template='<div class="offer">'+
-		'<div class="offerLeftPart">'+
-		'<div class="offer-name"><i class="fa fa-tags" aria-hidden="true"></i> <span>'+this.offerName+'</span></div>'+
-		'<div class="offer-location"><i class="fa fa-map-marker" aria-hidden="true"></i> <span>'+this.offerLocation+'</span></div>'+
-		'</div>'+
-		'<div class="offerRightPart">'+
-		'<div class="offerRightTop"><span>Expires in :</span><span class="expire-time">2 hr 59 mins</span><span ><i class="fa fa-window-close close-offer" aria-hidden="true"></i></span></div>'+
-		'<div class="offerRightBottom"><span class="offerlink view-details-link">view details</span><span class="offerlink add-comment-link">add comment</span><span class="offerlink view-comments-link">view comments</span></div>'+
-		'</div>'+
-		'<div>'+
-		'<div class="add-comment">'+
-		'<input type="text" class="comment-box" tabindex="4" id="comment-box" value="" placeholder="type comment" /><span><i tabindex="5" class="fa fa-plus add-comment-button" aria-hidden="true"></i></span>'+
-		'</div>'+
-		'<div class="comment-list" id="comment-list">'+
-		'<div><i class="fa fa-window-close close-comments" aria-hidden="true"></i></div>'+
-		'<div id="comment-content"></div>'
-		'</div>'+
-		'</div>'+
-		'</div>';
+		var template=`<div class="offer clear-fix">
+						<div>
+							<h1 class="offerName">${offerName}</h1><span class=" closeIcon fa fa-window-close"></span></div>
+							<div class="offerContent">${offerDetails}</div>
+							<div class="sideBar">
+								<span class="editIcon fa fa-pencil-square-o"></span>
+								<span class="addIcon fa fa-plus"></span>
+								<span class="previewIcon fa fa-eye"></span>
+							</div>
+					</div>`;
 		var offer=document.createElement("div");
 		offer.innerHTML=template;
 		offer.id=this.id;
-		document.getElementById("offer-list").appendChild(offer);
+		document.getElementById("offersList").appendChild(offer);
 		this.initializeEventHanders(offer);
-		this.addComments();
+		//this.addComments();
 	}
 	this.addComment=function(){
 		var target=document.querySelector("#"+this.id+" .add-comment");
@@ -70,6 +58,20 @@ export default function CreateOffer(offerName,locationName,offerDetails,comments
 	}
 	this.initializeEventHanders=function(offer){
 		var _this=this;
+		// offer.addEventListener("mouseover",function(event){
+		// 	console.log("mousover")
+		// 	var target=event.target;
+		// 	if(target.className.indexOf("offerContent")!=-1){
+		// 		offer.querySelector(".sideBar").style.display="block";
+		// 	}
+		// });
+		// offer.addEventListener("mouseout",function(event){
+		// 	console.log("mousout")
+		// 	var target=event.target;
+		// 	if(target.className.indexOf("offerContent")!=-1){
+		// 		//offer.querySelector(".sideBar").style.display="none";
+		// 	}
+		// });
 		offer.addEventListener("click",function(event){
 			var target=event.target;
 			if(target.className.indexOf("view-details-link")!=-1){
