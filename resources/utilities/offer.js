@@ -9,7 +9,7 @@ export default function CreateOffer(offerName,offerDetails){
 							<h1 class="offerName">${offerName}</h1><span class=" closeIcon fa fa-window-close"></span></div>
 							<div class="offerContent">${offerDetails}</div>
 							<div class="sideBar">
-								<span class="editIcon fa fa-pencil-square-o"></span>
+								 <span class="editIcon fa fa-pencil-square-o"></span>
 								<span class="addIcon fa fa-plus"></span>
 								<span class="previewIcon fa fa-eye"></span>
 							</div>
