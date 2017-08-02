@@ -11,9 +11,9 @@ window.onload = function () {
 	location[0].innerHTML="Location coordinates:"+data.coords.latitude+","+data.coords.longitude;
 });*/
 
- for(let i=0;i<5;i++){
+ for(let i=0;i<2;i++){
    var obj = new CreateOffer("two jeans at 300rs", "k r puram"+i);
-    obj.init();
+   obj.init();
  }
 
 

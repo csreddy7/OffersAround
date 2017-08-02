@@ -14,7 +14,7 @@ html,body,div,p,h1,h2{
 
 html {
   box-sizing: border-box;
-  font-size: 10px;
+  font-size: 62.5%;
   height: 100%;
 }
 
@@ -97,22 +97,23 @@ article.offersAround{
 /***** search tab styles *****/
 
 .searchTab{
-	padding: 1rem;
-    position: relative;
+	position: relative;
     font-size: 0;
+    width: 99%;
+    margin: 1rem auto 1rem;
 }
 .searchTab input[type="text"]{
 	border: 1px solid #ccc;
     border-radius: 2px;
     height: 4rem;
     padding-left: 1rem;
-    width: 88%;
+    width: calc(100% - 40px);
     font-size: 1.5rem;
     border-right: 0;
 }
 
-article h1{
-	    text-align: center;
+article>h1{
+	text-align: center;
     font-size: 2.5rem;
     color: #9E9E9E;
 }
@@ -121,6 +122,11 @@ article h1{
 #offersList{
 	height: calc(100% - 8.8rem);
 	overflow: auto;
+}
+#offersList h1{
+	text-align: center;
+    font-size: 2rem;
+    color: #9E9E9E;
 }
 .offer{
 	width: 80%;
@@ -203,6 +209,6 @@ footer{
     color: rgba(99, 90, 90, 0.82);
     cursor: pointer;
     position: absolute;
-    top: 1rem;
+    top: 0rem;
     font-size: 2rem;
 }
