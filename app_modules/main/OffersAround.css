@@ -123,13 +123,9 @@ article>h1{
 	height: calc(100% - 8.8rem);
 	overflow: auto;
 }
-#offersList h1{
-	text-align: center;
-    font-size: 2rem;
-    color: #9E9E9E;
-}
+
 .offer{
-	width: 80%;
+	width: 90%;
     margin: 0 auto;
 	border: 1px solid #ccc;
 	margin-top: 1rem;
@@ -138,32 +134,35 @@ article>h1{
 .offer div:first-of-type{
 	border-bottom: 1px solid #ccc;
 	padding: 0.5rem;
+	font-size: 0;
 }
 
 .offerName{
 	display: inline-block;
-    width: 80%;
-    text-align: center;
-}
-.closeIcon{
-	display: inline-block;
-    width: 20%;
-	text-align: right;
-	padding: 0.2rem;
+	width: calc(100% - 20px);
+	text-align: center;
+    font-size: 2rem;
+    color: #9E9E9E;
 }
 
 .offerContent{
 	margin: 0 auto;
     padding: 1rem;
 	line-height: 1.5rem;
-	width:calc(100% - 4rem);
 	float: left;
+	width:calc(100% - 4rem);
+	height: 12rem;
+    overflow: auto;
 }
+/*.offerContent:hover{
+	width:calc(100% - 4rem);
+}*/
 
 .sideBar{
 	float: left;
     border-left: 1px solid #ccc;
 	width:4rem;
+	/* display: none; */
 }
 
 .sideBar span{

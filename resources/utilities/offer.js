@@ -4,19 +4,19 @@ export default function CreateOffer(offerName,offerDetails){
 	offerDetails=offerDetails || "No offer details";
 	this.id="offer-item-"+(++offerNumber);
 	this.init=function(){
-		var template=`<div class="offer clear-fix">
-						<div>
-							<h1 class="offerName">${offerName}</h1><span class=" closeIcon fa fa-window-close"></span></div>
+			  var template=`<div>
+								<h1 class="offerName">${offerName}</h1>
+								<i class="fa fa-window-close"></i>
+							</div>
 							<div class="offerContent">${offerDetails}</div>
 							<div class="sideBar">
 								 <span class="editIcon fa fa-pencil-square-o"></span>
 								<span class="addIcon fa fa-plus"></span>
-								<span class="previewIcon fa fa-eye"></span>
-							</div>
-					</div>`;
+								<span class="previewIcon fa fa-eye"></span>`;
 		var offer=document.createElement("div");
 		offer.innerHTML=template;
 		offer.id=this.id;
+		offer.className="offer clear-fix";
 		document.getElementById("offersList").appendChild(offer);
 		this.initializeEventHanders(offer);
 		//this.addComments();
@@ -58,19 +58,13 @@ export default function CreateOffer(offerName,offerDetails){
 	}
 	this.initializeEventHanders=function(offer){
 		var _this=this;
-		// offer.addEventListener("mouseover",function(event){
-		// 	console.log("mousover")
-		// 	var target=event.target;
-		// 	if(target.className.indexOf("offerContent")!=-1){
-		// 		offer.querySelector(".sideBar").style.display="block";
-		// 	}
+		// offer.addEventListener("mouseenter",function(event){
+		// 	offer.querySelector(".sideBar").style.display="block";
+		// 	console.log("mouseenter")
 		// });
-		// offer.addEventListener("mouseout",function(event){
+		// offer.addEventListener("mouseleave",function(event){
 		// 	console.log("mousout")
-		// 	var target=event.target;
-		// 	if(target.className.indexOf("offerContent")!=-1){
-		// 		//offer.querySelector(".sideBar").style.display="none";
-		// 	}
+		// 	offer.querySelector(".sideBar").style.display="none";
 		// });
 		offer.addEventListener("click",function(event){
 			var target=event.target;
