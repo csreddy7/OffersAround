@@ -1,5 +1,4 @@
-1)why padding is not working properly for icons created using ::before puesdo elements?
-
+1)when two inline-blocks placed in one block element and if one inline-block has span element inside it then it is going to bottom of parent div
 
 visual edit settings
 {

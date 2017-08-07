@@ -12,7 +12,8 @@ export default function CreateOffer(offerName,offerDetails){
 							<div class="sideBar">
 								 <span class="editIcon fa fa-pencil-square-o"></span>
 								<span class="addIcon fa fa-plus"></span>
-								<span class="previewIcon fa fa-eye"></span>`;
+								<span class="previewIcon fa fa-eye"></span>
+							</div>`;
 		var offer=document.createElement("div");
 		offer.innerHTML=template;
 		offer.id=this.id;
