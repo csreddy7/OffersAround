@@ -17,37 +17,43 @@ window.onload = function () {
  }
 
 
-  var menuIcon = document.getElementById("menu-icon"),
-    menu = document.getElementById("offer-menu");
-    
+  const menuIcon = document.querySelectorAll(".fa-bars")[0],
+        menu = document.querySelectorAll(".menu-list")[0],
+        registerIcon = document.querySelectorAll("#register")[0],
+        loginIcon = document.querySelectorAll("#login")[0],
+        logoutIcon = document.querySelectorAll("#logout")[0],
+        addOfferIcon = document.querySelectorAll("#addoffer")[0];
 
+    
+logoutIcon.style.display="none";
+addOfferIcon.style.display="none";
   menuIcon.addEventListener("click", function () {
     if (menuIcon.className.indexOf("rotate-menu") != -1) {
-      menuIcon.setAttribute("class", "menu-icon");
+      menuIcon.setAttribute("class", "fa fa-bars");
     } else {
-      menuIcon.setAttribute("class", "menu-icon rotate-menu");
+      menuIcon.setAttribute("class", "fa fa-bars rotate-menu");
     }
     if (menu.className.indexOf("show-menu") == -1) {
-      menu.setAttribute("class", "offer-menu show-menu");
+      menu.setAttribute("class", "menu-list show-menu");
     } else {
-      menu.setAttribute("class", "offer-menu hide-menu");
+      menu.setAttribute("class", "menu-list hide-menu");
     }
   });
 
 
-  document.getElementsByClassName("main-content")[0].addEventListener("click", function () {
+  document.querySelectorAll("main")[0].addEventListener("click", function () {
     if (menuIcon.className.indexOf("rotate-menu") != -1) {
-      menuIcon.setAttribute("class", "menu-icon");
+      menuIcon.setAttribute("class", "fa fa-bars");
     }
     if (menu.className.indexOf("show-menu") != -1) {
-      menu.setAttribute("class", "offer-menu hide-menu");
+      menu.setAttribute("class", "menu-list hide-menu");
     }
   });
 
-  document.getElementById("register").addEventListener("click", function () {
+  document.querySelectorAll("#register")[0].addEventListener("click", function () {
     this.dialog = new dialog({
       title: "User Registration",
-      templateUrl: "Registration.html"
+      templateUrl: "app_modules/registration/Registration.html"
     });
     this.dialog.init();
   });

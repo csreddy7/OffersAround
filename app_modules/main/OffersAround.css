@@ -47,7 +47,8 @@ header{
     width: 100%;
     font-size: 0;
     padding: 1rem;
-    border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	position: relative;
 }
 
 header div{
@@ -72,13 +73,73 @@ header .menu-icon{
     text-align: right;
 }
 
+.rotate-menu{
+	transform:rotate(90deg);
+}
 
 /***** nav Styles *****/
 
-nav{
-	display: none;
+
+
+.menu-list li{
+	display: block;
+	padding: 0;
+	cursor: pointer;
+	padding:0.5rem;
 }
 
+.menu-list li:hover{
+	background-color:#ddd;
+}
+.menu-list ul{
+	display: block;
+	margin: 0;
+	padding: 0.5rem;
+	list-style:none;
+}
+
+.menu-list .register-logo{
+	background-image: url("../../resources/images/Register.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	width:2rem;
+	height:2rem;
+	display: inline-block;
+}
+.menu-list{
+	width: 12rem;
+	height: 0px;
+	font-size: 2rem;
+	color: #696969;
+    position: absolute;
+    right: 0.7rem;
+	z-index:200;
+	background-color:rgba(158, 158, 158, 0.49);
+	overflow: hidden;
+}
+.show-menu{
+	animation:expand-menu 1s  forwards;
+}
+.hide-menu{
+	animation:shrink-menu 1s forwards;
+}
+@keyframes expand-menu{
+	0%{
+		height:0px;
+	}
+	100%{
+		height:8rem;
+	}
+}
+@keyframes shrink-menu{
+	0%{
+		height:8rem;
+	}
+	100%{
+		height:0px;
+	}
+}
 
 
 /*********************
@@ -181,13 +242,37 @@ footer{
     border-top: 1px solid #ccc;
 }
 
+/*********************
+	Dialog Styles
+***********************/
+.offer-details-dialog{
+	z-index: 100;
+        min-height: 100px;
+    min-width: 400px;
+    background-color: #fff;
+    position: fixed;
+    left: 30%;
+    top: 20%;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    box-shadow: 2px 2px 2px #eee;
+}
+.offer-dialog-header{
+	padding: 5px;
+    color: #fff;
+    background-color: rgba(33, 150, 243, 0.71);
+    text-align: center;
+    font-size: 1rem;
+}
+
 
 /*********************
 	Third Party Styles
 ***********************/
 .fa-bars:before {
     content: "\F0C9";
-    font-size: 3rem;
+	font-size: 3rem;
+	cursor: pointer;
 }
 
 .fa-window-close:before {
@@ -210,4 +295,11 @@ footer{
     position: absolute;
     top: 0rem;
     font-size: 2rem;
+}
+
+.menu-list .fa-sign-out:before,
+.menu-list .fa-sign-in:before{
+	color:#2196F3;
+	font-size:2rem;
+	margin-right:1rem;
 }

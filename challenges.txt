@@ -12,3 +12,16 @@ visual edit settings
     "editor.renderIndentGuides":false,
     "editor.minimap.enabled": false
 }
+
+
+Hi,
+
+I have created elastic IP but i couldn't able to connect to it from my browser,it always says connection refused ,its been already 24 hours since i created elastic IP still i couldn't able to access it.
+
+I have created node http server and i can access it inside my rdp ,but couldn't able to access thorugh elastic IP
+
+I have changed security group to allow all http/https connections and also i created rule in windows firewall of  aws instance to allow all http/https connections
+
+my instance-id is :    i-0e60fce9fdef2da2d
+
+Please help me to connect to my aws ws2 instance through elastic ip.

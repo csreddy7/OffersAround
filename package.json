@@ -11,7 +11,7 @@
     "css-loader": "^0.28.4",
     "express": "4.x.x",
     "file-loader": "^0.11.2",
-    "http-server": "^0.9.0",
+    "http-server": "^0.10.0",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.9",
     "webpack": "^3.3.0"
@@ -25,10 +25,8 @@
     "url": "https://github.com/csreddy7/OffersAround.git"
   },
   "scripts": {
-    "start": "http-server ./ -d false -a localhost -p 7697",
+    "start": "http-server . -p 7575",
     "build": "webpack --config webpack.config.js"
   },
-  "dependencies": {
-    
-  }
+  "dependencies": {}
 }

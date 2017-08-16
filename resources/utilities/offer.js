@@ -31,7 +31,7 @@ export default function CreateOffer(offerName,offerDetails){
 		target.style.display="block";
 	}
 	this.showDetails=function(){
-		this.dialog=new dialog({title:"Offer Details",name:this.offerName,locationName:this.offerLocation,details:this.offerDetails,templateUrl:"offer-details.html"});
+		this.dialog=new dialog({title:"Offer Details",name:this.offerName,locationName:this.offerLocation,details:this.offerDetails,templateUrl:"app_modules/main/offer-details.html"});
 		this.dialog.init();
 	}
 	this.createComment=function(){

@@ -26,7 +26,7 @@
       });
 
       var offer = document.createElement("div"),
-        parent = document.getElementById("offersAround");
+        parent = document.querySelectorAll(".offersAround")[0];
       offer.innerHTML = template;
       parent.appendChild(offer);
       offer.addEventListener("click", function() {
