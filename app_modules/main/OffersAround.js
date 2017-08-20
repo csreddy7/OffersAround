@@ -57,5 +57,12 @@ addOfferIcon.style.display="none";
     });
     this.dialog.init();
   });
+  document.querySelectorAll("#login")[0].addEventListener("click", function () {
+    this.dialog = new dialog({
+      title: "Login",
+      templateUrl: "app_modules/login/login.html"
+    });
+    this.dialog.init();
+  });
 
 }

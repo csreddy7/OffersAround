@@ -1,18 +1,29 @@
 var offerNumber=0;
 import dialog from "utilities/dialog";
-export default function CreateOffer(offerName,offerDetails){
+export default function CreateOffer(offerName,offerDetails,offerLocation){
 	offerDetails=offerDetails || "No offer details";
+	offerLocation=offerLocation || "location unknown";
 	this.id="offer-item-"+(++offerNumber);
 	this.init=function(){
-			  var template=`<div>
+			  var template=`<div class="offer-header">
 								<h1 class="offerName">${offerName}</h1>
-								<i class="fa fa-window-close"></i>
 							</div>
 							<div class="offerContent">${offerDetails}</div>
 							<div class="sideBar">
-								 <span class="editIcon fa fa-pencil-square-o"></span>
-								<span class="addIcon fa fa-plus"></span>
-								<span class="previewIcon fa fa-eye"></span>
+								<span class="view-details-link" title="Open in new window"></span>
+								<span class="add-comment-link fa fa-plus" title="Add comment"></span>
+								<span class="view-comments-link fa fa-eye" title="View comments"></span>
+							</div>
+							<div class="add-comment clear-fix">
+								<input type="text" class="comment-box" tabindex="4" id="comment-box" value="" placeholder="type comment" />
+								<i tabindex="5" class="fa fa-plus add-comment-button" aria-hidden="true"></i>
+							</div>
+							<div class="comment-list" >
+								<div>
+									<h1>Comments</h1>
+									<i class="fa fa-window-close close-comments" aria-hidden="true"></i>
+								</div>
+								<div id="comment-content"></div>
 							</div>`;
 		var offer=document.createElement("div");
 		offer.innerHTML=template;
@@ -22,16 +33,16 @@ export default function CreateOffer(offerName,offerDetails){
 		this.initializeEventHanders(offer);
 		//this.addComments();
 	}
-	this.addComment=function(){
+	this.showAddCommentBox=function(){
 		var target=document.querySelector("#"+this.id+" .add-comment");
 		target.style.display="block";
 	}
-	this.showComments=function(){
+	this.showCommentsBox=function(){
 		var target=document.querySelector("#"+this.id+" .comment-list");
 		target.style.display="block";
 	}
-	this.showDetails=function(){
-		this.dialog=new dialog({title:"Offer Details",name:this.offerName,locationName:this.offerLocation,details:this.offerDetails,templateUrl:"app_modules/main/offer-details.html"});
+	this.showOfferDetails=function(){
+		this.dialog=new dialog({title:"Offer Details",name:offerName,locationName:offerLocation,details:offerDetails,templateUrl:"app_modules/main/offer-details.html"});
 		this.dialog.init();
 	}
 	this.createComment=function(){
@@ -70,17 +81,15 @@ export default function CreateOffer(offerName,offerDetails){
 		offer.addEventListener("click",function(event){
 			var target=event.target;
 			if(target.className.indexOf("view-details-link")!=-1){
-				_this.showDetails();
+				_this.showOfferDetails();
 			}else if(target.className.indexOf("add-comment-link")!=-1){
-				_this.addComment();
+				_this.showAddCommentBox();
 			}else if(target.className.indexOf("view-comments-link")!=-1){
-				_this.showComments();
-			}else if(target.className.indexOf("close-offer")!=-1){
-				document.getElementById(_this.id).style.display="none";
+				_this.showCommentsBox();
 			}else if(target.className.indexOf("add-comment-button")!=-1){
 				_this.createComment();
 			}else if(target.className.indexOf("close-comments")!=-1){
-				document.getElementById("comment-list").style.display="none";
+				document.querySelectorAll("#"+this.id+" .comment-list")[0].style.display="none";
 			}
 		});
 	}

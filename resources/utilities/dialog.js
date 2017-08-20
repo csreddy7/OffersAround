@@ -15,11 +15,8 @@
     request.send();
 
     function render() {
-      var ch = response;
       var template = '<section class="offer-details-dialog">' +
-        '<div class="offer-dialog-header"><span><h8>' + _this.params.title + '</h8></span><span ><i class="fa fa-window-close close-dialog" aria-hidden="true"></i></span></div>' +
-        '<div>' + ch + '</div>' +
-        '</section>';
+        '<div class="offer-dialog-header"><span><h8>' + _this.params.title + '</h8></span><span ><i class="fa fa-window-close close-dialog" aria-hidden="true"></i></span></div>'+response+'</section>';
       var keys = Object.keys(params);
       keys.forEach(function(e) {
         template = template.replace("{{params." + e + "}}", params[e]);
