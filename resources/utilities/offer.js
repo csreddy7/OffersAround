@@ -14,6 +14,11 @@ export default function CreateOffer(offerName,offerDetails,offerLocation){
 								<span class="add-comment-link fa fa-plus" title="Add comment"></span>
 								<span class="view-comments-link fa fa-eye" title="View comments"></span>
 							</div>
+							<div class="bottom-links">
+								<span class="view-details-link" title="Open in new window">New Window</span>
+								<span class="add-comment-link" title="Add comment">Add comment</span>
+								<span class="view-comments-link" title="View comments">View comments</span>
+							</div>
 							<div class="add-comment clear-fix">
 								<input type="text" class="comment-box" tabindex="4" id="comment-box" value="" placeholder="type comment" />
 								<i tabindex="5" class="fa fa-plus add-comment-button" aria-hidden="true"></i>
