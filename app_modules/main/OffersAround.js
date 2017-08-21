@@ -1,5 +1,5 @@
 import { CreateOffer } from "utilities/Offer/offer";
-import { Dialog } from "utilities/dialog";
+import { Dialog } from "utilities/Dialog/dialog";
 // import 'css/reset.css';
 // import 'main/OffersAround.css';
 import 'css/font-awesome.css';

@@ -1,4 +1,4 @@
-import { Dialog } from "utilities/dialog";
+import { Dialog } from "utilities/Dialog/dialog";
 class CreateOffer {
 	constructor(offerName, offerDetails, offerLocation) {
 		this.offerDetails = offerDetails || "No offer details";
