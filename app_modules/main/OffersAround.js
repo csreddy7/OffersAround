@@ -9,7 +9,7 @@ window.onload = function () {
 
   // adding offers to main content
   for (let i = 0; i < 2; i++) {
-    var obj = new CreateOffer("two jeans at 300rs", "k r puram" + i);
+    var obj = new CreateOffer("Two jeans at 300rs", "k r puram" + i);
     obj.init();
   }
 
