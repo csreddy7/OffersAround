@@ -51,6 +51,7 @@ class Dialog {
       keys.forEach((e) => {
         dialogContent = dialogContent.replace("{{params." + e + "}}", this.params[e]);
       });
+      dialog.querySelectorAll(".dialog-title")[0].innerHTML = this.params.title;
       dialog.querySelectorAll(".dialog-content")[0].innerHTML = dialogContent;
       this.initializeEventHandlers(dialog);
     }

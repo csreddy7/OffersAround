@@ -45,6 +45,13 @@ body{
 	display: table;
 	clear: both;
 }
+
+input{
+	font-family:"Open Sans",sans-serif;
+}
+input::placeholder{
+	color: #9E9E9E;
+}
 /*********************
 	Header Styles
 ***********************/
@@ -98,10 +105,18 @@ header h1{
 	font-size: 2rem;
 	color: #696969;
     position: absolute;
-    right: 0.7rem;
+    right: 1rem;
 	z-index:200;
 	background-color:#fff;
 	overflow: hidden;
+}
+
+.menu-list ul{
+	display: block;
+	margin: 0;
+	padding: 0.5rem;
+	list-style:none;
+	border: 1px solid #ccc;
 }
 
 .menu-list li{
@@ -109,17 +124,11 @@ header h1{
 	padding: 0;
 	cursor: pointer;
 	padding:0.5rem;
+	font-size: 1.8rem;
 }
 
 .menu-list li:hover{
 	background-color:#ddd;
-}
-.menu-list ul{
-	display: block;
-	margin: 0;
-	padding: 0.5rem;
-	list-style:none;
-	border: 1px solid #ccc;
 }
 
 .menu-list .register-logo{
@@ -142,12 +151,12 @@ header h1{
 		height:0px;
 	}
 	100%{
-		height:8rem;
+		height:8.2rem;
 	}
 }
 @keyframes shrink-menu{
 	0%{
-		height:8rem;
+		height:8.2rem;
 	}
 	100%{
 		height:0px;
@@ -185,8 +194,8 @@ article.offersAround{
     width: calc(100% - 40px);
     font-size: 1.5rem;
 	border-right: 0;
-	font-family: "Open Sans",sans-serif;
 }
+
 
 article>h1,header>h1{
 	text-align: center;
@@ -470,6 +479,9 @@ footer{
 		width: calc(100% - 80px);
 		font-size: 3rem;
 	}
+	.menu-list{
+		right: 2rem;
+	}
 	article>h1{
 		display: none;
 	}
@@ -510,10 +522,12 @@ footer{
 		text-align:right;
 		padding-left: 2rem;
 		margin-top: 1rem;
+		font-size: 1.6rem;
 	}
 	.offer-details-dialog .offer-value{
 		width:80%;
 		text-align: left;
+		font-size: 1.6rem;
 	}
 	.offer-details-dialog .form-input{
 		width: 75%;
@@ -538,6 +552,9 @@ footer{
 		width: calc(100% - 80px);
 		font-size:3rem;
 	}
+	.menu-list{
+		right: 2rem;
+	}
 	article>h1{
 		display: none;
 	}
@@ -550,7 +567,7 @@ footer{
 	.offer-details-dialog .label-name{
 		text-align: right;
 	    width: 25%;
-	    padding-right: 2rem;
+	    padding-right: 1.8rem;
 	}
 
 	.offer-details-dialog .form-input{
@@ -562,10 +579,12 @@ footer{
 		width: 15%;
 		text-align: right;
 		margin-bottom: 1rem;
+		font-size:1.6rem;
 	}
 	
 	.offer-details-dialog .offer-value{
 		width:80%;
+		font-size:1.6rem;
 	}
 
 	footer{
