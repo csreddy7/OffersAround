@@ -49,7 +49,7 @@ body{
 input{
 	font-family:"Open Sans",sans-serif;
 }
-input::placeholder{
+input::placeholder,input::placeholder-shown{
 	color: #9E9E9E;
 }
 /*********************
@@ -520,7 +520,7 @@ footer{
 	.offer-details-dialog .offer-label{
 		width:15%;
 		text-align:right;
-		padding-left: 2rem;
+		padding-left: 1rem;
 		margin-top: 1rem;
 		font-size: 1.6rem;
 	}
