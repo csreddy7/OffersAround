@@ -1,9 +1,5 @@
 import { CreateOffer } from "utilities/Offer/offer";
 import { Dialog } from "utilities/Dialog/dialog";
-// import 'css/reset.css';
-// import 'main/OffersAround.css';
-import 'css/font-awesome.css';
-// import 'registration/Registration.css';
 var offers = 0;
 window.onload = function () {
 
