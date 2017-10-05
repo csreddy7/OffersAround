@@ -1,0 +1,22 @@
+{
+	"data":[
+		{
+			"id":1,
+			"title":"two jeansat 300",
+			"details":"super offer on jeans",
+			"location":"banglore"
+		},
+		{
+			"id":2,
+			"title":"two shirts at 500",
+			"details":"super offer on shirts",
+			"location":"manglore"
+		},
+		{
+			"id":1,
+			"title":"two shoes at 3000",
+			"details":"super offer on shoes",
+			"location":"mysore"
+		}
+	]
+}

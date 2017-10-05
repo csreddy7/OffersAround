@@ -3,11 +3,20 @@ import { Dialog } from "utilities/Dialog/dialog";
 var offers = 0;
 window.onload = function () {
 
-  // adding offers to main content
-  for (let i = 0; i < 2; i++) {
-    var obj = new CreateOffer("Two jeans at 300rs", "k r puram" + i);
-    obj.init();
-  }
+var http= new XMLHttpRequest();
+http.open("GET","/getOffers",true);
+http.send();
+http.onreadystatechange= ()=>{
+	if(http.readyState==XMLHttpRequest.DONE && http.status==200){
+		var res=JSON.parse(http.responseText);
+		var arr=res.data;
+		arr.forEach((e)=>{
+			var obj = new CreateOffer(e.title, e.details);
+    		obj.init();
+		});
+	}
+};
+  
 
   // initializing event handlers
   const menuIcon = document.querySelectorAll(".fa-bars")[0],
