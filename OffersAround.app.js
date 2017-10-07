@@ -3,6 +3,7 @@ var path=require("path");
 var app=express();
 var fs=require("fs");
 
+app.use(express.static(__dirname+'/'));
 app.get("/getOffers",function(req,res){
 	fs.readFile("resources/data/offers.json","UTF-8",(err,data)=>{
 		if(err){
@@ -12,9 +13,6 @@ app.get("/getOffers",function(req,res){
 	});
 });
 
-app.use(express.static(__dirname+'/'));
 
-
-
-app.listen(7697);
-console.log("server listening at 7697");
+app.listen(7575);
+console.log("server listening at 7575");

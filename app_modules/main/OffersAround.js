@@ -1,5 +1,8 @@
 import { CreateOffer } from "utilities/Offer/offer";
 import { Dialog } from "utilities/Dialog/dialog";
+import { login }  from "login/loginWidget";
+import { Registration }  from "registration/Registration";
+
 var offers = 0;
 window.onload = function () {
 
@@ -11,8 +14,7 @@ http.onreadystatechange= ()=>{
 		var res=JSON.parse(http.responseText);
 		var arr=res.data;
 		arr.forEach((e)=>{
-			var obj = new CreateOffer(e.title, e.details);
-    		obj.init();
+			var obj = new CreateOffer(e.title, e.details,e.location);
 		});
 	}
 };
@@ -27,7 +29,7 @@ http.onreadystatechange= ()=>{
     addOfferIcon = document.querySelectorAll("#addoffer")[0],
     main = document.querySelectorAll("main")[0],
     register = document.querySelectorAll("#register")[0],
-    login = document.querySelectorAll("#login")[0];
+    loginLink = document.querySelectorAll("#login")[0];
 
 
   logoutIcon.style.display = "none";
@@ -58,17 +60,29 @@ http.onreadystatechange= ()=>{
   });
 
   register.addEventListener("click", () => {
-    this.dialog = new Dialog({
-      title: "User Registration",
-      templateUrl: "app_modules/registration/Registration.html"
-    });
+    	let dialog = new Dialog({
+	      title: "User Registration"
+	    });
+	    let registrationWidget= new Registration();
+	    registrationWidget.renderPage().then(()=>{
+	    	dialog.init(registrationWidget.dom);
+	    	registrationWidget.initializeHandlers();
+	    },()=>{
+	    	console.log("error while creating login widget")
+	    });
   });
 
-  login.addEventListener("click", () => {
-    this.dialog = new Dialog({
-      title: "Login",
-      templateUrl: "app_modules/login/login.html"
-    });
+  loginLink.addEventListener("click", () => {
+	    let dialog = new Dialog({
+	      title: "Login"
+	    });
+	    let loginWidget= new login();
+	    loginWidget.renderPage().then(()=>{
+	    	dialog.init(loginWidget.dom);
+	    	loginWidget.initializeHandlers();
+	    },()=>{
+	    	console.log("error while creating login widget")
+	    });
   });
 
 }

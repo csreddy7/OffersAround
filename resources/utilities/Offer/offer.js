@@ -1,4 +1,5 @@
 import { Dialog } from "utilities/Dialog/dialog";
+import {OfferDetails} from "main/OfferDetails";
 class CreateOffer {
 	constructor(offerName, offerDetails, offerLocation) {
 		this.offerDetails = offerDetails || "No offer details";
@@ -59,7 +60,16 @@ class CreateOffer {
 	}
 
 	showOfferDetails() {
-		this.dialog = new Dialog({ title: "Offer Details", name: this.offerName, locationName: this.offerLocation, details: this.offerDetails, templateUrl: "app_modules/main/offer-details.html" });
+		let dialog = new Dialog({
+	      title: "Offer Details"
+	    });
+	    let OfferDetailsWidget= new OfferDetails();
+	    OfferDetailsWidget.renderPage().then(()=>{
+	    	dialog.init(OfferDetailsWidget.dom);
+	    	OfferDetailsWidget.populateOfferDetails(this);
+	    },()=>{
+	    	console.log("error while creating login widget")
+	    });
 	}
 	showAddCommentBox() {
 		let target = document.querySelector("#" + this.id + " .add-comment");
