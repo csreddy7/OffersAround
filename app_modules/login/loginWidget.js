@@ -28,7 +28,20 @@ class login{
 	login(){
 		let mobileNumber=document.querySelectorAll("#mobileNumber")[0].value;
 		let passWord=document.querySelectorAll("#passWord")[0].value;
-		ajax.loginUser(mobileNumber,passWord);
+		ajax.loginUser(mobileNumber,passWord).then((res)=>{
+			    if(res.validUser){
+			    	let registerIcon = document.querySelectorAll("#register")[0],
+				    loginIcon = document.querySelectorAll("#login")[0],
+				    logoutIcon = document.querySelectorAll("#logout")[0],
+				    addOfferIcon = document.querySelectorAll("#addoffer")[0];
+			    	registerIcon.style.display="none";
+				    loginIcon.style.display="none";
+				    logoutIcon.style.display="block";
+				    addOfferIcon.style.display="block";
+			    }else{
+			    	alert("invalid user");
+			    }  
+		})
 	}
 }
 
