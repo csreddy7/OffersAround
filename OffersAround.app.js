@@ -29,16 +29,15 @@ app.post("/login",function(req,res){
 		var mobileNumber=req.body.mobileNumber;
 		var passWord=req.body.passWord;
 		var arr=JSON.parse(response).data;
+		var validUser=false;
 		if(arr){
 			arr.forEach(function(e){
 				if(e.mobileNumber==mobileNumber && e.passWord==passWord){
-					var obj={validUser:true};
-					res.json(obj);
-				}else{
-					var obj={validUser:false};
-					res.json(obj);
+					validUser=true;
 				}
 			});
+			var obj={"validUser":validUser};
+			res.json(obj);
 		}
 	});
 });
@@ -68,6 +67,30 @@ app.post("/register",function(req,res){
 	});
 });
 
+app.post("/addOffer",function(req,res){
+	fs.readFile("resources/data/offers.json","UTF-8",(err,response)=>{
+		if(err){
+			console.log(err);
+		}
+		response=JSON.parse(response);
+		var arr=response.data;
+		var obj={};
+		obj.title=req.body.offerName;
+		obj.details=req.body.offerContent;
+		obj.location=req.body.locationName;
+		arr.push(obj);
+		response=JSON.stringify(response);
+		fs.writeFile("resources/data/offers.json",response,"UTF-8",(err)=>{
+			if(err){
+				console.log(err);
+				res.send("failure");
+			}else{
+				console.log("offer added successfully");
+				res.send("success");
+			}
+		})
+	});
+});
 
 
 app.listen(7575);

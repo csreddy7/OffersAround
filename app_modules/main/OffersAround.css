@@ -404,10 +404,10 @@ footer{
     border: 1px solid #ccc;
     padding-left: 0.5rem;
 }
- .offer-details-dialog .reg-button,.offer-details-dialog .login-button{
+ .offer-details-dialog .reg-button,.offer-details-dialog .login-button,.offer-details-dialog .save-offer{
 	text-align: center;
 }
- .offer-details-dialog .reg-button input,.offer-details-dialog .login-button input{
+ .offer-details-dialog .reg-button input,.offer-details-dialog .login-button input,.offer-details-dialog .save-offer input{
 	padding: 0.8rem;
     margin-bottom: 1rem;
     border: 1px solid #ccc;
@@ -426,6 +426,16 @@ footer{
 	padding: 1rem;
 	max-height: 20rem;
 	overflow-y: auto;
+}
+.add-offer-content{
+	width: 95%;
+	margin: 1rem;
+	padding: 1rem;
+}
+
+.add-offer-content textarea{
+	width: 100%;
+    border: 1px solid #ddd;
 }
 /*********************
 	Third Party Styles

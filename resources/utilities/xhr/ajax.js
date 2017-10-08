@@ -43,7 +43,30 @@ var obj={
 	        request.send(JSON.stringify(data));
 		});
 		return promise;
+	},
+
+	addOffer(offerName,locationName,offerContent){
+		let promise = new Promise((resolve,reject)=>{
+			let request = new XMLHttpRequest();
+	        request.open("POST", "/addOffer", true);
+	        request.onload = () => {
+	        	resolve(request.responseText);
+	        }
+	        request.reject= () =>{
+	        	console.log("error while login")
+	        }
+	        var data={
+	        	"offerName":offerName,
+	        	"locationName":locationName,
+	        	"offerContent":offerContent
+	        }
+	        request.setRequestHeader("Content-Type","application/json");
+	        request.send(JSON.stringify(data));
+		});
+		return promise;
 	}
+
+
 }
 
 export {obj}

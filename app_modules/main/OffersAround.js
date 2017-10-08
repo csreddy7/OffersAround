@@ -2,8 +2,10 @@ import { CreateOffer } from "utilities/Offer/offer";
 import { Dialog } from "utilities/Dialog/dialog";
 import { login }  from "login/loginWidget";
 import { Registration }  from "registration/Registration";
+import { AddOffer }  from "main/AddOffer";
 
-var offers = 0;
+
+let offers = null;
 window.onload = function () {
 
 var http= new XMLHttpRequest();
@@ -11,10 +13,10 @@ http.open("GET","/getOffers",true);
 http.send();
 http.onreadystatechange= ()=>{
 	if(http.readyState==XMLHttpRequest.DONE && http.status==200){
-		var res=JSON.parse(http.responseText);
-		var arr=res.data;
+		let res=JSON.parse(http.responseText);
+		let arr = offers = res.data;
 		arr.forEach((e)=>{
-			var obj = new CreateOffer(e.title, e.details,e.location);
+			let obj = new CreateOffer(e.title, e.details,e.location);
 		});
 	}
 };
@@ -29,8 +31,12 @@ http.onreadystatechange= ()=>{
     addOfferIcon = document.querySelectorAll("#addoffer")[0],
     main = document.querySelectorAll("main")[0],
     register = document.querySelectorAll("#register")[0],
-    loginLink = document.querySelectorAll("#login")[0];
-
+    loginLink = document.querySelectorAll("#login")[0],
+    addOffer = document.querySelectorAll("#addoffer")[0],
+    logout = document.querySelectorAll("#logout")[0],
+    searchBox = document.querySelectorAll("#searchBox")[0],
+    searchButton = document.querySelectorAll("#searchButton")[0],
+    offersList=document.querySelectorAll("#offersList")[0];
 
   logoutIcon.style.display = "none";
   addOfferIcon.style.display = "none";
@@ -52,6 +58,19 @@ http.onreadystatechange= ()=>{
 
   main.addEventListener("click", () => {
     hideMenu();
+  });
+
+  searchButton.addEventListener("click", () => {
+    let searchValue=searchBox.value;
+    let arr=offers.filter((e)=>{
+        return (e.title.indexOf(searchValue)!=-1);
+    });
+    if(arr.length>0){
+      offersList.innerHTML="";
+      arr.forEach((e)=>{
+      let obj = new CreateOffer(e.title, e.details,e.location);
+    });
+    }
   });
 
 
@@ -89,6 +108,28 @@ http.onreadystatechange= ()=>{
 	    },()=>{
 	    	console.log("error while creating login widget")
 	    });
+  });
+
+  logout.addEventListener("click", () => {
+      hideMenu();
+      logoutIcon.style.display = "none";
+      addOfferIcon.style.display = "none";
+      registerIcon.style.display="block";
+      loginIcon.style.display="block";  
+  });
+
+  addOffer.addEventListener("click", () => {
+     let dialog = new Dialog({
+        title: "Add Offer"
+      });
+      let addOfferWidget= new AddOffer();
+      addOfferWidget.renderPage().then(()=>{
+        dialog.init(addOfferWidget.dom);
+        addOfferWidget.initializeHandlers();
+        hideMenu();
+      },()=>{
+        console.log("error while creating login widget")
+      });  
   });
 
 }
