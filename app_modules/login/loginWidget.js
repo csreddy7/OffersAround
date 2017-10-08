@@ -29,6 +29,7 @@ class login{
 		let mobileNumber=document.querySelectorAll("#mobileNumber")[0].value;
 		let passWord=document.querySelectorAll("#passWord")[0].value;
 		ajax.loginUser(mobileNumber,passWord).then((res)=>{
+				res=JSON.parse(res);
 			    if(res.validUser){
 			    	let registerIcon = document.querySelectorAll("#register")[0],
 				    loginIcon = document.querySelectorAll("#login")[0],
@@ -38,6 +39,8 @@ class login{
 				    loginIcon.style.display="none";
 				    logoutIcon.style.display="block";
 				    addOfferIcon.style.display="block";
+				    let event = new Event("close-dialog");
+				    document.dispatchEvent(event);
 			    }else{
 			    	alert("invalid user");
 			    }  

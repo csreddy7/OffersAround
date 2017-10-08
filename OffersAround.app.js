@@ -28,7 +28,6 @@ app.post("/login",function(req,res){
 		}
 		var mobileNumber=req.body.mobileNumber;
 		var passWord=req.body.passWord;
-		console.log(req);
 		var arr=JSON.parse(response).data;
 		if(arr){
 			arr.forEach(function(e){
@@ -43,6 +42,32 @@ app.post("/login",function(req,res){
 		}
 	});
 });
+
+app.post("/register",function(req,res){
+	fs.readFile("resources/data/users.json","UTF-8",(err,response)=>{
+		if(err){
+			console.log(err);
+		}
+		response=JSON.parse(response);
+		var arr=response.data;
+		var obj={};
+		obj.mobileNumber=req.body.mobileNumber;
+		obj.passWord=req.body.passWord;
+		obj.userName=req.body.userName;
+		arr.push(obj);
+		response=JSON.stringify(response);
+		fs.writeFile("resources/data/users.json",response,"UTF-8",(err)=>{
+			if(err){
+				console.log(err);
+				res.send("failure");
+			}else{
+				console.log("user registered successfully");
+				res.send("success");
+			}
+		})
+	});
+});
+
 
 
 app.listen(7575);

@@ -51,14 +51,18 @@ http.onreadystatechange= ()=>{
 
 
   main.addEventListener("click", () => {
+    hideMenu();
+  });
+
+
+  let hideMenu = () =>{
     if (menuIcon.className.indexOf("rotate-menu") != -1) {
       menuIcon.setAttribute("class", "fa fa-bars");
     }
     if (menu.className.indexOf("show-menu") != -1) {
       menu.setAttribute("class", "menu-list hide-menu");
     }
-  });
-
+  }
   register.addEventListener("click", () => {
     	let dialog = new Dialog({
 	      title: "User Registration"
@@ -67,6 +71,7 @@ http.onreadystatechange= ()=>{
 	    registrationWidget.renderPage().then(()=>{
 	    	dialog.init(registrationWidget.dom);
 	    	registrationWidget.initializeHandlers();
+        hideMenu();
 	    },()=>{
 	    	console.log("error while creating login widget")
 	    });
@@ -80,6 +85,7 @@ http.onreadystatechange= ()=>{
 	    loginWidget.renderPage().then(()=>{
 	    	dialog.init(loginWidget.dom);
 	    	loginWidget.initializeHandlers();
+        hideMenu();
 	    },()=>{
 	    	console.log("error while creating login widget")
 	    });

@@ -29,7 +29,16 @@ class Registration{
 		let userName=document.querySelectorAll("#userName")[0].value;
 		let mobileNumber=document.querySelectorAll("#mobileNumber")[0].value;
 		let passWord=document.querySelectorAll("#passWord")[0].value;
-		ajax.registerUser(userName,mobileNumber,passWord);
+		ajax.registerUser(userName,mobileNumber,passWord).then((res)=>{
+			console.log(res);
+			if(res=="success"){
+				let event = new Event("close-dialog");
+				document.dispatchEvent(event);	
+			}else{
+				alert("registration failed");
+			}
+			
+		});
 	}
 }
 

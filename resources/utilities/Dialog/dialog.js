@@ -3,6 +3,7 @@
 class Dialog {
   constructor(params) {
     this.params = params;
+    this.dialog=null;
     this.parent = document.querySelectorAll(".offersAround")[0];
   }
 
@@ -14,22 +15,29 @@ class Dialog {
                             </div>
                             <div class="dialog-content"></div>
                         </section>`;
-    let dialog = document.createElement("div");
-    dialog.innerHTML = dialogTemplate;
-    this.parent.appendChild(dialog);
-    dialog.querySelectorAll(".dialog-content")[0].appendChild(dialogContent);
-    this.initializeEventHandlers(dialog);
+    this.dialog = document.createElement("div");
+    this.dialog.innerHTML = dialogTemplate;
+    this.parent.appendChild(this.dialog);
+    this.dialog.querySelectorAll(".dialog-content")[0].appendChild(dialogContent);
+    this.initializeEventHandlers();
   }
 
-  initializeEventHandlers(dialog) {
-    dialog.addEventListener("click", (event) => {
+  initializeEventHandlers() {
+    this.dialog.addEventListener("click", (event) => {
       let target = event.target;
       if (target.className.indexOf("close-dialog") != -1) {
-        this.parent.removeChild(dialog);
+        this.closeDialog();
       }
     });
+
+    document.addEventListener("close-dialog",(e)=>{
+      this.closeDialog();
+    },false);
   }
 
+  closeDialog(){
+    this.parent.removeChild(this.dialog);
+  }
 }
 
 export { Dialog }
