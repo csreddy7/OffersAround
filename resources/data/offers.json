@@ -1,1 +1,1 @@
-{"data":[{"title":"two jeans at 300","details":"this is great offer","location":"banglore"},{"title":"shirt at 400","details":"two shirts at 500","location":"shirt"},{"title":"shoe at 600","details":"best shoes in industry","location":"shoe"}]}
+{"data":[{"title":"two jeans at 300","details":"best offer","location":"banglore","comments":[{"comment":"very best offer","id":1},{"comment":"quality is not good","id":2}],"comment_max_id":2,"id":1},{"title":"two shirts at 400","details":"best offer","location":"mysore","comments":[],"comment_max_id":0,"id":2}],"MAX_ID":2}

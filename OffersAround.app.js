@@ -3,6 +3,9 @@ var path=require("path");
 var app=express();
 var fs=require("fs");
 var bodyParser=require("body-parser");
+var dataCache=null;
+var lastUpdatedTime= new Date().getTime();
+var cachedTime=null;
 
 app.use(express.static(__dirname+'/'));
 
@@ -12,6 +15,8 @@ app.get("/getOffers",function(req,res){
 		if(err){
 			console.log(err);
 		}
+		dataCache=JSON.parse(data);
+		cachedTime= new Date().getTime(); 
 		res.send(data);
 	});
 });
@@ -68,28 +73,81 @@ app.post("/register",function(req,res){
 });
 
 app.post("/addOffer",function(req,res){
-	fs.readFile("resources/data/offers.json","UTF-8",(err,response)=>{
-		if(err){
-			console.log(err);
-		}
-		response=JSON.parse(response);
-		var arr=response.data;
-		var obj={};
+	var obj={};
 		obj.title=req.body.offerName;
 		obj.details=req.body.offerContent;
 		obj.location=req.body.locationName;
-		arr.push(obj);
-		response=JSON.stringify(response);
-		fs.writeFile("resources/data/offers.json",response,"UTF-8",(err)=>{
+		obj.comments=[];
+		obj.comment_max_id=0;
+			
+	if(cachedTime>lastUpdatedTime){
+		obj.id=++dataCache.MAX_ID;
+		dataCache.data.push(obj);
+		addOffer(JSON.stringify(dataCache));
+	}else{
+			fs.readFile("resources/data/offers.json","UTF-8",(err,response)=>{
+			if(err){
+				console.log(err);
+			}
+			response=JSON.parse(response);
+			cachedTime= new Date().getTime();
+			var arr=response.data;
+			obj.id=++response.MAX_ID;
+			arr.push(obj);
+			response=JSON.stringify(response);
+			addOffer(response);
+		});
+	}
+	
+	function addOffer(data){
+		fs.writeFile("resources/data/offers.json",data,"UTF-8",(err)=>{
 			if(err){
 				console.log(err);
 				res.send("failure");
 			}else{
 				console.log("offer added successfully");
+				lastUpdatedTime= new Date().getTime();
 				res.send("success");
 			}
 		})
-	});
+	}
+});
+
+app.post("/addComment",function(req,res){
+	if(cachedTime>lastUpdatedTime){
+		addComment(dataCache);
+	}else{
+			fs.readFile("resources/data/offers.json","UTF-8",(err,response)=>{
+			if(err){
+				console.log(err);
+			}
+			response=JSON.parse(response);
+			cachedTime= new Date().getTime();
+			addComment(response);
+		});
+	}
+	
+	function addComment(offers){
+		var offerId=req.body.offerId;
+		offers.data.forEach(function(e){
+			if(e.id==offerId){
+				var obj={};
+				obj.comment=req.body.comment;
+				obj.id=++e.comment_max_id;
+				e.comments.push(obj);
+			}
+		});
+		fs.writeFile("resources/data/offers.json",JSON.stringify(offers),"UTF-8",(err)=>{
+			if(err){
+				console.log(err);
+				res.send("failure");
+			}else{
+				console.log("comment added successfully");
+				lastUpdatedTime= new Date().getTime();
+				res.send("success");
+			}
+		})
+	}
 });
 
 

@@ -1,10 +1,12 @@
 import { Dialog } from "utilities/Dialog/dialog";
 import {OfferDetails} from "main/OfferDetails";
+import {obj as ajax } from 'utilities/xhr/ajax';
 class CreateOffer {
-	constructor(offerName, offerDetails, offerLocation) {
-		this.offerDetails = offerDetails || "No offer details";
-		this.offerLocation = offerLocation || "location unknown";
-		this.offerName = offerName;
+	constructor(offer) {
+		this.offer=offer;
+		this.offerDetails = this.offer.details || "No offer details";
+		this.offerLocation = this.offer.location || "location unknown";
+		this.offerName = this.offer.title;
 		this.id = "offer-item-" + (++CreateOffer.offerNumber);
 		this.init();
 	}
@@ -31,6 +33,14 @@ class CreateOffer {
 			document.getElementById("offersList").appendChild(offer);
 			offer.querySelectorAll(".offerName")[0].innerHTML=this.offerName;
 			offer.querySelectorAll(".offerContent")[0].innerHTML=this.offerDetails;
+			const commentParent=document.querySelector("#" + this.id + " #comment-content");
+			this.offer.comments.forEach((e)=>{
+				let obj={};
+				obj.username="chandu";
+				obj.comment=e.comment;
+				let comment=this.getComment(obj);
+				commentParent.appendChild(comment);
+			});
 			this.initializeEventHanders(offer);
 		}
 	}
@@ -84,9 +94,12 @@ class CreateOffer {
 		obj.username = "chandu";
 		obj.comment = value;
 		let comment = this.getComment(obj);
-		document.getElementById("comment-content").appendChild(comment);
-		document.getElementById("comment-box").value = "";
-		document.querySelector("#" + this.id + " .add-comment").style.display = "none";
+		ajax.createComment(this.offer,value).then(()=>{
+			document.querySelector("#" + this.id + " #comment-content").appendChild(comment);
+			document.getElementById("comment-box").value = "";
+			document.querySelector("#" + this.id + " .add-comment").style.display = "none";
+		});
+		
 	}
 	getComment(obj) {
 		let template = "<span class='username'>" + obj.username + ":</span><span>" + obj.comment + "</span>";

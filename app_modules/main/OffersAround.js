@@ -15,8 +15,8 @@ http.onreadystatechange= ()=>{
 	if(http.readyState==XMLHttpRequest.DONE && http.status==200){
 		let res=JSON.parse(http.responseText);
 		let arr = offers = res.data;
-		arr.forEach((e)=>{
-			let obj = new CreateOffer(e.title, e.details,e.location);
+		arr.forEach((offer)=>{
+			let obj = new CreateOffer(offer);
 		});
 	}
 };
@@ -67,8 +67,8 @@ http.onreadystatechange= ()=>{
     });
     if(arr.length>0){
       offersList.innerHTML="";
-      arr.forEach((e)=>{
-      let obj = new CreateOffer(e.title, e.details,e.location);
+      arr.forEach((offer)=>{
+      let obj = new CreateOffer(offer);
     });
     }
   });

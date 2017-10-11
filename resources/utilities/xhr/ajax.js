@@ -6,67 +6,51 @@ var obj={
         return request;
 	},
 	loginUser(mobileNumber,passWord){
-		let promise = new Promise((resolve,reject)=>{
-			let request = new XMLHttpRequest();
-	        request.open("POST", "/login", true);
-	        request.onload = () => {
-	        	resolve(request.responseText);
-	        }
-	        request.reject= () =>{
-	        	console.log("error while login")
-	        }
-	        var data={
+		var data={
 	        	"mobileNumber":mobileNumber,
 	        	"passWord":passWord
 	        }
-	        request.setRequestHeader("Content-Type","application/json");
-	        request.send(JSON.stringify(data));
-		});
-		return promise;
+		return this.post("/login",data);
 	},
 	registerUser(userName,mobileNumber,passWord){
-		let promise = new Promise((resolve,reject)=>{
-			let request = new XMLHttpRequest();
-	        request.open("POST", "/register", true);
-	        request.onload = () => {
-	        	resolve(request.responseText);
-	        }
-	        request.reject= () =>{
-	        	console.log("error while login")
-	        }
-	        var data={
+		var data={
 	        	"mobileNumber":mobileNumber,
 	        	"passWord":passWord,
 	        	"userName":userName
 	        }
-	        request.setRequestHeader("Content-Type","application/json");
-	        request.send(JSON.stringify(data));
-		});
-		return promise;
+		return this.post("/addOffer",data);
 	},
 
 	addOffer(offerName,locationName,offerContent){
+			var data={
+	        	"offerName":offerName,
+	        	"locationName":locationName,
+	        	"offerContent":offerContent
+	        }
+	    return this.post("/addOffer",data);
+	},
+	createComment(offer,comment){
+	        var data={
+	        	"offerId":offer.id,
+	        	"comment":comment,
+	        }
+	    return this.post("/addComment",data);
+	},
+	post(url,data){
 		let promise = new Promise((resolve,reject)=>{
 			let request = new XMLHttpRequest();
-	        request.open("POST", "/addOffer", true);
+	        request.open("POST", url, true);
 	        request.onload = () => {
 	        	resolve(request.responseText);
 	        }
 	        request.reject= () =>{
 	        	console.log("error while login")
-	        }
-	        var data={
-	        	"offerName":offerName,
-	        	"locationName":locationName,
-	        	"offerContent":offerContent
 	        }
 	        request.setRequestHeader("Content-Type","application/json");
 	        request.send(JSON.stringify(data));
 		});
 		return promise;
 	}
-
-
 }
 
 export {obj}
