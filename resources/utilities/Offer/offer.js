@@ -92,19 +92,23 @@ class CreateOffer {
 	createComment() {
 		let value = document.getElementById("comment-box").value, obj = {};
 		 ajax.getUserName().then((res)=>{
-			obj.comment = value;
-			obj.username=JSON.parse(res).userName;
-			let comment = this.getComment(obj);
-			ajax.createComment(this.offer,value).then(()=>{
-				document.querySelector("#" + this.id + " #comment-content").appendChild(comment);
-				document.getElementById("comment-box").value = "";
-				document.querySelector("#" + this.id + " .add-comment").style.display = "none";
-			});
-		},(err)=>{
-			console.log(err);
-		});
+				obj.comment = value;
+				obj.username=JSON.parse(res).userName;
+				let comment = this.getComment(obj);
+				ajax.createComment(this.offer,value).then(()=>{
+					document.querySelector("#" + this.id + " #comment-content").appendChild(comment);
+					document.getElementById("comment-box").value = "";
+					document.querySelector("#" + this.id + " .add-comment").style.display = "none";
+				},showError);
+		},showError);
 		
-		
+		let showError = (error)=>{
+			var err=JSON.parse(error);
+			if(err.status && err.status==401){
+				alert("session expired");
+				commonService.clearScreen();
+			}
+		};
 	}
 	getComment(obj) {
 		let template = "<span class='username'>" + obj.username + ":</span><span>" + obj.comment + "</span>";

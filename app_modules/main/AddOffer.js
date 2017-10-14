@@ -1,5 +1,5 @@
 import {obj as ajax } from 'utilities/xhr/ajax';
-
+import { commonService } from "utilities/common/commonService";
 class AddOffer{
 	constructor(){
 		this.dom=null;
@@ -36,6 +36,12 @@ class AddOffer{
 			    }else{
 			    	alert("error while adding offer");
 			    }  
+		},(error)=>{
+			var err=JSON.parse(error);
+			if(err.status && err.status==401){
+				alert("session expired");
+				commonService.clearScreen();
+			}
 		});
 	}
 }

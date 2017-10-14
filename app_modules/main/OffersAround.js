@@ -100,8 +100,7 @@ window.onload = function () {
       logout.addEventListener("click", () => {
           hideMenu();
           document.cookie="token=77";
-          offersList.innerHTML="";
-          commonService.showInValidUserActions();
+          commonService.clearScreen();
       });
 
       addOffer.addEventListener("click", () => {

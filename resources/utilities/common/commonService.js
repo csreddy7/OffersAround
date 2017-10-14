@@ -18,9 +18,7 @@ let commonService={
 				          });
 				          this.showValidUserActions();
 				    },(err)=>{
-				    	offersList.innerHTML="";
-				    	this.offers=null;
-				    	this.showInValidUserActions();
+				    	this.clearScreen();
 				    	console.error(JSON.parse(err));
 				    });
 	},
@@ -48,6 +46,11 @@ let commonService={
 		loginIcon.style.display="block";
 		logoutIcon.style.display="none";
 		addOfferIcon.style.display="none";		
+	},
+	clearScreen(){
+		offersList.innerHTML="";
+		this.offers=null;
+		this.showInValidUserActions();
 	}
 }
 export {commonService}

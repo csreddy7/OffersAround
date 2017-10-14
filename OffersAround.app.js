@@ -73,21 +73,19 @@ app.use(function(req,res,next){
 
 
 app.get("/getOffers",function(req,res){
-	var validUser=secureService.validateToken(cookies.token);
-	if(validUser){
-			res.json(getOffers());
-		}else{
-			res.status(401).send({error:"Not authorised user"});
-		}
+	validateUser(res);
+	res.json(getOffers());
 });
 
 app.get("/userName",function(req,res){
+	validateUser(res);
 	var obj={};
 	obj.userName=getUserName(req.cookies.phoneNo);
 	res.json(obj);
 });
 
 app.post("/addOffer",function(req,res){
+	validateUser(res);
 	var obj={};
 		obj.title=req.body.offerName;
 		obj.details=req.body.offerContent;
@@ -116,7 +114,7 @@ app.post("/addOffer",function(req,res){
 });
 
 app.post("/addComment",function(req,res){
-
+	validateUser(res);
 	if(offersCachedTime>offersLastUpdatedTime){
 		addComment(dataCache);
 	}else{
@@ -147,6 +145,13 @@ var getOffers=function(){
 	dataCache = response = JSON.parse(response);
 	offersCachedTime = new Date().getTime(); 
 	return response;
+}
+
+var validateUser=function(res){
+	var validUser=secureService.validateToken(cookies.token);
+	if(!validUser){
+		res.status(401).send({status:"401",error:"Not authorised user"});
+	}
 }
 
 var putOffers=function(offers,res){
