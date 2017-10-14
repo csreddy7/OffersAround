@@ -1,19 +1,5 @@
-1)when two inline-blocks placed in one block element and if one inline-block has span element inside it then it is going to bottom of parent div
-
-visual edit settings
-{
-    "window.zoomLevel": 1,
-    "editor.renderWhitespace": "none",
-    "editor.renderControlCharacters": false,
-    "workbench.activityBar.visible": true,
-    "workbench.sideBar.location": "left",
-    "editor.glyphMargin": false,
-    "explorer.openEditors.visible": 0,
-    "editor.renderIndentGuides":false,
-    "editor.minimap.enabled": false
-}
-
-
-
-
-
+1) maintaing session
+2)showing location
+3)dynamic server location
+4)editing and deleting features
+5)automatic logout 

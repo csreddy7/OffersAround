@@ -8,6 +8,9 @@ var obj={
 	getOffers(){
      return this.get("/getOffers");
     },
+    getUserName(){
+    	return this.get("/userName");
+    },
 	loginUser(mobileNumber,passWord){
 		var data={
 	        	"mobileNumber":mobileNumber,

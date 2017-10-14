@@ -52,6 +52,13 @@ window.onload = function () {
         commonService.filterOffers(searchValue);
       });
 
+      searchBox.addEventListener("keyup", (event) => {
+          if(event.keyCode==13){
+            let searchValue=searchBox.value;
+            commonService.filterOffers(searchValue);
+          }
+      });
+
 
       let hideMenu = () =>{
         if (menuIcon.className.indexOf("rotate-menu") != -1) {
@@ -88,6 +95,7 @@ window.onload = function () {
             console.log("error while creating login widget")
           });
       });
+
 
       logout.addEventListener("click", () => {
           hideMenu();

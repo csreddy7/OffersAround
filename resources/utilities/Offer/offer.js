@@ -36,7 +36,7 @@ class CreateOffer {
 			const commentParent=document.querySelector("#" + this.id + " #comment-content");
 			this.offer.comments.forEach((e)=>{
 				let obj={};
-				obj.username="chandu";
+				obj.username=e.userName;
 				obj.comment=e.comment;
 				let comment=this.getComment(obj);
 				commentParent.appendChild(comment);
@@ -91,14 +91,19 @@ class CreateOffer {
 	}
 	createComment() {
 		let value = document.getElementById("comment-box").value, obj = {};
-		obj.username = "chandu";
-		obj.comment = value;
-		let comment = this.getComment(obj);
-		ajax.createComment(this.offer,value).then(()=>{
-			document.querySelector("#" + this.id + " #comment-content").appendChild(comment);
-			document.getElementById("comment-box").value = "";
-			document.querySelector("#" + this.id + " .add-comment").style.display = "none";
+		 ajax.getUserName().then((res)=>{
+			obj.comment = value;
+			obj.username=JSON.parse(res).userName;
+			let comment = this.getComment(obj);
+			ajax.createComment(this.offer,value).then(()=>{
+				document.querySelector("#" + this.id + " #comment-content").appendChild(comment);
+				document.getElementById("comment-box").value = "";
+				document.querySelector("#" + this.id + " .add-comment").style.display = "none";
+			});
+		},(err)=>{
+			console.log(err);
 		});
+		
 		
 	}
 	getComment(obj) {

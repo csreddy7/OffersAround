@@ -32,6 +32,7 @@ class login{
 				res=JSON.parse(res);
 			    if(res.validUser){
 			    	document.cookie="token="+res.token;
+			    	document.cookie="phoneNo="+mobileNumber;
 				    let event = new Event("close-dialog");
 				    document.dispatchEvent(event);
 				    commonService.showValidUserActions();
