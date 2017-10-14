@@ -27,7 +27,7 @@ let commonService={
 	filterOffers(query){
 		if(this.offers){
 			let arr=this.offers.filter((e)=>{
-            	return (e.title.indexOf(searchValue)!=-1);
+            	return (e.title.indexOf(query)!=-1);
         	});
 	        if(arr.length>0){
 		          offersList.innerHTML="";
