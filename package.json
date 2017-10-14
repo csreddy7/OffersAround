@@ -25,5 +25,7 @@
     "start": "http-server . -p 7575",
     "build": "webpack --config webpack.config.js"
   },
-  "dependencies": {}
+  "dependencies": {
+    "cookie-parser": "^1.4.3"
+  }
 }

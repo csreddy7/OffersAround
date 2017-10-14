@@ -3,29 +3,18 @@ var path=require("path");
 var app=express();
 var fs=require("fs");
 var bodyParser=require("body-parser");
+var cookieParser=require("cookie-parser");
 var dataCache=null;
 var lastUpdatedTime= new Date().getTime();
 var cachedTime=null;
-
+var cookies=null;
+var secureService =require("./resources/utilities/security/secureService");
 app.use(express.static(__dirname+'/'));
-
-
-app.get("/getOffers",function(req,res){
-	fs.readFile("resources/data/offers.json","UTF-8",(err,data)=>{
-		if(err){
-			console.log(err);
-		}
-		dataCache=JSON.parse(data);
-		cachedTime= new Date().getTime(); 
-		res.send(data);
-	});
-});
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({     
   extended: false
 })); 
-
+app.use(cookieParser());
 app.post("/login",function(req,res){
 	fs.readFile("resources/data/users.json","UTF-8",(err,response)=>{
 		if(err){
@@ -37,15 +26,19 @@ app.post("/login",function(req,res){
 		var validUser=false;
 		if(arr){
 			arr.forEach(function(e){
-				if(e.mobileNumber==mobileNumber && e.passWord==passWord){
+				if(e.mobileNumber==mobileNumber && e.passWord==secureService.encryptPassword(passWord)){
 					validUser=true;
 				}
 			});
 			var obj={"validUser":validUser};
+			if(obj.validUser){
+				obj.token=secureService.getSecureToken();
+			}
 			res.json(obj);
 		}
 	});
 });
+
 
 app.post("/register",function(req,res){
 	fs.readFile("resources/data/users.json","UTF-8",(err,response)=>{
@@ -56,7 +49,7 @@ app.post("/register",function(req,res){
 		var arr=response.data;
 		var obj={};
 		obj.mobileNumber=req.body.mobileNumber;
-		obj.passWord=req.body.passWord;
+		obj.passWord=secureService.encryptPassword(req.body.passWord);
 		obj.userName=req.body.userName;
 		arr.push(obj);
 		response=JSON.stringify(response);
@@ -70,6 +63,31 @@ app.post("/register",function(req,res){
 			}
 		})
 	});
+});
+
+app.use(function(req,res,next){
+	cookies=req.cookies;
+	if(cookies.token){
+		next();
+	}
+});
+
+
+app.get("/getOffers",function(req,res){
+	var validUser=secureService.validateToken(cookies.token);
+	if(validUser){
+			fs.readFile("resources/data/offers.json","UTF-8",(err,data)=>{
+			if(err){
+				console.log(err);
+			}
+			dataCache=JSON.parse(data);
+			cachedTime= new Date().getTime(); 
+			res.send(data);
+		});
+		}else{
+			res.status(401).send({error:"Not authorised user"});
+		}
+	
 });
 
 app.post("/addOffer",function(req,res){

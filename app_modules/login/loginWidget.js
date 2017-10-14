@@ -1,5 +1,5 @@
 import {obj as ajax } from 'utilities/xhr/ajax';
-
+import { commonService } from "utilities/common/commonService";
 class login{
 	constructor(){
 		this.dom=null;
@@ -31,19 +31,16 @@ class login{
 		ajax.loginUser(mobileNumber,passWord).then((res)=>{
 				res=JSON.parse(res);
 			    if(res.validUser){
-			    	let registerIcon = document.querySelectorAll("#register")[0],
-				    loginIcon = document.querySelectorAll("#login")[0],
-				    logoutIcon = document.querySelectorAll("#logout")[0],
-				    addOfferIcon = document.querySelectorAll("#addoffer")[0];
-			    	registerIcon.style.display="none";
-				    loginIcon.style.display="none";
-				    logoutIcon.style.display="block";
-				    addOfferIcon.style.display="block";
+			    	document.cookie="token="+res.token;
 				    let event = new Event("close-dialog");
 				    document.dispatchEvent(event);
+				    commonService.showValidUserActions();
+			    	commonService.showOffers();
 			    }else{
 			    	alert("invalid user");
 			    }  
+		},(err)=>{
+			console.log(err);	
 		})
 	}
 }
