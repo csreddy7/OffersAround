@@ -20,11 +20,23 @@ window.onload = function () {
     searchButton = document.querySelectorAll("#searchButton")[0],
     offersList=document.querySelectorAll("#offersList")[0];
 
+    let locationObj=null;
+
   let init=function(){
     logoutIcon.style.display="none";
     addOfferIcon.style.display="none";
     initializeHandlers();
     commonService.showOffers();
+    commonService.getLocation().then((res)=>{
+      locationObj=res;
+      var titleArray=document.querySelectorAll(".location-title");
+      titleArray.forEach((e)=>{
+        e.innerHTML="Offers Around "+locationObj.short_name;
+      });
+      console.log("locationName---->",locationObj.short_name);
+    },(err)=>{
+      console.log(err)
+    });
   }
 
   let initializeHandlers =function(){

@@ -44,6 +44,8 @@ class CreateOffer {
 			this.initializeEventHanders(offer);
 		}
 	}
+
+	
 	initializeEventHanders(offer) {
 		/*offer.addEventListener("mouseenter",function(event){
 			offer.querySelector(".sideBar").style.display="block";

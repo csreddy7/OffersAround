@@ -1,5 +1,7 @@
-1) maintaing session
-2)showing location
-3)dynamic server location
-4)editing and deleting features
-5)automatic logout 
+maintaing session
+automatic logout 
+showing location
+dynamic server location
+adding images
+editing and deleting features
+favourites

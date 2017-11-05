@@ -5,10 +5,42 @@ let registerIcon = document.querySelectorAll("#register")[0],
 	loginIcon = document.querySelectorAll("#login")[0],
 	logoutIcon = document.querySelectorAll("#logout")[0],
 	addOfferIcon = document.querySelectorAll("#addoffer")[0],
-	offersList=document.querySelectorAll("#offersList")[0];
-
+	offersList=document.querySelectorAll("#offersList")[0],
+	geomapUrl="https://maps.googleapis.com/maps/api/geocode/json";
 let commonService={
 	offers:null,
+	getLocation(){
+		let coords=null;
+		let geoPromise=new Promise((resolve,reject)=>{
+			navigator.geolocation.getCurrentPosition((obj)=>{
+				coords=obj.coords;
+				if(coords){
+					geomapUrl+="?latlng="+coords.latitude+","+coords.longitude+"&key=yDhJ8p3h0utLDPejbfHNAB0-lkFqrf1V60";
+				}else{
+					alert("please allow location access");
+					return;
+				}
+				ajax.get(geomapUrl).then((response)=>{
+					let data=JSON.parse(response);
+					let locationData=data.results[0].address_components,
+						n=locationData.length,
+						locationObj=null;
+					for(let i=0;i<n;i++){
+						let types=locationData[i].types.join(",");
+						if(types.indexOf("sublocality_level_1")!=-1){
+							locationObj=locationData[i];
+							break;
+						}
+					}
+					 resolve(locationObj);
+				},(err)=>{
+					reject(err);
+					console.log(err);
+				});
+			});
+		});
+	 return geoPromise;
+	},
 	showOffers(){
 		ajax.getOffers().then((response)=>{
 				    	  let res=JSON.parse(response);
@@ -19,6 +51,7 @@ let commonService={
 				          this.showValidUserActions();
 				    },(err)=>{
 				    	this.clearScreen();
+				    	alert("session timeout.please login again")
 				    	console.error(JSON.parse(err));
 				    });
 	},
