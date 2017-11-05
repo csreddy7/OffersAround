@@ -52,6 +52,9 @@ input{
 input::placeholder,input::placeholder-shown{
 	color: #9E9E9E;
 }
+.edit-delete{
+	float: right;
+}
 /*********************
 	Header Styles
 ***********************/

@@ -15,7 +15,7 @@ let commonService={
 			navigator.geolocation.getCurrentPosition((obj)=>{
 				coords=obj.coords;
 				if(coords){
-					geomapUrl+="?latlng="+coords.latitude+","+coords.longitude+"&key=yDhJ8p3h0utLDPejbfHNAB0-lkFqrf1V60";
+					geomapUrl+="?latlng="+coords.latitude+","+coords.longitude+"&key=AIzaSyDhJ8p3h0utLDPejbfHNAB0-lkFqrf1V60";
 				}else{
 					alert("please allow location access");
 					return;

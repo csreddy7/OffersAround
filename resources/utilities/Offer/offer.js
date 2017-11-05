@@ -113,7 +113,12 @@ class CreateOffer {
 		};
 	}
 	getComment(obj) {
-		let template = "<span class='username'>" + obj.username + ":</span><span>" + obj.comment + "</span>";
+		let template = `
+		<div class="edit-delete">
+				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+				<i class="fa fa-trash-o" aria-hidden="true"></i>
+		</div>
+		<span class='username'> ${obj.username} :</span><span>${obj.comment}</span>`;
 		let comment = document.createElement("div");
 		comment.className = "offer-comment";
 		comment.innerHTML = template;

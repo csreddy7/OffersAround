@@ -35,7 +35,7 @@ class login{
 			    	document.cookie="phoneNo="+mobileNumber;
 			    	 window.sessionVariable=setTimeout(()=>{
 			    		location.reload();
-			    	},60000);
+			    	},300000);
 				    let event = new Event("close-dialog");
 				    document.dispatchEvent(event);
 				    commonService.showValidUserActions();
