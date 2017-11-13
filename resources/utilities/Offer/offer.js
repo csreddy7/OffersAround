@@ -93,15 +93,13 @@ class CreateOffer {
 	}
 	createComment() {
 		let value = document.getElementById("comment-box").value, obj = {};
-		 ajax.getUserName().then((res)=>{
-				obj.comment = value;
-				obj.username=JSON.parse(res).userName;
-				let comment = this.getComment(obj);
-				ajax.createComment(this.offer,value).then(()=>{
-					document.querySelector("#" + this.id + " #comment-content").appendChild(comment);
-					document.getElementById("comment-box").value = "";
-					document.querySelector("#" + this.id + " .add-comment").style.display = "none";
-				},showError);
+		obj.comment = value;
+		obj.username="undefined";
+		let comment = this.getComment(obj);
+		ajax.createComment(this.offer,value).then(()=>{
+			document.querySelector("#" + this.id + " #comment-content").appendChild(comment);
+			document.getElementById("comment-box").value = "";
+			document.querySelector("#" + this.id + " .add-comment").style.display = "none";
 		},showError);
 		
 		let showError = (error)=>{

@@ -44,7 +44,7 @@ let commonService={
 	showOffers(){
 		ajax.getOffers().then((response)=>{
 				    	  let res=JSON.parse(response);
-				          let arr = this.offers= res.data;
+				          let arr = this.offers= res;
 				          arr.forEach((offer)=>{
 				            let obj = new CreateOffer(offer);
 				          });

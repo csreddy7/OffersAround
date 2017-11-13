@@ -12,6 +12,9 @@ var offersCachedTime=null;
 var usersCachedTime=null;
 var cookies=null;
 var secureService =require("./resources/utilities/security/secureService");
+var mongoClient=require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
+var dbUrl="mongodb://localhost:7272/OffersAround";
 
 
 app.use(express.static(__dirname+'/'));
@@ -21,48 +24,50 @@ app.use(bodyParser.urlencoded({
 })); 
 app.use(cookieParser());
 
+/*********************login api  **********************/
+
 
 app.post("/login",function(req,res){
-	var response=getUsers();
-	var mobileNumber=req.body.mobileNumber;
-		var passWord=req.body.passWord;
-		var arr=response.data;
-		var validUser=false;
-		if(arr){
-			arr.forEach(function(e){
-				if(e.mobileNumber==mobileNumber && e.passWord==secureService.encryptPassword(passWord)){
-					validUser=true;
+	mongoClient.connect(dbUrl,function(err,db){
+		var mobileNO=req.body.mobileNumber;
+		db.collection("users").findOne({mobileNumber:mobileNO},function(err,data){		
+			var passWord=req.body.passWord;
+			var obj={};
+			if(data){
+				if(data.passWord==secureService.encryptPassword(passWord)){
+					obj.validUser=true;
+				}else{
+					obj.validUser=false;
+				}	
+				if(obj.validUser){
+					obj.token=secureService.getSecureToken();
 				}
-			});
-			var obj={"validUser":validUser};
-			if(obj.validUser){
-				obj.token=secureService.getSecureToken();
+				db.close();
+				res.json(obj);
+			}else{
+				obj.validUser=false;
+				db.close();
+				res.json(obj);
 			}
-			res.json(obj);
-		}
+		});
+	});
 });
+
 
 
 app.post("/register",function(req,res){
-	var response=getUsers(),
-		obj={},
-		arr=response.data;
+	var obj={};
 		obj.mobileNumber=req.body.mobileNumber;
 		obj.passWord=secureService.encryptPassword(req.body.passWord);
 		obj.userName=req.body.userName;
-		arr.push(obj);
-		response=JSON.stringify(response);
-		fs.writeFile("resources/data/users.json",response,"UTF-8",(err)=>{
-			if(err){
-				console.log(err);
-				res.send("failure");
-				usersLastUpdatedTime=getCurrentTime();
-			}else{
-				console.log("user registered successfully");
-				res.send("success");
-			}
-		})
+		mongoClient.connect(dbUrl,function(err,db){
+			db.collection("users").insertOne(obj);
+			res.send("success");
+		});
 });
+
+
+
 
 app.use(function(req,res,next){
 	cookies=req.cookies;
@@ -72,20 +77,32 @@ app.use(function(req,res,next){
 });
 
 
+/********offers api  *********************/
+
+
 app.get("/getOffers",function(req,res){
-	validateUser(res);
-	res.json(getOffers());
+	var validUser=secureService.validateToken(cookies.token);
+	if(!validUser){
+		res.status(401).send({status:"401",error:"Not authorised user"});
+		return;
+	}
+	mongoClient.connect(dbUrl,function(err,db){
+		db.collection("offers").find({}).toArray(function(err,data){
+			console.log("data--->",data);
+			db.close();
+			res.json(data);
+		});
+	});
 });
 
-app.get("/userName",function(req,res){
-	validateUser(res);
-	var obj={};
-	obj.userName=getUserName(req.cookies.phoneNo);
-	res.json(obj);
-});
+
 
 app.post("/addOffer",function(req,res){
-	validateUser(res);
+	var validUser=secureService.validateToken(cookies.token);
+	if(!validUser){
+		res.status(401).send({status:"401",error:"Not authorised user"});
+		return;
+	}
 	var obj={};
 		obj.title=req.body.offerName;
 		obj.details=req.body.offerContent;
@@ -95,103 +112,43 @@ app.post("/addOffer",function(req,res){
 		obj.updatedTime="";
 		obj.comments=[];
 		obj.comment_max_id=0;
-			
-	if(offersCachedTime>offersLastUpdatedTime){
-		obj.id=++dataCache.MAX_ID;
-		dataCache.data.push(obj);
-		addOffer(dataCache);
-	}else{
-			var response=getOffers();
-			var arr=response.data;
-			obj.id=++response.MAX_ID;
-			arr.push(obj);
-			addOffer(response);
-	}
-	
-	function addOffer(data){
-		putOffers(data,res);
-	}
+
+	mongoClient.connect(dbUrl,function(err,db){
+			db.collection("offers").insertOne(obj);
+			db.close();
+			res.send("success");
+	});
 });
 
 app.post("/addComment",function(req,res){
-	validateUser(res);
-	if(offersCachedTime>offersLastUpdatedTime){
-		addComment(dataCache);
-	}else{
-		var response=getOffers();
-		addComment(response);
-	}
-	
-	function addComment(offers){
-		var offerId=req.body.offerId;
-		offers.data.forEach(function(e){
-			if(e.id==offerId){
-				var obj={};
-				obj.comment=req.body.comment;
-				obj.id=++e.comment_max_id;
-				obj.createdBy=req.cookies.phoneNo;
-				obj.userName=getUserName(req.cookies.phoneNo);
-				obj.createdTime= new Date().getTime();
-				obj.updatedTime="";
-				e.comments.push(obj);
-			}
-		});
-		putOffers(offers,res);
-	}
-});
-
-var getOffers=function(){
-	var response=fs.readFileSync("resources/data/offers.json","UTF-8");
-	dataCache = response = JSON.parse(response);
-	offersCachedTime = new Date().getTime(); 
-	return response;
-}
-
-var validateUser=function(res){
+	var offerId=req.body.offerId;
 	var validUser=secureService.validateToken(cookies.token);
 	if(!validUser){
 		res.status(401).send({status:"401",error:"Not authorised user"});
+		return;
 	}
-}
-
-var putOffers=function(offers,res){
-	fs.writeFile("resources/data/offers.json",JSON.stringify(offers),"UTF-8",(err)=>{
-			if(err){
-				console.log(err);
-				res.send("failure");
-			}else{
-				console.log("offers added successfully");
-				offersLastUpdatedTime= new Date().getTime();
+	mongoClient.connect(dbUrl,function(err,db){
+		db.collection("offers").findOne({_id:ObjectId(offerId)},function(err,data){
+			console.log(err);
+			console.log(data);		
+			if(data){
+				var obj={};
+					obj.comment=req.body.comment;
+					obj.id=++(data.comment_max_id);
+					obj.createdBy=req.cookies.phoneNo;
+					obj.createdTime= new Date().getTime();
+					obj.updatedTime="";
+					data.comments.push(obj);
+				db.collection("offers").updateOne({_id:ObjectId(offerId)},{$set:data});
+				db.close();
 				res.send("success");
+			}else{
+				db.close();
+				res.send("failure");
 			}
 		});
-}
-
-var getUserName=function(phoneNo){
-	var users=[],
-		userName="";
-	if(usersCachedTime>usersLastUpdatedTime){
-		users=userCache.data;
-	}else{
-		users=getUsers().data;
-	}
-	users.every(function(e){
-		if(e.mobileNumber==phoneNo){
-			userName=e.userName;
-			return false;
-		}else{
-			return true;
-		}
 	});
-	return userName;
-}
-
-var getUsers=function(){
-	var response=fs.readFileSync("resources/data/users.json","UTF-8");
-	userCache= response=JSON.parse(response);
-	usersCachedTime = getCurrentTime();
-	return response;
-}
+});
 
 var getCurrentTime=function(){
 	return new Date().getTime();

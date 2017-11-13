@@ -37,7 +37,7 @@ var obj={
 	},
 	createComment(offer,comment){
 	        var data={
-	        	"offerId":offer.id,
+	        	"offerId":offer._id,
 	        	"comment":comment,
 	        }
 	    return this.post("/addComment",data);
