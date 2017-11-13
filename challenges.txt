@@ -8,6 +8,9 @@ favourites
 
 
 
+
+
+
 *** ubunut commands *******
 gnome-system-monitor           -----------monitor 
 gsettings set com.canonical.Unity.Launcher launcher-position Bottom    -----moving menu to Bottom

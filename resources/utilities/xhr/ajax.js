@@ -5,12 +5,15 @@ var obj={
         request.send();
         return request;
 	},
+	
 	getOffers(){
      return this.get("/getOffers");
-    },
+	},
+	
     getUserName(){
     	return this.get("/userName");
-    },
+	},
+	
 	loginUser(mobileNumber,passWord){
 		var data={
 	        	"mobileNumber":mobileNumber,
@@ -18,6 +21,7 @@ var obj={
 	        }
 		return this.post("/login",data);
 	},
+
 	registerUser(userName,mobileNumber,passWord){
 		var data={
 	        	"mobileNumber":mobileNumber,
@@ -34,6 +38,12 @@ var obj={
 	        	"offerContent":offerContent
 	        }
 	    return this.post("/addOffer",data);
+	},
+	deleteOffer(offer){
+		return this.delete("/deleteOffer",offer);
+	},
+	deleteComment(comment){
+		return this.delete("/deleteComment",comment);
 	},
 	createComment(offer,comment){
 	        var data={
@@ -76,6 +86,26 @@ var obj={
 	        	console.log(err);
 	        }
 	        request.send();
+		});
+		return promise;
+	},
+	delete(url,data){
+		console.log(data);
+		let promise = new Promise((resolve,reject)=>{
+			let request = new XMLHttpRequest();
+	        request.open("DELETE", url, true);
+	        request.onload = () => {
+	        	if(request.status===200){
+	        		resolve(request.responseText);
+	        	}else{
+	        		reject(request.responseText);
+	        	}
+	        }
+	        request.onerror= () =>{
+	        	console.log("error while login")
+	        }
+	        request.setRequestHeader("Content-Type","application/json");
+	        request.send(JSON.stringify(data));
 		});
 		return promise;
 	}

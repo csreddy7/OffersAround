@@ -39,6 +39,7 @@ class CreateOffer {
 				obj.username=e.userName;
 				obj.comment=e.comment;
 				let comment=this.getComment(obj);
+				comment.id=this.offer._id+"_"+e.id;
 				commentParent.appendChild(comment);
 			});
 			this.initializeEventHanders(offer);
@@ -67,6 +68,8 @@ class CreateOffer {
 				this.createComment();
 			} else if (target.className.indexOf("close-comments") != -1) {
 				document.querySelectorAll("#" + this.id + " .comment-list")[0].style.display = "none";
+			} else if (target.className.indexOf("fa-trash-o") != -1) {
+				this.deleteComment(target);
 			}
 		});
 	}
@@ -75,10 +78,11 @@ class CreateOffer {
 		let dialog = new Dialog({
 	      title: "Offer Details"
 	    });
-	    let OfferDetailsWidget= new OfferDetails();
+	    let OfferDetailsWidget= new OfferDetails(this.offer);
 	    OfferDetailsWidget.renderPage().then(()=>{
-	    	dialog.init(OfferDetailsWidget.dom);
-	    	OfferDetailsWidget.populateOfferDetails(this);
+			dialog.init(OfferDetailsWidget.dom);
+			OfferDetailsWidget.initializeEventHanders();
+	    	OfferDetailsWidget.populateOfferDetails();
 	    },()=>{
 	    	console.log("error while creating login widget")
 	    });
@@ -96,7 +100,9 @@ class CreateOffer {
 		obj.comment = value;
 		obj.username="undefined";
 		let comment = this.getComment(obj);
-		ajax.createComment(this.offer,value).then(()=>{
+		ajax.createComment(this.offer,value).then((res)=>{
+			var res=JSON.parse(res);
+			comment.id=res.commentId;
 			document.querySelector("#" + this.id + " #comment-content").appendChild(comment);
 			document.getElementById("comment-box").value = "";
 			document.querySelector("#" + this.id + " .add-comment").style.display = "none";
@@ -121,6 +127,17 @@ class CreateOffer {
 		comment.className = "offer-comment";
 		comment.innerHTML = template;
 		return comment;
+
+	}
+
+	deleteComment(comment){
+		var canDelete=confirm("do you want to delete this comment?");
+		if(canDelete){
+			console.log("about to delete comment")
+			var parent=comment.parentNode.parentNode;
+			var obj={id:parent.id};
+			ajax.deleteComment(obj);
+		}
 	}
 }
 CreateOffer.offerNumber = 0;

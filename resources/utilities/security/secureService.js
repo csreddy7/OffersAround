@@ -17,7 +17,7 @@ module.exports={
 	validateToken(token){
 		var t1=token/214;
 		var t2= new Date().getTime();
-		if(t2-t1>300000){
+		if(t2-t1>9000000){
 			return false;
 		}else{
 			return true;

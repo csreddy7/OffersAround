@@ -141,6 +141,59 @@ app.post("/addComment",function(req,res){
 					data.comments.push(obj);
 				db.collection("offers").updateOne({_id:ObjectId(offerId)},{$set:data});
 				db.close();
+				res.json({commentId:offerId+"_"+obj.id});
+			}else{
+				db.close();
+				res.send("failure");
+			}
+		});
+	});
+});
+
+app.delete("/deleteOffer",function(req,res){
+	console.log(req.body);
+	var offerId=req.body._id;
+	var validUser=secureService.validateToken(cookies.token);
+	if(!validUser){
+		res.status(401).send({status:"401",error:"Not authorised user"});
+		return;
+	}
+	console.log(offerId)
+	mongoClient.connect(dbUrl,function(err,db){
+		db.collection("offers").removeOne({_id:ObjectId(offerId)},function(err,data){
+			console.log(err);
+			console.log(data.result);		
+			if(data){
+				db.close();
+				res.send("success");
+			}else{
+				db.close();
+				res.send("failure");
+			}
+		});
+	});
+});
+
+app.delete("/deleteComment",function(req,res){
+	var commentId=req.body.id;
+	var validUser=secureService.validateToken(cookies.token);
+	if(!validUser){
+		res.status(401).send({status:"401",error:"Not authorised user"});
+		return;
+	}
+	console.log(commentId);
+	var offerId=commentId.split("_")[0],
+		commentId=commentId.split("_")[1];
+	mongoClient.connect(dbUrl,function(err,db){
+		db.collection("offers").findOne({_id:ObjectId(offerId)},function(err,data){
+			console.log(err);
+			console.log(data);		
+			if(data.comments.length>0){
+				data.comments=data.comments.filter((element)=>{
+					return element.id!=commentId;
+				});
+				db.collection("offers").updateOne({_id:ObjectId(offerId)},{$set:data});
+				db.close();
 				res.send("success");
 			}else{
 				db.close();
