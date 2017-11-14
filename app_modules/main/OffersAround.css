@@ -280,7 +280,7 @@ article>h1,header>h1{
 }
 
 .comment-box{
-	 width:calc(100% - 30px);
+	 width:calc(100% - 60px);
 	 float: left;
      border: 1px solid #ddd;
      border-radius: 2px;
@@ -292,6 +292,13 @@ article>h1,header>h1{
     padding: 0.7rem;
 	background: #2196F3;
 	float: left;
+	cursor: pointer;
+ }
+ .add-comment .close-dialog{
+	font-size: 1.8rem;
+    color: #fff;
+    background: #d80a0ab5;
+	padding: 0.7rem;
 	cursor: pointer;
  }
  .add-comment-button::before{
