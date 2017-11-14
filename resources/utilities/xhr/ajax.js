@@ -6,10 +6,6 @@ var obj={
         return request;
 	},
 	
-	getOffers(){
-     return this.get("/getOffers");
-	},
-	
     getUserName(){
     	return this.get("/userName");
 	},
@@ -31,6 +27,10 @@ var obj={
 		return this.post("/register",data);
 	},
 
+	getOffers(){
+		return this.get("/getOffers");
+	},
+
 	addOffer(offerName,locationName,offerContent){
 			var data={
 	        	"offerName":offerName,
@@ -39,11 +39,17 @@ var obj={
 	        }
 	    return this.post("/addOffer",data);
 	},
+	editOffer(offerId,offerName,locationName,offerContent){
+		var data={
+			"offerId":offerId,
+			"offerName":offerName,
+			"locationName":locationName,
+			"offerContent":offerContent
+		}
+		return this.put("/editOffer",data);
+	},
 	deleteOffer(offer){
 		return this.delete("/deleteOffer",offer);
-	},
-	deleteComment(comment){
-		return this.delete("/deleteComment",comment);
 	},
 	createComment(offer,comment){
 	        var data={
@@ -51,6 +57,9 @@ var obj={
 	        	"comment":comment,
 	        }
 	    return this.post("/addComment",data);
+	},
+	deleteComment(comment){
+		return this.delete("/deleteComment",comment);
 	},
 	post(url,data){
 		let promise = new Promise((resolve,reject)=>{
@@ -94,6 +103,26 @@ var obj={
 		let promise = new Promise((resolve,reject)=>{
 			let request = new XMLHttpRequest();
 	        request.open("DELETE", url, true);
+	        request.onload = () => {
+	        	if(request.status===200){
+	        		resolve(request.responseText);
+	        	}else{
+	        		reject(request.responseText);
+	        	}
+	        }
+	        request.onerror= () =>{
+	        	console.log("error while login")
+	        }
+	        request.setRequestHeader("Content-Type","application/json");
+	        request.send(JSON.stringify(data));
+		});
+		return promise;
+	},
+	put(url,data){
+		console.log(data);
+		let promise = new Promise((resolve,reject)=>{
+			let request = new XMLHttpRequest();
+	        request.open("PUT", url, true);
 	        request.onload = () => {
 	        	if(request.status===200){
 	        		resolve(request.responseText);

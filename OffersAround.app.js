@@ -120,28 +120,25 @@ app.post("/addOffer",function(req,res){
 	});
 });
 
-app.post("/addComment",function(req,res){
-	var offerId=req.body.offerId;
+
+app.put("/editOffer",function(req,res){
 	var validUser=secureService.validateToken(cookies.token);
 	if(!validUser){
 		res.status(401).send({status:"401",error:"Not authorised user"});
 		return;
 	}
+	var offerId=req.body.offerId;
 	mongoClient.connect(dbUrl,function(err,db){
 		db.collection("offers").findOne({_id:ObjectId(offerId)},function(err,data){
 			console.log(err);
 			console.log(data);		
 			if(data){
-				var obj={};
-					obj.comment=req.body.comment;
-					obj.id=++(data.comment_max_id);
-					obj.createdBy=req.cookies.phoneNo;
-					obj.createdTime= new Date().getTime();
-					obj.updatedTime="";
-					data.comments.push(obj);
+				data.title=req.body.offerName;
+				data.details=req.body.offerContent;
+				data.location=req.body.locationName;
 				db.collection("offers").updateOne({_id:ObjectId(offerId)},{$set:data});
 				db.close();
-				res.json({commentId:offerId+"_"+obj.id});
+				res.send("success");
 			}else{
 				db.close();
 				res.send("failure");
@@ -166,6 +163,36 @@ app.delete("/deleteOffer",function(req,res){
 			if(data){
 				db.close();
 				res.send("success");
+			}else{
+				db.close();
+				res.send("failure");
+			}
+		});
+	});
+});
+
+app.post("/addComment",function(req,res){
+	var offerId=req.body.offerId;
+	var validUser=secureService.validateToken(cookies.token);
+	if(!validUser){
+		res.status(401).send({status:"401",error:"Not authorised user"});
+		return;
+	}
+	mongoClient.connect(dbUrl,function(err,db){
+		db.collection("offers").findOne({_id:ObjectId(offerId)},function(err,data){
+			console.log(err);
+			console.log(data);		
+			if(data){
+				var obj={};
+					obj.comment=req.body.comment;
+					obj.id=++(data.comment_max_id);
+					obj.createdBy=req.cookies.phoneNo;
+					obj.createdTime= new Date().getTime();
+					obj.updatedTime="";
+					data.comments.push(obj);
+				db.collection("offers").updateOne({_id:ObjectId(offerId)},{$set:data});
+				db.close();
+				res.json({commentId:offerId+"_"+obj.id});
 			}else{
 				db.close();
 				res.send("failure");

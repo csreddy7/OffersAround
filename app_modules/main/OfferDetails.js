@@ -1,5 +1,6 @@
 import {obj as ajax } from 'utilities/xhr/ajax';
-
+import { EditOffer }  from "main/EditOffer";
+import { Dialog } from "utilities/Dialog/dialog";
 class OfferDetails{
 	constructor(offer){
 		this.dom=null;
@@ -20,6 +21,7 @@ class OfferDetails{
 		});
         return promise;
 	}
+	
 	initializeEventHanders(){
 		var deleteNode=this.dom.querySelector("#offer_delete");
 		deleteNode.addEventListener("click",()=>{
@@ -27,6 +29,22 @@ class OfferDetails{
 			if(canDelete){
 				ajax.deleteOffer(this.offer);
 			}
+		});
+		var editNode=this.dom.querySelector("#offer_edit");
+		editNode.addEventListener("click",()=>{
+			let event = new Event("close-dialog");
+			document.dispatchEvent(event);
+			let dialog = new Dialog({
+				title: "Edit Offer"
+			  });
+			let editOfferWidget= new EditOffer(this.offer);
+			  editOfferWidget.renderPage().then(()=>{
+				dialog.init(editOfferWidget.dom);
+				editOfferWidget.initializeHandlers();
+				editOfferWidget.popUpDetails();
+			  },()=>{
+				console.log("error while creating login widget")
+			  });    
 		});
 	}
 	populateOfferDetails(){
