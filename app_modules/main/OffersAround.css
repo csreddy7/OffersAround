@@ -271,7 +271,7 @@ article>h1,header>h1{
 	background-repeat: no-repeat;
 	padding-top: 3rem;
 }
-.add-comment{
+.add-comment,.edit-comment{
 	display: none;
     padding: 1rem;
 	overflow: hidden;
@@ -288,13 +288,13 @@ article>h1,header>h1{
      padding-left: 5px;
      border-right: none !important;
  }
- .add-comment-button{
+ .add-comment-button,.edit-comment-button{
     padding: 0.7rem;
 	background: #2196F3;
 	float: left;
 	cursor: pointer;
  }
- .add-comment .close-dialog{
+ .add-comment .close-dialog, .edit-comment .close-edit-dialog{
 	font-size: 1.8rem;
     color: #fff;
     background: #d80a0ab5;
@@ -466,6 +466,12 @@ footer{
 .fa-pencil-square-o::before,.fa-plus::before,.fa-eye::before{
 	font-size: 2rem;
     color: #2196F3;
+}
+
+.fa-save:before{
+    content: "\f0c7";
+    font-size: 1.8rem;
+    color: #fff;
 }
 
 .searchTab .fa-search::before {

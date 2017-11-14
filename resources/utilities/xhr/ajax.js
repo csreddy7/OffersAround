@@ -58,6 +58,13 @@ var obj={
 	        }
 	    return this.post("/addComment",data);
 	},
+	saveComment(id,comment){
+		var data={
+			"id":id,
+			"comment":comment,
+		}
+		return this.put("/saveComment",data);
+	},
 	deleteComment(comment){
 		return this.delete("/deleteComment",comment);
 	},

@@ -230,6 +230,39 @@ app.delete("/deleteComment",function(req,res){
 	});
 });
 
+app.put("/saveComment",function(req,res){
+	var commentId=req.body.id;
+	var validUser=secureService.validateToken(cookies.token);
+	if(!validUser){
+		res.status(401).send({status:"401",error:"Not authorised user"});
+		return;
+	}
+	console.log(commentId);
+	var offerId=commentId.split("_")[0],
+		commentId=commentId.split("_")[1];
+	mongoClient.connect(dbUrl,function(err,db){
+		db.collection("offers").findOne({_id:ObjectId(offerId)},function(err,data){
+			console.log(err);
+			console.log(data);
+			var n=data.comments.length;		
+			if(n>0){
+				for(let i=0;i<n;i++){
+					if(data.comments[i].id==commentId){
+						data.comments[i].comment=req.body.comment;
+						break;
+					}
+				}
+				db.collection("offers").updateOne({_id:ObjectId(offerId)},{$set:data});
+				db.close();
+				res.send("success");
+			}else{
+				db.close();
+				res.send("failure");
+			}
+		});
+	});
+});
+
 var getCurrentTime=function(){
 	return new Date().getTime();
 }

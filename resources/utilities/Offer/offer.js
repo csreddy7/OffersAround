@@ -7,6 +7,7 @@ class CreateOffer {
 		this.offerDetails = this.offer.details || "No offer details";
 		this.offerLocation = this.offer.location || "location unknown";
 		this.offerName = this.offer.title;
+		this.editCommentId=null;
 		this.id = "offer-item-" + (++CreateOffer.offerNumber);
 		this.init();
 	}
@@ -66,10 +67,18 @@ class CreateOffer {
 				this.showCommentsBox();
 			} else if (target.className.indexOf("add-comment-button") != -1) {
 				this.createComment();
+			} else if (target.className.indexOf("edit-comment-button") != -1) {
+				this.saveComment();
 			} else if (target.className.indexOf("close-comments") != -1) {
 				document.querySelectorAll("#" + this.id + " .comment-list")[0].style.display = "none";
 			} else if (target.className.indexOf("fa-trash-o") != -1) {
 				this.deleteComment(target);
+			} else if (target.className.indexOf("close-dialog") != -1) {
+				document.querySelector("#" + this.id + " .add-comment").style.display = "none";
+			} else if (target.className.indexOf("fa-pencil-square-o") != -1) {
+				this.editComment(target);
+			} else if (target.className.indexOf("close-edit-dialog") != -1) {
+				document.querySelector("#" + this.id + " .edit-comment").style.display = "none";
 			}
 		});
 	}
@@ -101,15 +110,15 @@ class CreateOffer {
 		obj.username="undefined";
 		let comment = this.getComment(obj);
 		ajax.createComment(this.offer,value).then((res)=>{
-			var res=JSON.parse(res);
-			comment.id=res.commentId;
+			let response=JSON.parse(res);
+			comment.id=response.commentId;
 			document.querySelector("#" + this.id + " #comment-content").appendChild(comment);
 			document.getElementById("comment-box").value = "";
 			document.querySelector("#" + this.id + " .add-comment").style.display = "none";
 		},showError);
 		
 		let showError = (error)=>{
-			var err=JSON.parse(error);
+			let err=JSON.parse(error);
 			if(err.status && err.status==401){
 				alert("session expired");
 				commonService.clearScreen();
@@ -122,7 +131,7 @@ class CreateOffer {
 				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 				<i class="fa fa-trash-o" aria-hidden="true"></i>
 		</div>
-		<span class='username'> ${obj.username} :</span><span>${obj.comment}</span>`;
+		<span class='username'> ${obj.username} :</span><span id="comment_content">${obj.comment}</span>`;
 		let comment = document.createElement("div");
 		comment.className = "offer-comment";
 		comment.innerHTML = template;
@@ -131,13 +140,26 @@ class CreateOffer {
 	}
 
 	deleteComment(comment){
-		var canDelete=confirm("do you want to delete this comment?");
+		let canDelete=confirm("do you want to delete this comment?");
 		if(canDelete){
 			console.log("about to delete comment")
-			var parent=comment.parentNode.parentNode;
-			var obj={id:parent.id};
+			let parent=comment.parentNode.parentNode;
+			let obj={id:parent.id};
 			ajax.deleteComment(obj);
 		}
+	}
+
+	editComment(comment){
+		console.log("about to edit comment")
+		let parent=comment.parentNode.parentNode;
+		document.querySelector("#" + this.id + " .edit-comment").style.display = "block";
+		document.querySelector("#" + this.id + "  #edit_box").value=parent.querySelector("#comment_content").innerHTML;
+		this.editCommentId=parent.id;
+	}
+
+	saveComment(){
+		let comment=document.querySelector("#" + this.id + " #edit_box").value;
+		ajax.saveComment(this.editCommentId,comment);
 	}
 }
 CreateOffer.offerNumber = 0;
