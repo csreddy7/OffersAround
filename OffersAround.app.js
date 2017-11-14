@@ -110,6 +110,7 @@ app.post("/addOffer",function(req,res){
 		obj.createdBy=req.cookies.phoneNo;
 		obj.createdTime= new Date().getTime();
 		obj.updatedTime="";
+		obj.isFavourite=false;
 		obj.comments=[];
 		obj.comment_max_id=0;
 
@@ -117,6 +118,30 @@ app.post("/addOffer",function(req,res){
 			db.collection("offers").insertOne(obj);
 			db.close();
 			res.send("success");
+	});
+});
+
+app.post("/makeFavourite",function(req,res){
+	var validUser=secureService.validateToken(cookies.token);
+	if(!validUser){
+		res.status(401).send({status:"401",error:"Not authorised user"});
+		return;
+	}
+	var offerId=req.body._id;
+	mongoClient.connect(dbUrl,function(err,db){
+		db.collection("offers").findOne({_id:ObjectId(offerId)},function(err,data){
+			console.log(err);
+			console.log(data);		
+			if(data){
+				data.isFavourite=true;
+				db.collection("offers").updateOne({_id:ObjectId(offerId)},{$set:data});
+				db.close();
+				res.send("success");
+			}else{
+				db.close();
+				res.send("failure");
+			}
+		});
 	});
 });
 

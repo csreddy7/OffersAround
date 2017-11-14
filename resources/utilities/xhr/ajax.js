@@ -51,6 +51,9 @@ var obj={
 	deleteOffer(offer){
 		return this.delete("/deleteOffer",offer);
 	},
+	makeFavourite(offer){
+		return this.post("/makeFavourite",offer);
+	},
 	createComment(offer,comment){
 	        var data={
 	        	"offerId":offer._id,

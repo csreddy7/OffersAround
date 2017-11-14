@@ -6,6 +6,7 @@ let registerIcon = document.querySelectorAll("#register")[0],
 	logoutIcon = document.querySelectorAll("#logout")[0],
 	addOfferIcon = document.querySelectorAll("#addoffer")[0],
 	offersList=document.querySelectorAll("#offersList")[0],
+	favIcon=document.querySelector("#favourite"),
 	geomapUrl="https://maps.googleapis.com/maps/api/geocode/json";
 let commonService={
 	offers:null,
@@ -68,17 +69,32 @@ let commonService={
 	        }
 		}
 	},
+	showFavourites(){
+		if(this.offers){
+			let arr=this.offers.filter((e)=>{
+            	return e.isFavourite==true;
+        	});
+	        if(arr.length>0){
+		          offersList.innerHTML="";
+		          arr.forEach((offer)=>{
+		          let obj = new CreateOffer(offer);
+		        });
+	        }
+		}
+	},
 	showValidUserActions(){
 		registerIcon.style.display="none";
 		loginIcon.style.display="none";
 		logoutIcon.style.display="block";
 		addOfferIcon.style.display="block";
+		favIcon.style.display="block";
 	},
 	showInValidUserActions(){
 		registerIcon.style.display="block";
 		loginIcon.style.display="block";
 		logoutIcon.style.display="none";
-		addOfferIcon.style.display="none";		
+		addOfferIcon.style.display="none";
+		favIcon.style.display="none";		
 	},
 	clearScreen(){
 		offersList.innerHTML="";

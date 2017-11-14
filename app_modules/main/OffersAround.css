@@ -474,6 +474,11 @@ footer{
     color: #fff;
 }
 
+.fa-fav-star:before{
+	color: #2196F3;
+}
+
+
 .searchTab .fa-search::before {
     content: "\f002";
     border: 1px solid #ddd;

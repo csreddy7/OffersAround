@@ -18,13 +18,15 @@ window.onload = function () {
     logout = document.querySelectorAll("#logout")[0],
     searchBox = document.querySelectorAll("#searchBox")[0],
     searchButton = document.querySelectorAll("#searchButton")[0],
-    offersList=document.querySelectorAll("#offersList")[0];
+    offersList=document.querySelectorAll("#offersList")[0],
+    favIcon=document.querySelector("#favourite");
 
     let locationObj=null;
 
   let init=function(){
     logoutIcon.style.display="none";
     addOfferIcon.style.display="none";
+    favIcon.style.display="none";
     initializeHandlers();
     commonService.showOffers();
     commonService.getLocation().then((res)=>{
@@ -128,6 +130,10 @@ window.onload = function () {
             console.log("error while creating login widget")
           });  
       });
+
+      favIcon.addEventListener("click", () => {
+        commonService.showFavourites();
+     });
   }
 
   init();
