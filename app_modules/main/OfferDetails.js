@@ -27,7 +27,20 @@ class OfferDetails{
 		deleteNode.addEventListener("click",()=>{
 			var canDelete=confirm("do you want to delete the offer?");
 			if(canDelete){
-				ajax.deleteOffer(this.offer);
+				ajax.deleteOffer(this.offer).then((res)=>{
+								if(res=="success"){
+									let event = new Event("close-dialog");
+									document.dispatchEvent(event);
+								}else{
+								alert("error while deleting offer");
+								}  
+					},(error)=>{
+						var err=JSON.parse(error);
+						if(err.status && err.status==401){
+							alert("session expired");
+							commonService.clearScreen();
+						}
+					});
 			}
 		});
 		var editNode=this.dom.querySelector("#offer_edit");
@@ -47,6 +60,7 @@ class OfferDetails{
 			  });    
 		});
 	}
+	
 	populateOfferDetails(){
 		document.querySelectorAll("#offerName")[0].innerHTML=this.offer.title;
 		document.querySelectorAll("#offerLocation")[0].innerHTML=this.offer.location;

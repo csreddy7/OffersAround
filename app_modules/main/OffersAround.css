@@ -240,7 +240,7 @@ article>h1,header>h1{
 	line-height: 1.5rem;
 	float: left;
 	width:calc(100% - 4rem);
-	height: 12rem;
+	min-height: 8rem;
 	overflow: auto;
 	font-size: 1.8rem;
 }
@@ -465,7 +465,8 @@ footer{
 }
 .fa-pencil-square-o::before,.fa-plus::before,.fa-eye::before{
 	font-size: 2rem;
-    color: #2196F3;
+	color: #2196F3;
+	cursor: pointer;
 }
 
 .fa-save:before{
@@ -478,7 +479,10 @@ footer{
 	color: #2196F3;
 }
 
-
+.fa-trash-o:before {
+    cursor: pointer;
+    color: #2196F3;
+}
 .searchTab .fa-search::before {
     content: "\f002";
     border: 1px solid #ddd;

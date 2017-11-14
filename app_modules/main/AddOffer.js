@@ -34,7 +34,7 @@ class AddOffer{
 			    	let event = new Event("close-dialog");
 				    document.dispatchEvent(event);
 			    }else{
-			    	alert("error while adding offer");
+					alert("error while adding offer");
 			    }  
 		},(error)=>{
 			var err=JSON.parse(error);

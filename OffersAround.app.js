@@ -81,14 +81,8 @@ app.use(function(req,res,next){
 
 
 app.get("/getOffers",function(req,res){
-	var validUser=secureService.validateToken(cookies.token);
-	if(!validUser){
-		res.status(401).send({status:"401",error:"Not authorised user"});
-		return;
-	}
 	mongoClient.connect(dbUrl,function(err,db){
 		db.collection("offers").find({}).toArray(function(err,data){
-			console.log("data--->",data);
 			db.close();
 			res.json(data);
 		});

@@ -24,9 +24,12 @@ window.onload = function () {
     let locationObj=null;
 
   let init=function(){
-    logoutIcon.style.display="none";
-    addOfferIcon.style.display="none";
-    favIcon.style.display="none";
+    var userId=localStorage.getItem("userName");
+    if(!userId){
+     commonService.showInValidUserActions();
+    }else{
+      commonService.showValidUserActions();
+    }
     initializeHandlers();
     commonService.showOffers();
     commonService.getLocation().then((res)=>{

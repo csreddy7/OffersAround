@@ -1,6 +1,7 @@
 import { Dialog } from "utilities/Dialog/dialog";
 import {OfferDetails} from "main/OfferDetails";
 import {obj as ajax } from 'utilities/xhr/ajax';
+import { commonService } from "utilities/common/commonService";
 class CreateOffer {
 	constructor(offer) {
 		this.offer=offer;
@@ -35,7 +36,7 @@ class CreateOffer {
 			offer.querySelectorAll(".offerName")[0].innerHTML=this.offerName;
 			offer.querySelectorAll(".offerContent")[0].innerHTML=this.offerDetails;
 			if(this.offer.isFavourite){
-				offer.querySelector(".sideBar  .favourite-link").classList.add("fa-fav-star");
+				offer.querySelector(".sideBar .favourite-link").classList.add("fa-fav-star");
 			}
 			const commentParent=document.querySelector("#" + this.id + " #comment-content");
 			this.offer.comments.forEach((e)=>{
@@ -46,6 +47,14 @@ class CreateOffer {
 				comment.id=this.offer._id+"_"+e.id;
 				commentParent.appendChild(comment);
 			});
+			var userId=localStorage.getItem("userName");
+			if(!userId){
+				commonService.showInValidUserActions();
+				let addIcon=offer.querySelector(".sideBar .add-comment-link");
+				addIcon.parentNode.removeChild(addIcon);
+				let favIcon=offer.querySelector(".sideBar .favourite-link");
+				favIcon.parentNode.removeChild(favIcon);
+			}
 			this.initializeEventHanders(offer);
 		}
 	}
@@ -142,7 +151,14 @@ class CreateOffer {
 			console.log("about to delete comment")
 			let parent=comment.parentNode.parentNode;
 			let obj={id:parent.id};
-			ajax.deleteComment(obj);
+			ajax.deleteComment(obj).then((res)=>{
+				let response=JSON.parse(res);
+				if(res==="success"){
+					location.reload();
+				}else if(res==="failure"){
+					console.log("erroe while deleting comment")
+				}
+			},this.showError);
 		}
 	}
 
@@ -156,7 +172,14 @@ class CreateOffer {
 
 	saveComment(){
 		let comment=document.querySelector("#" + this.id + " #edit_box").value;
-		ajax.saveComment(this.editCommentId,comment);
+		ajax.saveComment(this.editCommentId,comment).then((res)=>{
+			let response=JSON.parse(res);
+			if(res==="success"){
+				location.reload();
+			}else if(res==="failure"){
+				console.log("erroe while editing comment")
+			}
+		},this.showError);
 	}
 
 	makeFavourite(){

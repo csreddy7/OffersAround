@@ -32,8 +32,9 @@ class login{
 				res=JSON.parse(res);
 			    if(res.validUser){
 			    	document.cookie="token="+res.token;
-			    	document.cookie="phoneNo="+mobileNumber;
+			    	localStorage.setItem("userName",mobileNumber);
 			    	 window.sessionVariable=setTimeout(()=>{
+						localStorage.setItem("userName",null);
 			    		location.reload();
 			    	},300000);
 				    let event = new Event("close-dialog");
@@ -41,6 +42,8 @@ class login{
 				    commonService.showValidUserActions();
 			    	commonService.showOffers();
 			    }else{
+					localStorage.setItem("userName",null);
+					commonService.showInValidUserActions();
 			    	alert("invalid user");
 			    }  
 		},(err)=>{

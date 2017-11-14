@@ -49,7 +49,6 @@ let commonService={
 				          arr.forEach((offer)=>{
 				            let obj = new CreateOffer(offer);
 				          });
-				          this.showValidUserActions();
 				    },(err)=>{
 				    	this.clearScreen();
 				    	alert("session timeout.please login again")
@@ -97,9 +96,8 @@ let commonService={
 		favIcon.style.display="none";		
 	},
 	clearScreen(){
-		offersList.innerHTML="";
-		this.offers=null;
-		this.showInValidUserActions();
+		localStorage.setItem("userName",null);
+		location.reload();
 	}
 }
 export {commonService}
