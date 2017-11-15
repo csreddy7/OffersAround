@@ -35,10 +35,13 @@ let commonService={
 					}
 					 resolve(locationObj);
 				},(err)=>{
+					alert("can't access your location this time,please try after some time ");
 					reject(err);
 					console.log(err);
 				});
-			});
+			},(err)=>{
+				alert("can't access your location this time,please try after some time ");
+			},{timeout:5000});
 		});
 	 return geoPromise;
 	},
@@ -81,7 +84,9 @@ let commonService={
 		          arr.forEach((offer)=>{
 		          let obj = new CreateOffer(offer);
 		        });
-	        }
+	        }else{
+				offersList.innerHTML="";
+			}
 		}
 	},
 	showValidUserActions(){

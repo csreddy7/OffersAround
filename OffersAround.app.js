@@ -124,10 +124,8 @@ app.post("/makeFavourite",function(req,res){
 	var offerId=req.body._id;
 	mongoClient.connect(dbUrl,function(err,db){
 		db.collection("offers").findOne({_id:ObjectId(offerId)},function(err,data){
-			console.log(err);
-			console.log(data);		
+			data.isFavourite=req.body.isFavourite;		
 			if(data){
-				data.isFavourite=true;
 				db.collection("offers").updateOne({_id:ObjectId(offerId)},{$set:data});
 				db.close();
 				res.send("success");
@@ -149,8 +147,6 @@ app.put("/editOffer",function(req,res){
 	var offerId=req.body.offerId;
 	mongoClient.connect(dbUrl,function(err,db){
 		db.collection("offers").findOne({_id:ObjectId(offerId)},function(err,data){
-			console.log(err);
-			console.log(data);		
 			if(data){
 				data.title=req.body.offerName;
 				data.details=req.body.offerContent;
@@ -167,18 +163,14 @@ app.put("/editOffer",function(req,res){
 });
 
 app.delete("/deleteOffer",function(req,res){
-	console.log(req.body);
 	var offerId=req.body._id;
 	var validUser=secureService.validateToken(cookies.token);
 	if(!validUser){
 		res.status(401).send({status:"401",error:"Not authorised user"});
 		return;
 	}
-	console.log(offerId)
 	mongoClient.connect(dbUrl,function(err,db){
 		db.collection("offers").removeOne({_id:ObjectId(offerId)},function(err,data){
-			console.log(err);
-			console.log(data.result);		
 			if(data){
 				db.close();
 				res.send("success");
@@ -199,8 +191,6 @@ app.post("/addComment",function(req,res){
 	}
 	mongoClient.connect(dbUrl,function(err,db){
 		db.collection("offers").findOne({_id:ObjectId(offerId)},function(err,data){
-			console.log(err);
-			console.log(data);		
 			if(data){
 				var obj={};
 					obj.comment=req.body.comment;
@@ -227,13 +217,10 @@ app.delete("/deleteComment",function(req,res){
 		res.status(401).send({status:"401",error:"Not authorised user"});
 		return;
 	}
-	console.log(commentId);
 	var offerId=commentId.split("_")[0],
 		commentId=commentId.split("_")[1];
 	mongoClient.connect(dbUrl,function(err,db){
 		db.collection("offers").findOne({_id:ObjectId(offerId)},function(err,data){
-			console.log(err);
-			console.log(data);		
 			if(data.comments.length>0){
 				data.comments=data.comments.filter((element)=>{
 					return element.id!=commentId;
@@ -256,13 +243,10 @@ app.put("/saveComment",function(req,res){
 		res.status(401).send({status:"401",error:"Not authorised user"});
 		return;
 	}
-	console.log(commentId);
 	var offerId=commentId.split("_")[0],
 		commentId=commentId.split("_")[1];
 	mongoClient.connect(dbUrl,function(err,db){
 		db.collection("offers").findOne({_id:ObjectId(offerId)},function(err,data){
-			console.log(err);
-			console.log(data);
 			var n=data.comments.length;		
 			if(n>0){
 				for(let i=0;i<n;i++){

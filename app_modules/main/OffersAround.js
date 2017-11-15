@@ -24,7 +24,7 @@ window.onload = function () {
     let locationObj=null;
 
   let init=function(){
-    var userId=localStorage.getItem("userName");
+    let userId=localStorage.getItem("userName");
     if(userId==="null"){
      commonService.showInValidUserActions();
     }else{
@@ -34,7 +34,7 @@ window.onload = function () {
     commonService.showOffers();
     commonService.getLocation().then((res)=>{
       locationObj=res;
-      var titleArray=document.querySelectorAll(".location-title");
+      let titleArray=document.querySelectorAll(".location-title");
       titleArray.forEach((e)=>{
         e.innerHTML="Offers Around "+locationObj.short_name;
       });

@@ -41,7 +41,7 @@ class CreateOffer {
 			const commentParent=document.querySelector("#" + this.id + " #comment-content");
 			this.offer.comments.forEach((e)=>{
 				let obj={};
-				obj.username=e.userName;
+				obj.username=e.createdBy;
 				obj.comment=e.comment;
 				let comment=this.getComment(obj);
 				comment.id=this.offer._id+"_"+e.id;
@@ -121,7 +121,7 @@ class CreateOffer {
 	createComment() {
 		let value = document.getElementById("comment-box").value, obj = {};
 		obj.comment = value;
-		obj.username="undefined";
+		obj.username=localStorage.getItem("userName");
 		let comment = this.getComment(obj);
 		ajax.createComment(this.offer,value).then((res)=>{
 			let response=JSON.parse(res);
@@ -132,17 +132,23 @@ class CreateOffer {
 		},this.showError);
 	}
 	getComment(obj) {
-		let template = `
-		<div class="edit-delete">
-				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-				<i class="fa fa-trash-o" aria-hidden="true"></i>
-		</div>
-		<span class='username'> ${obj.username} :</span><span id="comment_content">${obj.comment}</span>`;
+		let template="";
+		let userId=localStorage.getItem("userName");
+		if(userId==obj.username){
+			template = `
+			<div class="edit-delete">
+					<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					<i class="fa fa-trash-o" aria-hidden="true"></i>
+			</div>
+			<span class='username'> ${obj.username} :</span><span id="comment_content">${obj.comment}</span>`;
+		}else{
+			template = `<span class='username'> ${obj.username} :</span><span id="comment_content">${obj.comment}</span>`;
+		}
+				
 		let comment = document.createElement("div");
 		comment.className = "offer-comment";
 		comment.innerHTML = template;
 		return comment;
-
 	}
 
 	deleteComment(comment){
@@ -181,10 +187,13 @@ class CreateOffer {
 	}
 
 	makeFavourite(){
+		this.offer.isFavourite=!this.offer.isFavourite;
 		ajax.makeFavourite(this.offer).then((res)=>{
-			document.querySelector("#" + this.id + "  .sideBar  .favourite-link").classList.add("fa-fav-star");
+			// document.querySelector("#" + this.id + "  .sideBar  .favourite-link").classList.add("fa-fav-star");
+			location.reload();
 		},this.showError);
 	}
+	
 	showError(error){
 		let err=JSON.parse(error);
 		if(err.status && err.status==401){
