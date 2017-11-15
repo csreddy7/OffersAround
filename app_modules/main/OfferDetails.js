@@ -1,6 +1,7 @@
 import {obj as ajax } from 'utilities/xhr/ajax';
 import { EditOffer }  from "main/EditOffer";
 import { Dialog } from "utilities/Dialog/dialog";
+import { commonService } from "utilities/common/commonService";
 class OfferDetails{
 	constructor(offer){
 		this.dom=null;
@@ -31,6 +32,7 @@ class OfferDetails{
 								if(res=="success"){
 									let event = new Event("close-dialog");
 									document.dispatchEvent(event);
+									commonService.showOffers();
 								}else{
 								alert("error while deleting offer");
 								}  

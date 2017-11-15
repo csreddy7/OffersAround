@@ -25,7 +25,7 @@ window.onload = function () {
 
   let init=function(){
     var userId=localStorage.getItem("userName");
-    if(!userId){
+    if(userId==="null"){
      commonService.showInValidUserActions();
     }else{
       commonService.showValidUserActions();

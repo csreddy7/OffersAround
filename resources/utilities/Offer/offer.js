@@ -48,7 +48,7 @@ class CreateOffer {
 				commentParent.appendChild(comment);
 			});
 			var userId=localStorage.getItem("userName");
-			if(!userId){
+			if(userId==="null"){
 				commonService.showInValidUserActions();
 				let addIcon=offer.querySelector(".sideBar .add-comment-link");
 				addIcon.parentNode.removeChild(addIcon);
@@ -152,7 +152,6 @@ class CreateOffer {
 			let parent=comment.parentNode.parentNode;
 			let obj={id:parent.id};
 			ajax.deleteComment(obj).then((res)=>{
-				let response=JSON.parse(res);
 				if(res==="success"){
 					location.reload();
 				}else if(res==="failure"){
@@ -173,7 +172,6 @@ class CreateOffer {
 	saveComment(){
 		let comment=document.querySelector("#" + this.id + " #edit_box").value;
 		ajax.saveComment(this.editCommentId,comment).then((res)=>{
-			let response=JSON.parse(res);
 			if(res==="success"){
 				location.reload();
 			}else if(res==="failure"){

@@ -38,7 +38,8 @@ class EditOffer{
 		ajax.editOffer(this.offer._id,offerName,locationName,offerContent).then((res)=>{
 			    if(res=="success"){
 			    	let event = new Event("close-dialog");
-				    document.dispatchEvent(event);
+					document.dispatchEvent(event);
+					commonService.showOffers();
 			    }else{
 			    	alert("error while editing offer");
 			    }  
