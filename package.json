@@ -28,8 +28,8 @@
     "url": "https://github.com/csreddy7/OffersAround.git"
   },
   "scripts": {
-    "start": "http-server . -p 7575",
-    "build": "webpack --config webpack.config.js"
+     "setup":"./scripts/setup.sh",
+     "build":"./scripts/build.sh"
   },
   "dependencies": {}
 }
