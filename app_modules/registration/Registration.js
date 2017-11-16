@@ -1,5 +1,5 @@
 import {obj as ajax } from 'utilities/xhr/ajax';
-
+import 'registration/Registration.css'
 class Registration{
 	constructor(){
 		this.dom=null;

@@ -3,6 +3,8 @@ import { login }  from "login/loginWidget";
 import { Registration }  from "registration/Registration";
 import { AddOffer }  from "main/AddOffer";
 import { commonService } from "utilities/common/commonService";
+import 'main/OffersAround.css';
+import 'css/font-awesome.css';
 window.onload = function () {
 
   const menuIcon = document.querySelectorAll(".fa-bars")[0],

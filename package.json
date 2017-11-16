@@ -1,16 +1,22 @@
 {
-  "name": "OffersAround",
+  "name": "offersaround",
   "version": "1.0.0",
-  "description": "software to check offers around ypur location",
+  "description": "app to check offers around your location",
   "license": "MIT",
   "main": "OffersAround.app.js",
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-preset-es2015": "^6.24.1",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "css-loader": "^0.28.7",
     "express": "^4.16.1",
     "file-loader": "^0.11.2",
     "http-server": "^0.10.0",
+    "mongodb": "^2.2.33",
+    "style-loader": "^0.19.0",
+    "url-loader": "^0.6.2",
     "webpack": "^3.3.0"
   },
   "person": {
@@ -25,8 +31,5 @@
     "start": "http-server . -p 7575",
     "build": "webpack --config webpack.config.js"
   },
-  "dependencies": {
-    "cookie-parser": "^1.4.3",
-    "mongodb": "^2.2.33"
-  }
+  "dependencies": {}
 }

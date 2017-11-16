@@ -83,6 +83,7 @@ app.use(function(req,res,next){
 app.get("/getOffers",function(req,res){
 	mongoClient.connect(dbUrl,function(err,db){
 		db.collection("offers").find({}).toArray(function(err,data){
+			console.log("offers data--->",data)
 			db.close();
 			res.json(data);
 		});
