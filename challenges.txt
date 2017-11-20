@@ -5,25 +5,3 @@ dynamic server location
 adding images
 editing and deleting features
 favourites
-
-
-
-
-
-
-*** ubunut commands *******
-gnome-system-monitor           -----------monitor 
-gsettings set com.canonical.Unity.Launcher launcher-position Bottom    -----moving menu to Bottom
-
-
-
-
-
-
-
-
-
-
-***** linux commands ****
-
-df -h           ---------showing hard disk memory

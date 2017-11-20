@@ -42,13 +42,14 @@ class CreateOffer {
 			this.offer.comments.forEach((e)=>{
 				let obj={};
 				obj.username=e.createdBy;
+				obj.phoneNo=e.phoneNo;
 				obj.comment=e.comment;
 				let comment=this.getComment(obj);
 				comment.id=this.offer._id+"_"+e.id;
 				commentParent.appendChild(comment);
 			});
-			var userId=localStorage.getItem("userName");
-			if(userId==="null"){
+			var userId=localStorage.getItem("userId");
+			if(!userId){
 				commonService.showInValidUserActions();
 				let addIcon=offer.querySelector(".sideBar .add-comment-link");
 				addIcon.parentNode.removeChild(addIcon);
@@ -121,20 +122,16 @@ class CreateOffer {
 	createComment() {
 		let value = document.getElementById("comment-box").value, obj = {};
 		obj.comment = value;
-		obj.username=localStorage.getItem("userName");
+		obj.username=localStorage.getItem("userId");
 		let comment = this.getComment(obj);
 		ajax.createComment(this.offer,value).then((res)=>{
-			let response=JSON.parse(res);
-			comment.id=response.commentId;
-			document.querySelector("#" + this.id + " #comment-content").appendChild(comment);
-			document.getElementById("comment-box").value = "";
-			document.querySelector("#" + this.id + " .add-comment").style.display = "none";
+			commonService.showOffers();
 		},this.showError);
 	}
 	getComment(obj) {
 		let template="";
-		let userId=localStorage.getItem("userName");
-		if(userId==obj.username){
+		let userId=localStorage.getItem("userId");
+		if(userId==obj.phoneNo){
 			template = `
 			<div class="edit-delete">
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i>

@@ -26,23 +26,24 @@ window.onload = function () {
     let locationObj=null;
 
   let init=function(){
-    let userId=localStorage.getItem("userName");
-    if(userId==="null"){
-     commonService.showInValidUserActions();
-    }else{
+    let userId=localStorage.getItem("userId");
+    if(userId){
       commonService.showValidUserActions();
+    }else{
+      commonService.showInValidUserActions();
     }
     initializeHandlers();
-    commonService.showOffers();
     commonService.getLocation().then((res)=>{
       locationObj=res;
       let titleArray=document.querySelectorAll(".location-title");
       titleArray.forEach((e)=>{
         e.innerHTML="Offers Around "+locationObj.short_name;
+        localStorage.setItem("location",locationObj.short_name);
+        commonService.showOffers();
       });
       console.log("locationName---->",locationObj.short_name);
     },(err)=>{
-      console.log(err)
+      console.log(err);
     });
   }
 

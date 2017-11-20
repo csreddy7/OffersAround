@@ -29,7 +29,7 @@
   },
   "scripts": {
      "setup":"./scripts/setup.sh",
-     "build":"./scripts/build.sh"
+     "build":"webpack --config webpack.config.js"
   },
   "dependencies": {}
 }

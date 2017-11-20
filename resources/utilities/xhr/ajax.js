@@ -6,9 +6,6 @@ var obj={
         return request;
 	},
 	
-    getUserName(){
-    	return this.get("/userName");
-	},
 	
 	loginUser(mobileNumber,passWord){
 		var data={
@@ -28,22 +25,23 @@ var obj={
 	},
 
 	getOffers(){
-		return this.get("/getOffers");
+		return this.get("/getOffers?location="+localStorage.getItem("location"));
 	},
 
 	addOffer(offerName,locationName,offerContent){
 			var data={
 	        	"offerName":offerName,
 	        	"locationName":locationName,
-	        	"offerContent":offerContent
+				"offerContent":offerContent,
+				"createdBy":localStorage.getItem("userId")
 	        }
 	    return this.post("/addOffer",data);
 	},
-	editOffer(offerId,offerName,locationName,offerContent){
+	editOffer(offerId,offerName,offerContent){
 		var data={
 			"offerId":offerId,
 			"offerName":offerName,
-			"locationName":locationName,
+			"locationName":localStorage.getItem("location"),
 			"offerContent":offerContent
 		}
 		return this.put("/editOffer",data);
@@ -57,7 +55,8 @@ var obj={
 	createComment(offer,comment){
 	        var data={
 	        	"offerId":offer._id,
-	        	"comment":comment,
+				"comment":comment,
+				"createdBy":localStorage.getItem("userId")
 	        }
 	    return this.post("/addComment",data);
 	},

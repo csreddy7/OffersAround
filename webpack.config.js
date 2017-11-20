@@ -1,9 +1,13 @@
 var path = require("path");
+var webpack = require("webpack");
 module.exports = {
   entry: './app_modules/main/OffersAround.js',
   output: {
     filename: './build/build.js'
   },
+  // plugins: [
+    // new webpack.optimize.UglifyJsPlugin({minimize: false})
+  // ],
   module: {
     loaders: [
       {

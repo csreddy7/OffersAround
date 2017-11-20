@@ -67,6 +67,25 @@ app.post("/register",function(req,res){
 });
 
 
+/********offers api  *********************/
+
+
+app.get("/getOffers",function(req,res){
+	console.log("params----->",req.query);
+	var location=req.query.location;
+	if(location && location!="undefined"){
+		mongoClient.connect(dbUrl,function(err,db){
+			db.collection("offers").find({"location":location}).toArray(function(err,data){
+				console.log("error--->",err);
+				console.log("offers data--->",data)
+				db.close();
+				res.json(data);
+			});
+		});
+	}else{
+		res.json([]);
+	}
+});
 
 
 app.use(function(req,res,next){
@@ -75,21 +94,6 @@ app.use(function(req,res,next){
 		next();
 	}
 });
-
-
-/********offers api  *********************/
-
-
-app.get("/getOffers",function(req,res){
-	mongoClient.connect(dbUrl,function(err,db){
-		db.collection("offers").find({}).toArray(function(err,data){
-			console.log("offers data--->",data)
-			db.close();
-			res.json(data);
-		});
-	});
-});
-
 
 
 app.post("/addOffer",function(req,res){
@@ -102,7 +106,7 @@ app.post("/addOffer",function(req,res){
 		obj.title=req.body.offerName;
 		obj.details=req.body.offerContent;
 		obj.location=req.body.locationName;
-		obj.createdBy=req.cookies.phoneNo;
+		obj.createdBy=req.body.createdBy;
 		obj.createdTime= new Date().getTime();
 		obj.updatedTime="";
 		obj.isFavourite=false;
@@ -194,15 +198,19 @@ app.post("/addComment",function(req,res){
 		db.collection("offers").findOne({_id:ObjectId(offerId)},function(err,data){
 			if(data){
 				var obj={};
-					obj.comment=req.body.comment;
-					obj.id=++(data.comment_max_id);
-					obj.createdBy=req.cookies.phoneNo;
-					obj.createdTime= new Date().getTime();
-					obj.updatedTime="";
-					data.comments.push(obj);
-				db.collection("offers").updateOne({_id:ObjectId(offerId)},{$set:data});
-				db.close();
-				res.json({commentId:offerId+"_"+obj.id});
+				db.collection("users").findOne({"mobileNumber":req.body.createdBy},function(err,user){
+					console.log("user",user);	
+						obj.comment=req.body.comment;
+						obj.id=++(data.comment_max_id);
+						obj.createdBy=user.userName;
+						obj.phoneNo=req.body.createdBy;
+						obj.createdTime= new Date().getTime();
+						obj.updatedTime="";
+						data.comments.push(obj);
+					db.collection("offers").updateOne({_id:ObjectId(offerId)},{$set:data});
+					db.close();
+					res.json({commentId:offerId+"_"+obj.id});
+				});
 			}else{
 				db.close();
 				res.send("failure");

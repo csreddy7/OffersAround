@@ -28,14 +28,12 @@ class EditOffer{
 	}
 	popUpDetails(){
 		this.dom.querySelector("#offerName").value=this.offer.title;
-		this.dom.querySelector("#locationName").value=this.offer.location;
 		this.dom.querySelector("#offerContent").value=this.offer.details;
 	}
 	editOffer(){
 		let offerName=document.querySelectorAll("#offerName")[0].value;
-		let locationName=document.querySelectorAll("#locationName")[0].value;
 		let offerContent=document.querySelectorAll("#offerContent")[0].value;
-		ajax.editOffer(this.offer._id,offerName,locationName,offerContent).then((res)=>{
+		ajax.editOffer(this.offer._id,offerName,offerContent).then((res)=>{
 			    if(res=="success"){
 			    	let event = new Event("close-dialog");
 					document.dispatchEvent(event);

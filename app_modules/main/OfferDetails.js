@@ -14,7 +14,7 @@ class OfferDetails{
 				request.onload = () => {
 					this.dom = document.createElement("div");
 					this.dom.innerHTML = request.responseText;
-					let userId=localStorage.getItem("userName");
+					let userId=localStorage.getItem("userId");
 					if(userId!=this.offer.createdBy){
 						var child=this.dom.querySelector(".edit-delete");
 						this.dom.removeChild(child);
@@ -30,7 +30,7 @@ class OfferDetails{
 	}
 	
 	initializeEventHanders(){
-		let userId=localStorage.getItem("userName");
+		let userId=localStorage.getItem("userId");
 		if(userId==this.offer.createdBy){
 					var deleteNode=this.dom.querySelector("#offer_delete");
 					deleteNode.addEventListener("click",()=>{
@@ -74,7 +74,6 @@ class OfferDetails{
 	
 	populateOfferDetails(){
 		document.querySelectorAll("#offerName")[0].innerHTML=this.offer.title;
-		document.querySelectorAll("#offerLocation")[0].innerHTML=this.offer.location;
 		document.querySelectorAll(".offer-content")[0].innerHTML=this.offer.details;
 	}
 	

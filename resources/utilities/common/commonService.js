@@ -51,10 +51,13 @@ let commonService={
 						  let arr = this.offers= res;
 						  if(arr.length>0){
 							offersList.innerHTML="";
+							arr.forEach((offer)=>{
+								let obj = new CreateOffer(offer);
+							  });
+						  }else{
+							offersList.innerHTML="";
 						  }
-				          arr.forEach((offer)=>{
-				            let obj = new CreateOffer(offer);
-				          });
+				          
 				    },(err)=>{
 				    	this.clearScreen();
 				    	alert("session timeout.please login again")
@@ -104,7 +107,7 @@ let commonService={
 		favIcon.style.display="none";		
 	},
 	clearScreen(){
-		localStorage.setItem("userName",null);
+		localStorage.removeItem("userId");
 		location.reload();
 	}
 }
