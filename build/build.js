@@ -80,9 +80,6 @@ var obj = {
 		request.send();
 		return request;
 	},
-	getUserName: function getUserName() {
-		return this.get("/userName");
-	},
 	loginUser: function loginUser(mobileNumber, passWord) {
 		var data = {
 			"mobileNumber": mobileNumber,
@@ -99,21 +96,22 @@ var obj = {
 		return this.post("/register", data);
 	},
 	getOffers: function getOffers() {
-		return this.get("/getOffers");
+		return this.get("/getOffers?location=" + localStorage.getItem("location"));
 	},
 	addOffer: function addOffer(offerName, locationName, offerContent) {
 		var data = {
 			"offerName": offerName,
 			"locationName": locationName,
-			"offerContent": offerContent
+			"offerContent": offerContent,
+			"createdBy": localStorage.getItem("userId")
 		};
 		return this.post("/addOffer", data);
 	},
-	editOffer: function editOffer(offerId, offerName, locationName, offerContent) {
+	editOffer: function editOffer(offerId, offerName, offerContent) {
 		var data = {
 			"offerId": offerId,
 			"offerName": offerName,
-			"locationName": locationName,
+			"locationName": localStorage.getItem("location"),
 			"offerContent": offerContent
 		};
 		return this.put("/editOffer", data);
@@ -127,7 +125,8 @@ var obj = {
 	createComment: function createComment(offer, comment) {
 		var data = {
 			"offerId": offer._id,
-			"comment": comment
+			"comment": comment,
+			"createdBy": localStorage.getItem("userId")
 		};
 		return this.post("/addComment", data);
 	},
@@ -290,10 +289,12 @@ var commonService = {
 			var arr = _this.offers = res;
 			if (arr.length > 0) {
 				offersList.innerHTML = "";
+				arr.forEach(function (offer) {
+					var obj = new _offer.CreateOffer(offer);
+				});
+			} else {
+				offersList.innerHTML = "";
 			}
-			arr.forEach(function (offer) {
-				var obj = new _offer.CreateOffer(offer);
-			});
 		}, function (err) {
 			_this.clearScreen();
 			alert("session timeout.please login again");
@@ -343,7 +344,7 @@ var commonService = {
 		favIcon.style.display = "none";
 	},
 	clearScreen: function clearScreen() {
-		localStorage.setItem("userName", null);
+		localStorage.removeItem("userId");
 		location.reload();
 	}
 };
@@ -914,19 +915,20 @@ window.onload = function () {
   var locationObj = null;
 
   var init = function init() {
-    var userId = localStorage.getItem("userName");
-    if (userId === "null") {
-      _commonService.commonService.showInValidUserActions();
-    } else {
+    var userId = localStorage.getItem("userId");
+    if (userId) {
       _commonService.commonService.showValidUserActions();
+    } else {
+      _commonService.commonService.showInValidUserActions();
     }
     initializeHandlers();
-    _commonService.commonService.showOffers();
     _commonService.commonService.getLocation().then(function (res) {
       locationObj = res;
       var titleArray = document.querySelectorAll(".location-title");
       titleArray.forEach(function (e) {
         e.innerHTML = "Offers Around " + locationObj.short_name;
+        localStorage.setItem("location", locationObj.short_name);
+        _commonService.commonService.showOffers();
       });
       console.log("locationName---->", locationObj.short_name);
     }, function (err) {
@@ -1100,9 +1102,9 @@ var login = function () {
 				res = JSON.parse(res);
 				if (res.validUser) {
 					document.cookie = "token=" + res.token;
-					localStorage.setItem("userName", mobileNumber);
+					localStorage.setItem("userId", mobileNumber);
 					window.sessionVariable = setTimeout(function () {
-						localStorage.setItem("userName", null);
+						localStorage.removeItem("userId");
 						location.reload();
 					}, 300000);
 					var event = new Event("close-dialog");
@@ -1110,7 +1112,6 @@ var login = function () {
 					_commonService.commonService.showValidUserActions();
 					_commonService.commonService.showOffers();
 				} else {
-					localStorage.setItem("userName", null);
 					_commonService.commonService.showInValidUserActions();
 					alert("invalid user");
 				}
@@ -1195,13 +1196,14 @@ var CreateOffer = function () {
 				_this.offer.comments.forEach(function (e) {
 					var obj = {};
 					obj.username = e.createdBy;
+					obj.phoneNo = e.phoneNo;
 					obj.comment = e.comment;
 					var comment = _this.getComment(obj);
 					comment.id = _this.offer._id + "_" + e.id;
 					commentParent.appendChild(comment);
 				});
-				var userId = localStorage.getItem("userName");
-				if (userId === "null") {
+				var userId = localStorage.getItem("userId");
+				if (!userId) {
 					_commonService.commonService.showInValidUserActions();
 					var addIcon = offer.querySelector(".sideBar .add-comment-link");
 					addIcon.parentNode.removeChild(addIcon);
@@ -1281,27 +1283,21 @@ var CreateOffer = function () {
 	}, {
 		key: "createComment",
 		value: function createComment() {
-			var _this3 = this;
-
 			var value = document.getElementById("comment-box").value,
 			    obj = {};
 			obj.comment = value;
-			obj.username = localStorage.getItem("userName");
+			obj.username = localStorage.getItem("userId");
 			var comment = this.getComment(obj);
 			_ajax.obj.createComment(this.offer, value).then(function (res) {
-				var response = JSON.parse(res);
-				comment.id = response.commentId;
-				document.querySelector("#" + _this3.id + " #comment-content").appendChild(comment);
-				document.getElementById("comment-box").value = "";
-				document.querySelector("#" + _this3.id + " .add-comment").style.display = "none";
+				_commonService.commonService.showOffers();
 			}, this.showError);
 		}
 	}, {
 		key: "getComment",
 		value: function getComment(obj) {
 			var template = "";
-			var userId = localStorage.getItem("userName");
-			if (userId == obj.username) {
+			var userId = localStorage.getItem("userId");
+			if (userId == obj.phoneNo) {
 				template = "\n\t\t\t<div class=\"edit-delete\">\n\t\t\t\t\t<i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i>\n\t\t\t\t\t<i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i>\n\t\t\t</div>\n\t\t\t<span class='username'> " + obj.username + " :</span><span id=\"comment_content\">" + obj.comment + "</span>";
 			} else {
 				template = "<span class='username'> " + obj.username + " :</span><span id=\"comment_content\">" + obj.comment + "</span>";
@@ -1419,7 +1415,7 @@ var OfferDetails = function () {
 				request.onload = function () {
 					_this.dom = document.createElement("div");
 					_this.dom.innerHTML = request.responseText;
-					var userId = localStorage.getItem("userName");
+					var userId = localStorage.getItem("userId");
 					if (userId != _this.offer.createdBy) {
 						var child = _this.dom.querySelector(".edit-delete");
 						_this.dom.removeChild(child);
@@ -1438,7 +1434,7 @@ var OfferDetails = function () {
 		value: function initializeEventHanders() {
 			var _this2 = this;
 
-			var userId = localStorage.getItem("userName");
+			var userId = localStorage.getItem("userId");
 			if (userId == this.offer.createdBy) {
 				var deleteNode = this.dom.querySelector("#offer_delete");
 				deleteNode.addEventListener("click", function () {
@@ -1483,7 +1479,6 @@ var OfferDetails = function () {
 		key: "populateOfferDetails",
 		value: function populateOfferDetails() {
 			document.querySelectorAll("#offerName")[0].innerHTML = this.offer.title;
-			document.querySelectorAll("#offerLocation")[0].innerHTML = this.offer.location;
 			document.querySelectorAll(".offer-content")[0].innerHTML = this.offer.details;
 		}
 	}]);
@@ -1554,16 +1549,14 @@ var EditOffer = function () {
 		key: "popUpDetails",
 		value: function popUpDetails() {
 			this.dom.querySelector("#offerName").value = this.offer.title;
-			this.dom.querySelector("#locationName").value = this.offer.location;
 			this.dom.querySelector("#offerContent").value = this.offer.details;
 		}
 	}, {
 		key: "editOffer",
 		value: function editOffer() {
 			var offerName = document.querySelectorAll("#offerName")[0].value;
-			var locationName = document.querySelectorAll("#locationName")[0].value;
 			var offerContent = document.querySelectorAll("#offerContent")[0].value;
-			_ajax.obj.editOffer(this.offer._id, offerName, locationName, offerContent).then(function (res) {
+			_ajax.obj.editOffer(this.offer._id, offerName, offerContent).then(function (res) {
 				if (res == "success") {
 					var event = new Event("close-dialog");
 					document.dispatchEvent(event);
@@ -1865,7 +1858,15 @@ var AddOffer = function () {
 		key: "addOffer",
 		value: function addOffer() {
 			var offerName = document.querySelectorAll("#offerName")[0].value;
-			var locationName = document.querySelectorAll("#locationName")[0].value;
+			var location = localStorage.getItem("location");
+			var locationName = "";
+			if (location) {
+				locationName = location;
+			} else {
+				alert("couldn't able to identify ur location,please try after some time");
+				return;
+			}
+
 			var offerContent = document.querySelectorAll("#offerContent")[0].value;
 			_ajax.obj.addOffer(offerName, locationName, offerContent).then(function (res) {
 				if (res == "success") {
