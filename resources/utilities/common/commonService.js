@@ -35,7 +35,6 @@ let commonService={
 					}
 					 resolve(locationObj);
 				},(err)=>{
-					alert("can't access your location this time,please try after some time ");
 					reject(err);
 					console.log(err);
 				});

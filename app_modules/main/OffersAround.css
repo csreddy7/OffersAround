@@ -54,6 +54,7 @@ input::placeholder,input::placeholder-shown{
 }
 .edit-delete{
 	float: right;
+	margin-right: 1rem;
 }
 /*********************
 	Header Styles
@@ -103,7 +104,7 @@ header h1{
 /***** nav Styles *****/
 
 .menu-list{
-	width: 12rem;
+	width: 13rem;
 	height: 0px;
 	font-size: 2rem;
 	color: #696969;
@@ -154,12 +155,12 @@ header h1{
 		height:0px;
 	}
 	100%{
-		height:8.2rem;
+		height:auto;
 	}
 }
 @keyframes shrink-menu{
 	0%{
-		height:8.2rem;
+		height:auto;
 	}
 	100%{
 		height:0px;
@@ -391,18 +392,19 @@ footer{
 	text-align: left;
 	padding-left: 1rem;
 	width:100%;
+	color: #1b97f3;
 }
 
 .offer-details-dialog .offer-value{
-		width:100%;
-		margin-bottom: 1rem;
-    	display: inline-block;
-    	margin-left: 2rem;
+	width: 100%;
+    margin-bottom: 1rem;
+    display: inline-block;
+    margin-left: 1rem;
+    margin-top: 1rem;
 }
 .offer-details-dialog .form-input{
 		width: 95%;
 		padding-left: 1rem;
-		margin-top: 1rem;
 		display: inline-block;
 }
 
@@ -439,7 +441,6 @@ footer{
 }
 .add-offer-content{
 	width: 95%;
-	margin: 1rem;
 	padding: 1rem;
 }
 
@@ -498,7 +499,6 @@ footer{
 .menu-list .fa-sign-in:before{
 	color:#2196F3;
 	font-size:2rem;
-	margin-right:1rem;
 }
 
 
@@ -536,10 +536,11 @@ footer{
 		width: 100%;
 		padding: 1rem;
 		border-top: 1px solid #ccc;
+		text-align: center;
 	}
 	.bottom-links span{
 		display: inline-block;
-		width: 32.5%;
+		width: 23.5%;
 		background: #1b97f3;
 		padding: 1rem;
 		text-align: center;
@@ -548,24 +549,24 @@ footer{
 		margin: 0 auto;
 	}
 	.offer-details-dialog .label-name{
-		width: 25%;
-    	text-align: right;
+		width: 100%;
+    	text-align: left;
     	padding-right: 1rem;
 	}
 	.offer-details-dialog .offer-label{
-		width:15%;
-		text-align:right;
+		width: 100%;
+		text-align:left;
 		padding-left: 1rem;
 		margin-top: 1rem;
 		font-size: 1.6rem;
 	}
 	.offer-details-dialog .offer-value{
-		width:80%;
+		width:95%;
 		text-align: left;
 		font-size: 1.6rem;
 	}
 	.offer-details-dialog .form-input{
-		width: 75%;
+		width: 100%;
 		padding-right: 5rem;
 	}
 	footer{
@@ -600,28 +601,35 @@ footer{
     	top: 30%;
 	}
 	.offer-details-dialog .label-name{
-		text-align: right;
-	    width: 25%;
+		text-align: left;
+	    width: 100%;
 	    padding-right: 1.8rem;
 	}
 
 	.offer-details-dialog .form-input{
-		  width: 75%;
+		  width: 100%;
     	  padding-right: 2rem;
 	}
 
 	.offer-details-dialog .offer-label{
-		width: 15%;
-		text-align: right;
+		width: 100%;
+		text-align: left;
 		margin-bottom: 1rem;
 		font-size:1.6rem;
 	}
 	
 	.offer-details-dialog .offer-value{
-		width:80%;
+		width:100%;
 		font-size:1.6rem;
+		margin-top: 0;
 	}
 
+	.add-offer-content {
+		width: 100%;
+		padding: 1rem;
+		padding-right: 2rem;
+	}
+	
 	footer{
 		font-size:2.5rem;
 	}

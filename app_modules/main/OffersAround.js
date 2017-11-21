@@ -39,9 +39,9 @@ window.onload = function () {
       titleArray.forEach((e)=>{
         e.innerHTML="Offers Around "+locationObj.short_name;
         localStorage.setItem("location",locationObj.short_name);
-        commonService.showOffers();
       });
       console.log("locationName---->",locationObj.short_name);
+      commonService.showOffers();
     },(err)=>{
       console.log(err);
     });

@@ -37,6 +37,7 @@ class CreateOffer {
 			offer.querySelectorAll(".offerContent")[0].innerHTML=this.offerDetails;
 			if(this.offer.isFavourite){
 				offer.querySelector(".sideBar .favourite-link").classList.add("fa-fav-star");
+				offer.querySelector(".bottom-links .favourite-link").innerHTML="favourite";
 			}
 			const commentParent=document.querySelector("#" + this.id + " #comment-content");
 			this.offer.comments.forEach((e)=>{
@@ -54,6 +55,11 @@ class CreateOffer {
 				let addIcon=offer.querySelector(".sideBar .add-comment-link");
 				addIcon.parentNode.removeChild(addIcon);
 				let favIcon=offer.querySelector(".sideBar .favourite-link");
+				favIcon.parentNode.removeChild(favIcon);
+
+				addIcon=offer.querySelector(".bottom-links .add-comment-link");
+				addIcon.parentNode.removeChild(addIcon);
+				favIcon=offer.querySelector(".bottom-links .favourite-link");
 				favIcon.parentNode.removeChild(favIcon);
 			}
 			this.initializeEventHanders(offer);
