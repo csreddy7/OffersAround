@@ -27,7 +27,13 @@ class login{
 	}
 	login(){
 		let mobileNumber=document.querySelectorAll("#mobileNumber")[0].value;
+		if(!commonService.validatePhoneNumber(mobileNumber)){
+			return;
+		}
 		let passWord=document.querySelectorAll("#passWord")[0].value;
+		if(!commonService.validatePassword(passWord)){
+			return;
+		}
 		ajax.loginUser(mobileNumber,passWord).then((res)=>{
 				res=JSON.parse(res);
 			    if(res.validUser){
@@ -36,7 +42,7 @@ class login{
 			    	 window.sessionVariable=setTimeout(()=>{
 						localStorage.removeItem("userId");
 			    		location.reload();
-			    	},300000);
+			    	},60000);
 				    let event = new Event("close-dialog");
 				    document.dispatchEvent(event);
 				    commonService.showValidUserActions();

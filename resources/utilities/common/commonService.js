@@ -108,6 +108,40 @@ let commonService={
 	clearScreen(){
 		localStorage.removeItem("userId");
 		location.reload();
+	},
+	validatePhoneNumber(no){
+		let nullValue=parseInt(no); // checking if value has characters
+		if(isNaN(nullValue)){
+			alert("mobile no must contain numbers");
+			return false;
+		}else if((""+nullValue).length!=10){
+			alert("Please enter 10 digit mobile no");
+			return false;
+		}
+		return true;
+	},
+	validatePassword(password){
+		let atleastOneCapitalChar=/[A-Z]{1,n}/g;
+		let atleastOneSmallChar=/[a-z]{1,n}/g;
+		let atleastOneSpecialChar=/[/$@_&]{1,n}/g;
+		let atleastOneDigit=/[0-9]{1,n}/g;
+		if(password.length<8){
+			alert("Password must contain atleast 8 chars");
+			return false;
+		}else if(!atleastOneCapitalChar.test(password)){
+			alert("Password must contain atleast one capital letter");
+			return false;
+		}else if(!atleastOneDigit.test(password)){
+			alert("Password must contain atleast one digit");
+			return false;
+		}else if(!atleastOneSmallChar.test(password)){
+			alert("Password must contain atleast one small char");
+			return false;
+		}else if(!atleastOneSpecialChar.test(password)){
+			alert("Password must contain atleast one special char");
+			return false;
+		}
+		return true;
 	}
 }
 export {commonService}

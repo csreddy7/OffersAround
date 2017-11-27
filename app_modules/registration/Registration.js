@@ -1,5 +1,6 @@
 import {obj as ajax } from 'utilities/xhr/ajax';
 import 'registration/Registration.css'
+import { commonService } from '../../resources/utilities/common/commonService';
 class Registration{
 	constructor(){
 		this.dom=null;
@@ -28,7 +29,13 @@ class Registration{
 	register(){
 		let userName=document.querySelectorAll("#userName")[0].value;
 		let mobileNumber=document.querySelectorAll("#mobileNumber")[0].value;
+		if(!commonService.validatePhoneNumber(mobileNumber)){
+			return;
+		}
 		let passWord=document.querySelectorAll("#passWord")[0].value;
+		if(!commonService.validatePassword(passWord)){
+			return;
+		}
 		ajax.registerUser(userName,mobileNumber,passWord).then((res)=>{
 			console.log(res);
 			if(res=="success"){
