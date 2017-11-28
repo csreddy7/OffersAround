@@ -121,10 +121,10 @@ let commonService={
 		return true;
 	},
 	validatePassword(password){
-		let atleastOneCapitalChar=/[A-Z]{1,n}/g;
-		let atleastOneSmallChar=/[a-z]{1,n}/g;
-		let atleastOneSpecialChar=/[/$@_&]{1,n}/g;
-		let atleastOneDigit=/[0-9]{1,n}/g;
+		let atleastOneCapitalChar=/[A-Z]/;
+		let atleastOneSmallChar=/[a-z]/;
+		let atleastOneSpecialChar=/[/$@_&]/;
+		let atleastOneDigit=/[0-9]/;
 		if(password.length<8){
 			alert("Password must contain atleast 8 chars");
 			return false;
