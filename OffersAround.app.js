@@ -15,14 +15,16 @@ var secureService =require("./resources/utilities/security/secureService");
 var mongoClient=require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var dbUrl="mongodb://localhost:7272/OffersAround";
+var compression = require('compression');
 
-
+app.use(compression());
 app.use(express.static(__dirname+'/'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({     
   extended: false
 })); 
 app.use(cookieParser());
+
 
 /*********************login api  **********************/
 
