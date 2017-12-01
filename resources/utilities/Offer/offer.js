@@ -1,4 +1,3 @@
-import { Dialog } from "utilities/Dialog/dialog";
 import {OfferDetails} from "main/OfferDetails";
 import {obj as ajax } from 'utilities/xhr/ajax';
 import { commonService } from "utilities/common/commonService";
@@ -105,12 +104,13 @@ class CreateOffer {
 	}
 
 	showOfferDetails() {
-		let dialog = new Dialog({
-	      title: "Offer Details"
-	    });
+		let dialog = oa.injector.get("dialog"); 
+		if(dialog.isOpened()){
+			dialog.closeDialog();
+          } 
 	    let OfferDetailsWidget= new OfferDetails(this.offer);
 	    OfferDetailsWidget.renderPage().then(()=>{
-			dialog.init(OfferDetailsWidget.dom);
+			dialog.init("Offer Details",OfferDetailsWidget.dom);
 			OfferDetailsWidget.initializeEventHanders();
 	    	OfferDetailsWidget.populateOfferDetails();
 	    },()=>{

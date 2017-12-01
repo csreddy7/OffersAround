@@ -4,13 +4,15 @@ class Dialog {
   constructor(params) {
     this.params = params;
     this.dialog=null;
+    this.display=false;
     this.parent = document.querySelectorAll(".offersAround")[0];
   }
 
-  init(dialogContent) {
+  init(title,dialogContent) {
+    this.display=true;
     var dialogTemplate=`<section class="offer-details-dialog">
                             <div class="offer-dialog-header">
-                                <span><h8 class="dialog-title">${this.params.title}</h8></span>
+                                <span><h8 class="dialog-title">${title}</h8></span>
                                 <span><i class="fa fa-window-close close-dialog" aria-hidden="true"></i></span>
                             </div>
                             <div class="dialog-content"></div>
@@ -35,7 +37,12 @@ class Dialog {
     },false);
   }
 
+  isOpened(){
+    return this.display;
+  }
+  
   closeDialog(){
+    this.display=false;
     this.parent.removeChild(this.dialog);
   }
 }

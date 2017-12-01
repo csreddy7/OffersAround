@@ -1,10 +1,15 @@
-import { Dialog } from "utilities/Dialog/dialog";
 import { login }  from "login/loginWidget";
 import { Registration }  from "registration/Registration";
 import { AddOffer }  from "main/AddOffer";
 import { commonService } from "utilities/common/commonService";
+import { Injector } from "utilities/common/injector";
 import 'main/OffersAround.css';
 import 'css/font-awesome.css';
+window.oa=(function(){
+   return {
+    "injector":new Injector()
+   }
+})();
 window.onload = function () {
 
   const menuIcon = document.querySelectorAll(".fa-bars")[0],
@@ -89,12 +94,13 @@ window.onload = function () {
         }
       }
       register.addEventListener("click", () => {
-          let dialog = new Dialog({
-            title: "User Registration"
-          });
-          let registrationWidget= new Registration();
+        let dialog = oa.injector.get("dialog");
+        if(dialog.isOpened()){
+          dialog.closeDialog();
+        } 
+        let registrationWidget= new Registration();
           registrationWidget.renderPage().then(()=>{
-            dialog.init(registrationWidget.dom);
+            dialog.init( "User Registration",registrationWidget.dom);
             registrationWidget.initializeHandlers();
             hideMenu();
           },()=>{
@@ -103,12 +109,13 @@ window.onload = function () {
       });
 
       loginLink.addEventListener("click", () => {
-          let dialog = new Dialog({
-            title: "Login"
-          });
+          let dialog = oa.injector.get("dialog");
+          if(dialog.isOpened()){
+            dialog.closeDialog();
+          } 
           let loginWidget= new login();
           loginWidget.renderPage().then(()=>{
-            dialog.init(loginWidget.dom);
+            dialog.init("Login",loginWidget.dom);
             loginWidget.initializeHandlers();
             hideMenu();
           },()=>{
@@ -124,12 +131,13 @@ window.onload = function () {
       });
 
       addOffer.addEventListener("click", () => {
-         let dialog = new Dialog({
-            title: "Add Offer"
-          });
+          let dialog = oa.injector.get("dialog");
+          if(dialog.isOpened()){
+            dialog.closeDialog();
+          } 
           let addOfferWidget= new AddOffer();
           addOfferWidget.renderPage().then(()=>{
-            dialog.init(addOfferWidget.dom);
+            dialog.init("Add Offer",addOfferWidget.dom);
             addOfferWidget.initializeHandlers();
             hideMenu();
           },()=>{

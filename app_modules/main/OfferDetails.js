@@ -1,6 +1,5 @@
 import {obj as ajax } from 'utilities/xhr/ajax';
 import { EditOffer }  from "main/EditOffer";
-import { Dialog } from "utilities/Dialog/dialog";
 import { commonService } from "utilities/common/commonService";
 
 class OfferDetails{
@@ -57,12 +56,13 @@ class OfferDetails{
 					editNode.addEventListener("click",()=>{
 						let event = new Event("close-dialog");
 						document.dispatchEvent(event);
-						let dialog = new Dialog({
-							title: "Edit Offer"
-							});
+						let dialog = oa.injector.get("dialog"); 
+						if(dialog.isOpened()){
+							dialog.closeDialog();
+						  } 
 						let editOfferWidget= new EditOffer(this.offer);
 							editOfferWidget.renderPage().then(()=>{
-							dialog.init(editOfferWidget.dom);
+							dialog.init("Edit Offer",editOfferWidget.dom);
 							editOfferWidget.initializeHandlers();
 							editOfferWidget.popUpDetails();
 							},()=>{
