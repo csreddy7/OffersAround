@@ -10,7 +10,6 @@
 	<meta name="description" content="app for finding offers around you">
 	<meta name="keywords" content="offers,offers around you,location offers,best offers">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="/resources/css/font-awesome.min.css" rel="stylesheet" />
 	<style>
 	
 		/*********************
@@ -234,6 +233,24 @@
 		/*********************
 			Third Party Styles
 		***********************/
+
+		@font-face {
+				font-family: 'FontAwesome';
+				src: url('/resources/fonts/fontawesome-webfont.eot?v=4.7.0');
+				src: url('/resources/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('/resources/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('/resources/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('/resources/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('/resources/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+				font-weight: normal;
+				font-style: normal;
+			}
+
+		.fa {
+				display: inline-block;
+				font: normal normal normal 14px/1 FontAwesome;
+				font-size: inherit;
+				text-rendering: auto;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+
 		.fa-bars:before {
 			content: "\F0C9";
 			font-size: 3.5rem;
@@ -241,6 +258,9 @@
 			color: #1b97f3;
 		}
 
+		.fa-star:before {
+			content: "\f005";
+		}
 		.fa-fav-star:before{
 			color: #2196F3;
 		}
@@ -255,12 +275,20 @@
 			font-size: 2rem;
 		}
 
-		.menu-list .fa-sign-out:before,
+		.menu-list .fa-sign-out:before{
+			color:#2196F3;
+			font-size:2rem;
+			content: "\f08b";
+		}
+
 		.menu-list .fa-sign-in:before{
+			content: "\f090";
 			color:#2196F3;
 			font-size:2rem;
 		}
+
 		.fa-plus::before{
+			content: "\f067";
 			font-size: 2rem;
 			color: #2196F3;
 			cursor: pointer;
