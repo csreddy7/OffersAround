@@ -26,8 +26,10 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 
 
-/*********************login api  **********************/
 
+
+
+/********************* login api  **********************/
 
 app.post("/login",function(req,res){
 	mongoClient.connect(dbUrl,function(err,db){
@@ -88,6 +90,8 @@ app.get("/getOffers",function(req,res){
 		res.json([]);
 	}
 });
+
+
 
 
 app.use(function(req,res,next){
@@ -281,5 +285,5 @@ var getCurrentTime=function(){
 	return new Date().getTime();
 }
 
-app.listen(7575);
-console.log("server listening at 7575");
+app.listen(80);
+console.log("server listening at 80");

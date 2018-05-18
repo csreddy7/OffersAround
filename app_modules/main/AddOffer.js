@@ -32,9 +32,12 @@ class AddOffer{
 		if(location){
 			 locationName=location;
 		}else{
-			 alert("couldn't able to identify ur location,please try after some time");
-			 return;
+			locationName="unknown";
 		}
+		// else{
+		// 	 alert("couldn't able to identify ur location,please try after some time");
+		// 	 return;
+		// }
 		
 		let offerContent=document.querySelectorAll("#offerContent")[0].value;
 		ajax.addOffer(offerName,locationName,offerContent).then((res)=>{

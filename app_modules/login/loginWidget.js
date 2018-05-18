@@ -39,10 +39,10 @@ class login{
 			    if(res.validUser){
 			    	document.cookie="token="+res.token;
 			    	localStorage.setItem("userId",mobileNumber);
-			    	 window.sessionVariable=setTimeout(()=>{
-						localStorage.removeItem("userId");
-			    		location.reload();
-			    	},60000);
+			    	// window.sessionVariable=setTimeout(()=>{
+					// 	localStorage.removeItem("userId");
+			    	// 	location.reload();
+			    	// },60000);
 				    let event = new Event("close-dialog");
 				    document.dispatchEvent(event);
 				    commonService.showValidUserActions();

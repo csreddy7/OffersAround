@@ -39,6 +39,7 @@ let commonService={
 					console.log(err);
 				});
 			},(err)=>{
+				reject(err);
 				alert("can't access your location this time,please try after some time ");
 			},{timeout:5000});
 		});
