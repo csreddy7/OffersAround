@@ -126,7 +126,7 @@ class CreateOffer {
 		target.style.display = "block";
 	}
 	createComment() {
-		let value = document.getElementById("comment-box").value, obj = {};
+		let value = document.querySelector("#" + this.id + " #comment-box").value, obj = {};
 		obj.comment = value;
 		obj.username=localStorage.getItem("userId");
 		let comment = this.getComment(obj);

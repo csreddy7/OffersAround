@@ -57,7 +57,6 @@ let commonService={
 						  }else{
 							offersList.innerHTML="";
 						  }
-				          
 				    },(err)=>{
 				    	this.clearScreen();
 				    	alert("session timeout.please login again")

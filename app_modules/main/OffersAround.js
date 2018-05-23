@@ -10,6 +10,7 @@ import 'css/font-awesome.css';
 window.OA={
   "injector":new Injector()
  };
+
 window.onload = function () {
 
   const menuIcon = document.querySelector(".fa-bars"),
@@ -66,7 +67,7 @@ window.onload = function () {
     } else {
       menuIcon.setAttribute("class", "fa fa-bars rotate-menu");
     }
-    if (menu.cclassList.contains("show-menu")) {
+    if (!menu.classList.contains("show-menu")) {
       menu.setAttribute("class", "menu-list show-menu");
     } else {
       menu.setAttribute("class", "menu-list hide-menu");
@@ -145,6 +146,8 @@ window.onload = function () {
   favIcon.addEventListener("click", () => {
     commonService.showFavourites();
  });
+
+ 
 }
 
 
