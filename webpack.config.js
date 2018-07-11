@@ -1,7 +1,7 @@
 var path = require("path");
 var webpack = require("webpack");
 module.exports = {
-  entry: './app_modules/main/OffersAround.js',
+  entry: './index.js',
   output: {
     filename: './build/build.js'
   },
@@ -31,7 +31,7 @@ module.exports = {
   resolve: {
     modules: [
       path.resolve('./resources'),
-      path.resolve('./app_modules')
+      path.resolve('./src')
     ]
   }
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>OffersAround</title>
+        <meta name="keywords" content="app for finding offers around you">
+        <meta name="description" content="offers,offers around you,location offers,best offers">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- 
+            using normalize css to give default styles for all browsers 
+        -->
+        <link href="/src/css/normalize.css" rel="stylesheet" />
+        <!--
+            global styles 
+        -->
+        <link href="/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <header class="float-clear">
+            <h1>Offers Around You!</h1>
+        </header>
+        <main role="main">
+            <article class="offersAround">
+                <section class="searchTab">
+                    <input type="text" value=""  id="searchBox" placeholder="search offers here by title" />
+                    <a class="fa fa-search" href="#" id="searchButton" aria-hidden="true"></a>
+                </section>
+                <section id="offersList">
+                </section>
+            </article>
+        </main>
+        <footer class="float-clear">
+            <p>copyright@csmerchandise.in</p>
+        </footer>
+        <script async src="/build/build.js"></script>
+    </body>
+</html>
+
+

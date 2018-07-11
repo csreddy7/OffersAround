@@ -104,7 +104,7 @@ class CreateOffer {
 	}
 
 	showOfferDetails() {
-		let dialog = oa.injector.get("dialog"); 
+		let dialog = OA.injector.get("dialog"); 
 		if(dialog.isOpened()){
 			dialog.closeDialog();
           } 
@@ -117,6 +117,7 @@ class CreateOffer {
 	    	console.log("error while creating login widget")
 	    });
 	}
+	
 	showAddCommentBox() {
 		let target = document.querySelector("#" + this.id + " .add-comment");
 		target.style.display = "block";

@@ -9,34 +9,40 @@
         <!-- 
             using normalize css to give default styles for all browsers 
         -->
-        <link href="src/css/normalize.css" rel="stylesheet" />
+        <link href="/src/css/normalize.css" rel="stylesheet" />
         <!--
             global styles 
         -->
-        <link href="styles.css" rel="stylesheet" />
+        <link href="/styles.css" rel="stylesheet" />
+        <link href="registration.css" rel="stylesheet" />
     </head>
     <body>
         <header class="float-clear">
             <h1>Offers Around You!</h1>
         </header>
         <main>
-            <article class="login-container">
-                <section class="login">
+            <article class="registration-container">
+                <section class="registration">
                     <form>
                         <fieldset>
+                            <legend></legend>
                             <div>
-                                <label for="mobileNumber">MobileNo:</label>
-                                <input id="mobileNumber" type="number" placeholder="Type username here">
+                                <label for="userName">Name:</label>
+                                <input id="userName" type="text" placeholder="Type username here">
+                            </div>
+                            <div>
+                                <label for="mobileNumber">Phone number:</label>
+                                <input id="mobileNumber" type="number" placeholder="Type phone no here">
                             </div>
                             <div>
                                 <label for="passWord">Password:</label>
                                 <input id="passWord" type="password" placeholder="Type password here">
                             </div>
                             <div class="actions">
-                                <button id="login">Login</button>
-                                <a class="register-link" href="src/registration/registration.html">Register</a>
+                                <button id="registerButton" >Register</button>
                             </div>
                         </fieldset>
+                        
                     </form>
                 </section>
             </article>
@@ -44,6 +50,6 @@
         <footer class="float-clear">
             <p>copyright@csmerchandise.in</p>
         </footer>
-        <script async src="build/build.js"></script>
+        <script async src="/build/build.js"></script>
     </body>
 </html>

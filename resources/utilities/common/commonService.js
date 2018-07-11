@@ -1,4 +1,3 @@
-import { CreateOffer } from "utilities/Offer/offer";
 import {obj as ajax } from 'utilities/xhr/ajax';
 
 let registerIcon = document.querySelectorAll("#register")[0],

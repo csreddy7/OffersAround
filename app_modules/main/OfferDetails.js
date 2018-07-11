@@ -56,7 +56,7 @@ class OfferDetails{
 					editNode.addEventListener("click",()=>{
 						let event = new Event("close-dialog");
 						document.dispatchEvent(event);
-						let dialog = oa.injector.get("dialog"); 
+						let dialog = OA.injector.get("dialog"); 
 						if(dialog.isOpened()){
 							dialog.closeDialog();
 						  } 
