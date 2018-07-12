@@ -1,0 +1,164 @@
+/**** global styles ********/
+
+@font-face{
+	font-family:"Open Sans";
+	src:url("/resources/fonts/OpenSans-SemiBold.ttf");
+}
+
+/*** offer style ****/
+#offersList{
+	height: calc(100% - 8.8rem);
+	overflow: auto;
+}
+
+.offer{
+	width: 90%;
+    margin: 0 auto;
+	border: 1px solid #ccc;
+	margin-top: 1rem;
+}
+
+
+.offer .offer-header{
+	border-bottom: 1px solid #ccc;
+	padding: 0.5rem;
+	font-size: 0;
+}
+
+.offerName,.comment-list h1{
+	display: inline-block;
+	width: calc(100% - 20px);
+	text-align: center;
+    font-size: 2rem;
+    color: #9E9E9E;
+}
+
+.offerContent{
+	margin: 0 auto;
+    padding: 1rem;
+	line-height: 1.5rem;
+	float: left;
+	width:calc(100% - 4rem);
+	min-height: 8rem;
+	overflow: auto;
+	font-size: 1.8rem;
+}
+/*.offerContent:hover{
+	width:calc(100% - 4rem);
+}*/
+
+.bottom-links{
+	display: none;
+}
+.sideBar{
+	float: left;
+    border-left: 1px solid #ccc;
+	width:4rem;
+	/* display: none; */
+}
+
+.sideBar span{
+	padding: 1rem;
+	display: block;
+	cursor: pointer;
+}
+
+.sideBar .view-details-link{
+	background-image: url(../../resources/images/new-window.png);
+    background-size: 3rem 3rem;
+    background-position: center;
+	background-repeat: no-repeat;
+	padding-top: 3rem;
+}
+.add-comment,.edit-comment{
+	display: none;
+    padding: 1rem;
+	overflow: hidden;
+	border-top: 1px solid #ccc;
+	font-size: 0;
+}
+
+.comment-box{
+	 width:calc(100% - 60px);
+	 float: left;
+     border: 1px solid #ddd;
+     border-radius: 2px;
+     height: 3.2rem;
+     padding-left: 5px;
+     border-right: none !important;
+ }
+ .add-comment-button,.edit-comment-button{
+    padding: 0.7rem;
+	background: #2196F3;
+	float: left;
+	cursor: pointer;
+ }
+ .add-comment .close-dialog, .edit-comment .close-edit-dialog{
+	font-size: 1.8rem;
+    color: #fff;
+    background: #d80a0ab5;
+	padding: 0.7rem;
+	cursor: pointer;
+ }
+ .add-comment-button::before{
+	 color: #fff !important;
+	 font-size: 1.8rem !important;
+ }
+
+.comment-box:focus{
+ 	outline:none;
+ }
+.comment-list{
+ 	display: none;
+    height: 11rem;
+    border-top: 1px solid #ddd;
+    width: 100%;
+    padding: 0.5rem;
+    clear: both;
+ }
+.close-comments{
+	float: right;
+}
+ .username{
+ 	margin-right:0.5rem;
+ 	color:#2196F3;
+ }
+ #comment-content{
+ 	overflow: auto;
+	max-height: 8rem;
+	clear: both;
+	padding: 1rem;
+ }
+ .offer-comment{
+ 	margin-bottom:1rem;
+ }
+
+
+ /*********************
+	Third Party Styles
+***********************/
+
+.fa-window-close:before {
+    content: "\f2d3";
+	color:#1b97f3;
+	cursor:pointer;
+	font-size: 2rem;
+}
+.fa-pencil-square-o::before,.fa-eye::before{
+	font-size: 2rem;
+	color: #2196F3;
+	cursor: pointer;
+}
+
+.fa-save:before{
+    content: "\f0c7";
+    font-size: 1.8rem;
+    color: #fff;
+}
+
+
+.fa-trash-o:before {
+    cursor: pointer;
+    color: #2196F3;
+}
+

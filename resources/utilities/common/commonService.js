@@ -1,11 +1,6 @@
 import {obj as ajax } from 'utilities/xhr/ajax';
 
-let registerIcon = document.querySelectorAll("#register")[0],
-	loginIcon = document.querySelectorAll("#login")[0],
-	logoutIcon = document.querySelectorAll("#logout")[0],
-	addOfferIcon = document.querySelectorAll("#addoffer")[0],
-	offersList=document.querySelectorAll("#offersList")[0],
-	favIcon=document.querySelector("#favourite"),
+let logoutIcon = document.querySelectorAll("#logout")[0],
 	geomapUrl="https://maps.googleapis.com/maps/api/geocode/json";
 let commonService={
 	offers:null,
@@ -44,24 +39,6 @@ let commonService={
 		});
 	 return geoPromise;
 	},
-	showOffers(){
-		ajax.getOffers().then((response)=>{
-				    	  let res=JSON.parse(response);
-						  let arr = this.offers= res;
-						  if(arr.length>0){
-							offersList.innerHTML="";
-							arr.forEach((offer)=>{
-								let obj = new CreateOffer(offer);
-							  });
-						  }else{
-							offersList.innerHTML="";
-						  }
-				    },(err)=>{
-				    	this.clearScreen();
-				    	alert("session timeout.please login again")
-				    	console.error(JSON.parse(err));
-				    });
-	},
 	filterOffers(query){
 		if(this.offers){
 			let arr=this.offers.filter((e)=>{
@@ -89,24 +66,6 @@ let commonService={
 				offersList.innerHTML="";
 			}
 		}
-	},
-	showValidUserActions(){
-		registerIcon.style.display="none";
-		loginIcon.style.display="none";
-		logoutIcon.style.display="block";
-		addOfferIcon.style.display="block";
-		favIcon.style.display="block";
-	},
-	showInValidUserActions(){
-		registerIcon.style.display="block";
-		loginIcon.style.display="block";
-		logoutIcon.style.display="none";
-		addOfferIcon.style.display="none";
-		favIcon.style.display="none";		
-	},
-	clearScreen(){
-		localStorage.removeItem("userId");
-		location.reload();
 	},
 	validatePhoneNumber(no){
 		let nullValue=parseInt(no); // checking if value has characters

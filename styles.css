@@ -44,7 +44,7 @@ header>h1{
 /**** main styles *******/
 
 main{
-    height: calc(100% - 130px);
+    height: calc(100% - 115px);
 }
 
 
@@ -57,8 +57,9 @@ footer{
     position: absolute;
     bottom: 0;
     width: 100%;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: bold;
+    line-height: 1.2rem;
 }
 
 

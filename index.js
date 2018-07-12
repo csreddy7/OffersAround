@@ -1,24 +1,24 @@
 import {obj as ajax } from 'utilities/xhr/ajax';
 import { commonService } from "utilities/common/commonService";
-import { Injector } from "utilities/common/injector";
-// import 'main/main.css';
-// import 'css/font-awesome.css';
+import 'main/main.css';
+import 'css/font-awesome.css';
+import initMainView from 'main/main.js';
 
 window.onload=function(){
     var loginButton=document.querySelector("#login");
+    var registerButton=document.querySelector("#registerButton");
     if(loginButton){
         loginButton.addEventListener("click",(e)=>{
             e.preventDefault();
             login();
         });
-    }
-
-    var registerButton=document.querySelector("#registerButton");
-    if(registerButton){
+    }else if(registerButton){
         registerButton.addEventListener("click",(e)=>{
             e.preventDefault();
             register();
         });
+    }else{
+        initMainView();
     }
     
 }
