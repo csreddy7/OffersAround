@@ -1,7 +1,5 @@
 import {obj as ajax } from 'utilities/xhr/ajax';
 import { commonService } from "utilities/common/commonService";
-import 'main/main.css';
-import 'css/font-awesome.css';
 import initMainView from 'main/main.js';
 
 window.onload=function(){

@@ -30,7 +30,7 @@ module.exports = {
   },
   resolve: {
     modules: [
-      path.resolve('./resources'),
+      path.resolve('./src/resources'),
       path.resolve('./src')
     ]
   }

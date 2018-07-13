@@ -1,6 +1,9 @@
 
 import {obj as ajax } from 'utilities/xhr/ajax';
 import { commonService } from "utilities/common/commonService";
+import "utilities/Offer/offer.css";
+
+
 class CreateOffer {
 	constructor(offer) {
 		this.offer=offer;
@@ -23,7 +26,7 @@ class CreateOffer {
 				render();
 			}
 		}
-		request.open("GET", "resources/utilities/Offer/offer.html", true);
+		request.open("GET", "/src/resources/utilities/Offer/offer.html", true);
 		request.send();
 
 		let render = () => {
@@ -34,10 +37,7 @@ class CreateOffer {
 			document.getElementById("offersList").appendChild(offer);
 			offer.querySelectorAll(".offerName")[0].innerHTML=this.offerName;
 			offer.querySelectorAll(".offerContent")[0].innerHTML=this.offerDetails;
-			if(this.offer.isFavourite){
-				offer.querySelector(".sideBar .favourite-link").classList.add("fa-fav-star");
-				offer.querySelector(".bottom-links .favourite-link").innerHTML="favourite";
-			}
+			
 			const commentParent=document.querySelector("#" + this.id + " #comment-content");
 			this.offer.comments.forEach((e)=>{
 				let obj={};
@@ -48,33 +48,13 @@ class CreateOffer {
 				comment.id=this.offer._id+"_"+e.id;
 				commentParent.appendChild(comment);
 			});
-			var userId=localStorage.getItem("userId");
-			if(!userId){
-				commonService.showInValidUserActions();
-				let addIcon=offer.querySelector(".sideBar .add-comment-link");
-				addIcon.parentNode.removeChild(addIcon);
-				let favIcon=offer.querySelector(".sideBar .favourite-link");
-				favIcon.parentNode.removeChild(favIcon);
-
-				addIcon=offer.querySelector(".bottom-links .add-comment-link");
-				addIcon.parentNode.removeChild(addIcon);
-				favIcon=offer.querySelector(".bottom-links .favourite-link");
-				favIcon.parentNode.removeChild(favIcon);
-			}
 			this.initializeEventHanders(offer);
 		}
 	}
 
 	
 	initializeEventHanders(offer) {
-		/*offer.addEventListener("mouseenter",function(event){
-			offer.querySelector(".sideBar").style.display="block";
-			console.log("mouseenter")
-		});
-		offer.addEventListener("mouseleave",function(event){
-			console.log("mousout")
-			offer.querySelector(".sideBar").style.display="none";
-		});*/
+
 		offer.addEventListener("click", event => {
 			let target = event.target;
 			if (target.className.indexOf("view-details-link") != -1) {
@@ -83,9 +63,7 @@ class CreateOffer {
 				this.showAddCommentBox();
 			} else if (target.className.indexOf("view-comments-link") != -1) {
 				this.showCommentsBox();
-			} else if (target.className.indexOf("favourite-link") != -1) {
-				this.makeFavourite();
-			} else if (target.className.indexOf("add-comment-button") != -1) {
+			}  else if (target.className.indexOf("add-comment-button") != -1) {
 				this.createComment();
 			} else if (target.className.indexOf("edit-comment-button") != -1) {
 				this.saveComment();
@@ -104,18 +82,7 @@ class CreateOffer {
 	}
 
 	showOfferDetails() {
-		let dialog = OA.injector.get("dialog"); 
-		if(dialog.isOpened()){
-			dialog.closeDialog();
-          } 
-	    let OfferDetailsWidget= new OfferDetails(this.offer);
-	    OfferDetailsWidget.renderPage().then(()=>{
-			dialog.init("Offer Details",OfferDetailsWidget.dom);
-			OfferDetailsWidget.initializeEventHanders();
-	    	OfferDetailsWidget.populateOfferDetails();
-	    },()=>{
-	    	console.log("error while creating login widget")
-	    });
+		
 	}
 	
 	showAddCommentBox() {
@@ -187,14 +154,6 @@ class CreateOffer {
 			}else if(res==="failure"){
 				console.log("erroe while editing comment")
 			}
-		},this.showError);
-	}
-
-	makeFavourite(){
-		this.offer.isFavourite=!this.offer.isFavourite;
-		ajax.makeFavourite(this.offer).then((res)=>{
-			// document.querySelector("#" + this.id + "  .sideBar  .favourite-link").classList.add("fa-fav-star");
-			location.reload();
 		},this.showError);
 	}
 	

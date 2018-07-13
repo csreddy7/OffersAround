@@ -2,8 +2,10 @@ import { commonService } from "utilities/common/commonService";
 import {obj as ajax } from 'utilities/xhr/ajax';
 import {CreateOffer} from 'utilities/Offer/offer';
 
-import "css/OffersAround.css";
+import 'main/main.css';
+import 'css/font-awesome.css';
 
+let offers=[];
 function initMainView() {
   
     let locationObj=null;
@@ -15,7 +17,7 @@ function initMainView() {
       });
       console.log("locationName---->",locationObj.short_name);
       localStorage.setItem("location",locationObj.short_name);
-      commonService.showOffers();
+      showOffers();
     },(err)=>{
       localStorage.setItem("location","unknown");
       showOffers();
@@ -28,7 +30,7 @@ function showOffers(){
   let offersList=document.querySelector("#offersList");
         ajax.getOffers().then((response)=>{
               let res=JSON.parse(response);
-              let arr = this.offers= res;
+              let arr = offers= res;
               if(arr.length>0){
                   offersList.innerHTML="";
                   arr.forEach((offer)=>{
