@@ -34,39 +34,20 @@ let commonService={
 				});
 			},(err)=>{
 				reject(err);
-				alert("can't access your location this time,please try after some time ");
+				// alert("can't access your location this time,please try after some time ");
 			},{timeout:5000});
 		});
 	 return geoPromise;
 	},
-	filterOffers(query){
-		if(this.offers){
-			let arr=this.offers.filter((e)=>{
+	filterOffers(query,offers){
+		if(offers){
+			let arr=offers.filter((e)=>{
             	return (e.title.indexOf(query)!=-1);
-        	});
-	        if(arr.length>0){
-		          offersList.innerHTML="";
-		          arr.forEach((offer)=>{
-		          let obj = new CreateOffer(offer);
-		        });
-	        }
+			});	
+			return arr;
 		}
 	},
-	showFavourites(){
-		if(this.offers){
-			let arr=this.offers.filter((e)=>{
-            	return e.isFavourite==true;
-        	});
-	        if(arr.length>0){
-		          offersList.innerHTML="";
-		          arr.forEach((offer)=>{
-		          let obj = new CreateOffer(offer);
-		        });
-	        }else{
-				offersList.innerHTML="";
-			}
-		}
-	},
+
 	validatePhoneNumber(no){
 		let nullValue=parseInt(no); // checking if value has characters
 		if(isNaN(nullValue)){
@@ -78,6 +59,7 @@ let commonService={
 		}
 		return true;
 	},
+
 	validatePassword(password){
 		let atleastOneCapitalChar=/[A-Z]/;
 		let atleastOneSmallChar=/[a-z]/;

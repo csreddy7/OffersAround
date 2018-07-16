@@ -5,3 +5,5 @@ dynamic server location
 adding images
 editing and deleting features
 favourites
+
+using iframes

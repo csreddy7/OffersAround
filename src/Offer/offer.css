@@ -1,0 +1,52 @@
+
+/*** offer style ****/
+#offersList{
+	height: calc(100% - 5rem);
+    overflow-y: auto;
+}
+
+.offer{
+    width: 90%;
+    margin: 0 auto;
+    border: 2px solid #eeeeee;
+    margin-top: 1rem;
+    display: flex;
+    padding: 0.6rem 0.3rem;
+}
+
+
+.offer .offerName{
+    width: calc(100% - 90px);
+    font-size: 1.4rem;
+    color: #9E9E9E;
+    text-transform: capitalize;
+    border-right: 2px solid #ccc;
+    margin-right: 0.2rem;
+}
+
+.offer .actions{
+    display: flex;
+    align-items: center;
+}
+
+
+.fa-pencil-square-o::before{
+    font-size: 1.1rem;
+    color: #2196F3;
+    cursor: pointer;
+    margin:0.3rem;
+}
+
+.fa-eye::before{
+    font-size: 1.2rem;
+    color: #2196F3;
+    cursor: pointer;
+    margin:0.3rem;
+}
+
+.fa-trash-o:before {
+    cursor: pointer;
+    color: #2196F3;
+    font-size: 1.2rem;
+    margin:0.3rem;
+}

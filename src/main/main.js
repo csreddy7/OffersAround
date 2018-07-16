@@ -1,11 +1,12 @@
 import { commonService } from "utilities/common/commonService";
 import {obj as ajax } from 'utilities/xhr/ajax';
-import {CreateOffer} from 'utilities/Offer/offer';
+import {CreateOffer} from 'Offer/offer';
 
 import 'main/main.css';
 import 'css/font-awesome.css';
 
 let offers=[];
+let offersList=document.querySelector("#offersList");
 function initMainView() {
   
     let locationObj=null;
@@ -27,7 +28,6 @@ function initMainView() {
 }
 
 function showOffers(){
-  let offersList=document.querySelector("#offersList");
         ajax.getOffers().then((response)=>{
               let res=JSON.parse(response);
               let arr = offers= res;
@@ -49,43 +49,47 @@ function initializeHandlers(){
  // initializing event handlers
   
     const logoutIcon = document.querySelector("#logout"),
-    addOfferIcon = document.querySelector("#addOffer"),
+    addOfferButton= document.querySelector("#addOfferButton"),
     searchBox = document.querySelector("#searchBox"),
-    searchButton = document.querySelector("#searchButton");
+    searchButton = document.querySelector("#searchButton"),
+    offersAround=document.querySelector(".offersAround"),
+    addOffer=document.querySelector("#addOffer");
     
     searchButton.addEventListener("click", () => {
-        let searchValue=searchBox.value;
-        commonService.filterOffers(searchValue);
+        filterOffers();
       });
 
-      searchBox.addEventListener("keyup", (event) => {
+    searchBox.addEventListener("keyup", (event) => {
           if(event.keyCode==13){
-            let searchValue=searchBox.value;
-            commonService.filterOffers(searchValue);
+            filterOffers();
           }
       });
 
+    function filterOffers(){
+        let searchValue=searchBox.value;
+        let arr=commonService.filterOffers(searchValue,offers);
+        if(arr.length>0){
+            offersList.innerHTML="";
+            arr.forEach((offer)=>{
+            let obj = new CreateOffer(offer);
+          });
+        }
+    }
       
-      addOfferIcon.addEventListener("click", () => {
-          hideMenu();
-          document.cookie="token=77";
-          commonService.clearScreen();
-      });
+    addOfferButton.addEventListener("click", () => {
+        offersAround.classList.remove("showDiv");
+		addOffer.classList.remove("hideDiv");
+        offersAround.classList.add("hideDiv");
+		addOffer.classList.add("showDiv");
+    });
 
-      addOfferIcon.addEventListener("click", () => {
-          let dialog = OA.injector.get("dialog");
-          if(dialog.isOpened()){
-            dialog.closeDialog();
-          } 
-          let addOfferWidget= new AddOffer();
-          addOfferWidget.renderPage().then(()=>{
-            dialog.init("Add Offer",addOfferWidget.dom);
-            addOfferWidget.initializeHandlers();
-            hideMenu();
-          },()=>{
-            console.log("error while creating login widget")
-          });  
-      });
+    document.querySelector("#addOffer .close").addEventListener("click", () => {
+        offersAround.classList.remove("hideDiv");
+		addOffer.classList.remove("showDiv");
+        offersAround.classList.add("showDiv");
+        addOffer.classList.add("hideDiv");       
+    });
+
 }
 
 export default initMainView;
