@@ -53,7 +53,7 @@ function initializeHandlers(){
     searchBox = document.querySelector("#searchBox"),
     searchButton = document.querySelector("#searchButton"),
     offersAround=document.querySelector(".offersAround"),
-    addOffer=document.querySelector("#addOffer");
+    addOfferDialog=document.querySelector("#addOffer");
     
     searchButton.addEventListener("click", () => {
         filterOffers();
@@ -77,18 +77,37 @@ function initializeHandlers(){
     }
       
     addOfferButton.addEventListener("click", () => {
-        offersAround.classList.remove("showDiv");
-		addOffer.classList.remove("hideDiv");
-        offersAround.classList.add("hideDiv");
-		addOffer.classList.add("showDiv");
+        showDialog(addOfferDialog);
     });
 
-    document.querySelector("#addOffer .close").addEventListener("click", () => {
-        offersAround.classList.remove("hideDiv");
-		addOffer.classList.remove("showDiv");
-        offersAround.classList.add("showDiv");
-        addOffer.classList.add("hideDiv");       
+    document.querySelector("#addOffer .close-icon").addEventListener("click", () => {
+        hideDialog(addOfferDialog);
     });
+
+    document.querySelector("#editOffer .close-icon").addEventListener("click", () => {
+        const editDialog=document.querySelector("#editOffer");
+        hideDialog(editDialog);
+    });
+
+    document.querySelector("#showOffer .close-icon").addEventListener("click", () => {
+        const showOfferDialog=document.querySelector("#showOffer");
+        hideDialog(showOfferDialog);
+    });
+
+
+    function showDialog(node){
+        offersAround.classList.remove("showDiv");
+		node.classList.remove("hideDiv");
+        offersAround.classList.add("hideDiv");
+		node.classList.add("showDiv");
+    }
+
+    function hideDialog(node){
+        offersAround.classList.remove("hideDiv");
+		node.classList.remove("showDiv");
+        offersAround.classList.add("showDiv");
+        node.classList.add("hideDiv");       
+    }
 
 }
 

@@ -22,38 +22,68 @@
         <main role="main">
             <article id="showOffer">
                     <section class="wrapper">
-                        <div class="offer-content">
-                                hello
-                        </div>
-                        <div class="close">
-        
-                        </div>
-                        <div class="offer-images">
-        
-                        </div>
-                     </section>
+                            <div class="header">
+                                <h1>Offer Details</h1>
+                                <button class="oa-button close-icon" aria-label="click here to close"></button>
+                            </div>
+                            <div class="offer-title">
+                                <label for="add-title">Title:</label>
+                                <div class="offer-title-input"></div>
+                            </div>
+                            <div class="offer-content">
+                                    <label for="add-title">Content:</label>
+                                    <div class="offer-content-textarea"></div>
+                            </div>
+                            <div class="offer-images">
+                                
+                            </div>
+                    </section>      
             </article>
             <article id="editOffer">
-                    
+                    <section class="wrapper">
+                            <div class="header">
+                                <h1>Edit Offer</h1>
+                                <button class="oa-button close-icon" aria-label="click here to close"></button>
+                            </div>
+                            <div class="offer-title">
+                                <label for="add-title">Title:</label>
+                                <input class="offer-title-input" type="text" aria-label="write title here" value="" placeholder="offer title" id="add-title">
+                            </div>
+                            <div class="offer-content">
+                                    <label for="add-title">Content:</label>
+                                    <textarea class="offer-content-textarea" rows="6" id="add-content" ></textarea>
+                            </div>
+                            <div class="upload-image">
+                                <label for="add-image">Add Images:</label>
+                                <input type="file" accept=".jpg,.png,.jpeg"  multiple>
+                            </div>
+                            <button class="oa-save">
+                                Save
+                            </button>
+                    </section>      
             </article>        
             <article id="addOffer">
                     <section class="wrapper">
-                            <div>
-                                <label for="add-title">Offer Title:</label>
-                                <input type="text" value="" id="add-title">
+                            <div class="header">
+                                <h1>Add Offer</h1>
+                                <button class="oa-button close-icon" aria-label="click here to close"></button>
+                            </div>
+                            <div class="offer-title">
+                                <label for="add-title">Title:</label>
+                                <input class="offer-title-input" type="text" aria-label="write title here" value="" placeholder="offer title" id="add-title">
                             </div>
                             <div class="offer-content">
-                                    <label for="add-title">Offer Content:</label>
-                                    <textarea rows="10" id="add-content" ></textarea>
+                                    <label for="add-title">Content:</label>
+                                    <textarea class="offer-content-textarea" rows="6" id="add-content" ></textarea>
                             </div>
-                            <div class="close">
-                                <i class="fa fa-window-close"></i>
+                            <div class="upload-image">
+                                <label for="add-image">Add Images:</label>
+                                <input type="file" accept=".jpg,.png,.jpeg"  multiple>
                             </div>
-                            <div>
-                                <label for="add-image">Add Image:</label>
-                                <input type="file" accept=".jpg,.png,.jpeg" multiple>
-                            </div>
-                         </section>                    
+                            <button class="oa-save">
+                                Save
+                            </button>
+                    </section>                    
             </article>        
             <article class="offersAround float-clear">
                 <section class="searchTab">

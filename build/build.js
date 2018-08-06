@@ -859,7 +859,7 @@ function register() {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _commonService = __webpack_require__(1);
@@ -876,86 +876,104 @@ var offers = [];
 var offersList = document.querySelector("#offersList");
 function initMainView() {
 
-  var locationObj = null;
-  _commonService.commonService.getLocation().then(function (res) {
-    locationObj = res;
-    var titleArray = document.querySelectorAll(".location-title");
-    titleArray.forEach(function (e) {
-      e.innerHTML = "Offers Around " + locationObj.short_name;
+    var locationObj = null;
+    _commonService.commonService.getLocation().then(function (res) {
+        locationObj = res;
+        var titleArray = document.querySelectorAll(".location-title");
+        titleArray.forEach(function (e) {
+            e.innerHTML = "Offers Around " + locationObj.short_name;
+        });
+        console.log("locationName---->", locationObj.short_name);
+        localStorage.setItem("location", locationObj.short_name);
+        showOffers();
+    }, function (err) {
+        localStorage.setItem("location", "unknown");
+        showOffers();
+        console.log(err);
     });
-    console.log("locationName---->", locationObj.short_name);
-    localStorage.setItem("location", locationObj.short_name);
-    showOffers();
-  }, function (err) {
-    localStorage.setItem("location", "unknown");
-    showOffers();
-    console.log(err);
-  });
-  initializeHandlers();
+    initializeHandlers();
 }
 
 function showOffers() {
-  _ajax.obj.getOffers().then(function (response) {
-    var res = JSON.parse(response);
-    var arr = offers = res;
-    if (arr.length > 0) {
-      offersList.innerHTML = "";
-      arr.forEach(function (offer) {
-        var obj = new _offer.CreateOffer(offer);
-      });
-    } else {
-      offersList.innerHTML = "";
-    }
-  }, function (err) {
-    alert("session timeout.please login again");
-    console.error(JSON.parse(err));
-  });
+    _ajax.obj.getOffers().then(function (response) {
+        var res = JSON.parse(response);
+        var arr = offers = res;
+        if (arr.length > 0) {
+            offersList.innerHTML = "";
+            arr.forEach(function (offer) {
+                var obj = new _offer.CreateOffer(offer);
+            });
+        } else {
+            offersList.innerHTML = "";
+        }
+    }, function (err) {
+        alert("session timeout.please login again");
+        console.error(JSON.parse(err));
+    });
 }
 
 function initializeHandlers() {
-  // initializing event handlers
+    // initializing event handlers
 
-  var logoutIcon = document.querySelector("#logout"),
-      addOfferButton = document.querySelector("#addOfferButton"),
-      searchBox = document.querySelector("#searchBox"),
-      searchButton = document.querySelector("#searchButton"),
-      offersAround = document.querySelector(".offersAround"),
-      addOffer = document.querySelector("#addOffer");
+    var logoutIcon = document.querySelector("#logout"),
+        addOfferButton = document.querySelector("#addOfferButton"),
+        searchBox = document.querySelector("#searchBox"),
+        searchButton = document.querySelector("#searchButton"),
+        offersAround = document.querySelector(".offersAround"),
+        addOfferDialog = document.querySelector("#addOffer");
 
-  searchButton.addEventListener("click", function () {
-    filterOffers();
-  });
+    searchButton.addEventListener("click", function () {
+        filterOffers();
+    });
 
-  searchBox.addEventListener("keyup", function (event) {
-    if (event.keyCode == 13) {
-      filterOffers();
+    searchBox.addEventListener("keyup", function (event) {
+        if (event.keyCode == 13) {
+            filterOffers();
+        }
+    });
+
+    function filterOffers() {
+        var searchValue = searchBox.value;
+        var arr = _commonService.commonService.filterOffers(searchValue, offers);
+        if (arr.length > 0) {
+            offersList.innerHTML = "";
+            arr.forEach(function (offer) {
+                var obj = new _offer.CreateOffer(offer);
+            });
+        }
     }
-  });
 
-  function filterOffers() {
-    var searchValue = searchBox.value;
-    var arr = _commonService.commonService.filterOffers(searchValue, offers);
-    if (arr.length > 0) {
-      offersList.innerHTML = "";
-      arr.forEach(function (offer) {
-        var obj = new _offer.CreateOffer(offer);
-      });
+    addOfferButton.addEventListener("click", function () {
+        showDialog(addOfferDialog);
+    });
+
+    document.querySelector("#addOffer .close-icon").addEventListener("click", function () {
+        hideDialog(addOfferDialog);
+    });
+
+    document.querySelector("#editOffer .close-icon").addEventListener("click", function () {
+        var editDialog = document.querySelector("#editOffer");
+        hideDialog(editDialog);
+    });
+
+    document.querySelector("#showOffer .close-icon").addEventListener("click", function () {
+        var showOfferDialog = document.querySelector("#showOffer");
+        hideDialog(showOfferDialog);
+    });
+
+    function showDialog(node) {
+        offersAround.classList.remove("showDiv");
+        node.classList.remove("hideDiv");
+        offersAround.classList.add("hideDiv");
+        node.classList.add("showDiv");
     }
-  }
 
-  addOfferButton.addEventListener("click", function () {
-    offersAround.classList.remove("showDiv");
-    addOffer.classList.remove("hideDiv");
-    offersAround.classList.add("hideDiv");
-    addOffer.classList.add("showDiv");
-  });
-
-  document.querySelector("#addOffer .close").addEventListener("click", function () {
-    offersAround.classList.remove("hideDiv");
-    addOffer.classList.remove("showDiv");
-    offersAround.classList.add("showDiv");
-    addOffer.classList.add("hideDiv");
-  });
+    function hideDialog(node) {
+        offersAround.classList.remove("hideDiv");
+        node.classList.remove("showDiv");
+        offersAround.classList.add("showDiv");
+        node.classList.add("hideDiv");
+    }
 }
 
 exports.default = initMainView;
@@ -1038,17 +1056,43 @@ var CreateOffer = function () {
 	}, {
 		key: "showOfferInfo",
 		value: function showOfferInfo() {
-			document.querySelector(".offersAround").classList.add("hideDiv");
-			document.querySelector("#showOffer").classList.add("showDiv");
-
-			document.querySelector(".offer-content").innerHTML = this.offer.details;
+			var showOfferDialog = document.querySelector("#showOffer");
+			this.showDialog(showOfferDialog);
+			document.querySelector(".offer-content .offer-content-textarea").innerHTML = this.offer.details;
 		}
 	}, {
 		key: "editOfferInfo",
-		value: function editOfferInfo() {}
+		value: function editOfferInfo() {
+			var editDialog = document.querySelector("#editOffer");
+			this.showDialog(editDialog);
+		}
+	}, {
+		key: "showDialog",
+		value: function showDialog(node) {
+			var offersAround = document.querySelector(".offersAround");
+
+			offersAround.classList.remove("showDiv");
+			node.classList.remove("hideDiv");
+			offersAround.classList.add("hideDiv");
+			node.classList.add("showDiv");
+		}
+	}, {
+		key: "hideDialog",
+		value: function hideDialog(node) {
+			var offersAround = document.querySelector(".offersAround");
+			offersAround.classList.remove("hideDiv");
+			node.classList.remove("showDiv");
+			offersAround.classList.add("showDiv");
+			node.classList.add("hideDiv");
+		}
 	}, {
 		key: "deleteOffer",
-		value: function deleteOffer() {}
+		value: function deleteOffer() {
+			var result = confirm("Are you sure to delete this offer?");
+			if (result) {
+				console.log("yes");
+			}
+		}
 	}, {
 		key: "showError",
 		value: function showError(error) {
@@ -1107,7 +1151,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n/*** offer style ****/\n#offersList{\n\theight: calc(100% - 5rem);\n    overflow-y: auto;\n}\n\n.offer{\n    width: 90%;\n    margin: 0 auto;\n    border: 2px solid #eeeeee;\n    margin-top: 1rem;\n    display: flex;\n    padding: 0.6rem 0.3rem;\n}\n\n\n.offer .offerName{\n    width: calc(100% - 90px);\n    font-size: 1.4rem;\n    color: #9E9E9E;\n    text-transform: capitalize;\n    border-right: 2px solid #ccc;\n    margin-right: 0.2rem;\n}\n\n.offer .actions{\n    display: flex;\n    align-items: center;\n}\n\n\n.fa-pencil-square-o::before{\n    font-size: 1.1rem;\n    color: #2196F3;\n    cursor: pointer;\n    margin:0.3rem;\n}\n\n.fa-eye::before{\n    font-size: 1.2rem;\n    color: #2196F3;\n    cursor: pointer;\n    margin:0.3rem;\n}\n\n.fa-trash-o:before {\n    cursor: pointer;\n    color: #2196F3;\n    font-size: 1.2rem;\n    margin:0.3rem;\n}\n", ""]);
+exports.push([module.i, "\n/*** offer style ****/\n#offersList{\n\theight: calc(100% - 5rem);\n    overflow-y: auto;\n}\n\n.offer{\n    width: 90%;\n    margin: 0 auto;\n    border: 2px solid #eeeeee;\n    margin-top: 1rem;\n    display: flex;\n    padding: 0.6rem 0.3rem;\n}\n\n\n.offer .offerName{\n    width: calc(100% - 90px);\n    font-size: 1.4rem;\n    color: #9E9E9E;\n    text-transform: capitalize;\n    border-right: 2px solid #ccc;\n    margin-right: 0.2rem;\n}\n\n.offer .actions{\n    display: flex;\n    align-items: center;\n}\n\n\n.fa-pencil-square-o::before{\n    font-size: 1.1rem;\n    color:#563d7c;\n    cursor: pointer;\n    margin:0.3rem;\n}\n\n.fa-eye::before{\n    font-size: 1.2rem;\n    color:#563d7c;\n    cursor: pointer;\n    margin:0.3rem;\n}\n\n.fa-trash-o:before {\n    cursor: pointer;\n    color:#563d7c;\n    font-size: 1.2rem;\n    margin:0.3rem;\n}\n", ""]);
 
 // exports
 
@@ -1247,7 +1291,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n    /*********************\n        Main Article Styles\n    ***********************/\n\n    .offersAround,#addOffer,#editOffer,#showOffer{\n        background: #fff;\n        height: 100%;\n        overflow: hidden;\n    }\n\n\n\n    /***** search tab styles *****/\n\n    .searchTab{\n        position: relative;\n        font-size: 0;\n        margin: 1rem;\n    }\n\n    #searchBox{\n        border: 1px solid #9e9e9e;\n        border-radius: 2px;\n        height: 2.7rem;\n        padding-left: 1rem;\n        width: calc(100% - 110px);\n        font-size: 1.4rem;\n        border-right: 0;\n    }\n\n\n    /*********************\n        Third Party Styles\n    ***********************/\n\n    @font-face {\n            font-family: 'FontAwesome';\n            src: url('/resources/fonts/fontawesome-webfont.eot?v=4.7.0');\n            src: url('/resources/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('/resources/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('/resources/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('/resources/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('/resources/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');\n            font-weight: normal;\n            font-style: normal;\n        }\n\n    .fa {\n            display: inline-block;\n            font: normal normal normal 14px/1 FontAwesome;\n            font-size: inherit;\n            text-rendering: auto;\n            -webkit-font-smoothing: antialiased;\n            -moz-osx-font-smoothing: grayscale;\n        }\n\n \n\n    .fa-star:before {\n        content: \"\\F005\";\n    }\n\n    .fa-fav-star:before{\n        color: #2196F3;\n    }\n\n\n    .searchTab .fa-search::before {\n        content: \"\\F002\";\n        border: 1px solid #9e9e9e;\n        padding: 0.9rem;\n        color: #1b97f3;\n        cursor: pointer;\n        position: absolute;\n        top: 0rem;\n        font-size: 1rem;\n    }\n\n\n\n    .fa-plus::before{\n        border: 1px solid #9e9e9e;\n        padding: 0.9rem;\n        color: #1b97f3;\n        cursor: pointer;\n        position: absolute;\n        top: 0rem;\n        font-size: 1rem;\n        content: \"\\F067\";\n        right: 0;\n    }\n\n    .fa-window-close:before {\n        content: \"\\F2D3\";\n        color:#563d7c;\n        cursor:pointer;\n        font-size: 2rem;\n    }\n    \n    .wrapper{\n        height: 85%;\n        margin: 2rem;\n        border: 1px solid #ddd;\n        border-radius: 2px;\n        padding: 1rem;\n        position: relative;\n        box-shadow: 0px 0px 2px 2px #eee;\n    }\n\n    .close{\n        position: absolute;\n        right: 0;\n        top: 0;\n        text-align: right;\n        border: 1px solid #ddd;\n        border-bottom-left-radius: 1rem;\n        padding: 10px;\n    }\n    \n    .fa-save:before{\n        content: \"\\F0C7\";\n        font-size: 1.8rem;\n        color: #fff;\n    }\n    \n\n\n    #addOffer,#editOffer,#showOffer{\n        height: 0;\n        color: #9E9E9E;\n    }\n    \n    #showOffer{\n        \n    }\n", ""]);
+exports.push([module.i, "\n\n    /*********************\n        Main Article Styles\n    ***********************/\n\n    .offersAround,#addOffer,#editOffer,#showOffer{\n        background: #fff;\n        height: 100%;\n        overflow: hidden;\n    }\n\n\n\n    /***** search tab styles *****/\n\n    .searchTab{\n        position: relative;\n        font-size: 0;\n        margin: 1rem;\n    }\n\n    #searchBox{\n        border: 1px solid #9e9e9e;\n        border-radius: 2px;\n        height: 2.9rem;\n        padding-left: 1rem;\n        width: calc(100% - 110px);\n        font-size: 1.4rem;\n        border-right: 0;\n    }\n\n\n    /*********************\n        Third Party Styles\n    ***********************/\n\n    @font-face {\n            font-family: 'FontAwesome';\n            src: url('/resources/fonts/fontawesome-webfont.eot?v=4.7.0');\n            src: url('/resources/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('/resources/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('/resources/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('/resources/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('/resources/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');\n            font-weight: normal;\n            font-style: normal;\n        }\n\n    .fa {\n            display: inline-block;\n            font: normal normal normal 14px/1 FontAwesome;\n            font-size: inherit;\n            text-rendering: auto;\n            -webkit-font-smoothing: antialiased;\n            -moz-osx-font-smoothing: grayscale;\n        }\n\n \n\n    .fa-star:before {\n        content: \"\\F005\";\n    }\n\n    .fa-fav-star:before{\n        color: #2196F3;\n    }\n\n\n    .searchTab .fa-search::before {\n        content: \"\\F002\";\n        border: 1px solid #9e9e9e;\n        padding: 0.9rem;\n        color: #563d7c;\n        cursor: pointer;\n        position: absolute;\n        top: 0rem;\n        font-size: 1rem;\n    }\n\n\n\n    .fa-plus::before{\n        border: 1px solid #9e9e9e;\n        padding: 0.9rem;\n        color: #563d7c;\n        cursor: pointer;\n        position: absolute;\n        top: 0rem;\n        font-size: 1rem;\n        content: \"\\F067\";\n        right: 0;\n    }\n\n    .fa-window-close:before {\n        content: \"\\F2D3\";\n        color:#563d7c;\n        cursor:pointer;\n        font-size: 2rem;\n    }\n    \n    .wrapper{\n        height: 88%;\n        margin: 2rem;\n        border-radius: 2px;\n        padding: 1rem;\n        position: relative;\n        box-shadow: 0px 0px 2px 2px #ddd;\n    }\n\n    .close{\n        position: absolute;\n        right: 0;\n        top: 0;\n        text-align: right;\n        border: 1px solid #ddd;\n        border-bottom-left-radius: 1rem;\n        padding: 10px;\n    }\n    \n    .fa-save:before{\n        content: \"\\F0C7\";\n        font-size: 1.8rem;\n        color: #fff;\n    }\n    \n\n\n    #addOffer,#editOffer,#showOffer{\n        height: 0;\n        color: #9E9E9E;\n    }\n    \n    #showOffer{\n        \n    }\n\n   .wrapper .header{\n        display: flex;\n        align-items: center;\n\n    }\n\n   .wrapper h1{\n        flex: 1 1 2rem;\n        margin: 0;\n        font-size: 1.8rem;\n        text-align: center;\n    }\n\n    .oa-button{\n        background-color: transparent;\n        border: 0;\n        background-size: cover;\n        background-position: center;\n    }\n\n    .close-icon{\n        background-image: url(" + __webpack_require__(20) + ");\n        height:1.4rem;\n        width:1.4rem;\n    }\n\n\n\n    .wrapper  label{\n        width: 100%;\n        display: inline-block;\n        font-size: 1.4rem;\n        margin-top: 1rem;\n        margin-bottom: 0.2rem;\n    }\n\n    .wrapper .offer-title .offer-title-input{\n        width: 100%;\n        height: 3rem;\n        margin-top: 0.2rem;\n        padding-left: 0.4rem;\n        font-size: 1.4rem;\n        border-radius: 2px;\n    }\n\n    .wrapper .offer-content .offer-content-textarea{\n        margin-top: 0.2rem;\n        width: 100%;\n        border: 1px solid rgb(195, 189, 189);\n        border-radius: 2px;\n        min-height: 6rem;\n        padding: 0.2rem;\n    }\n\n    .wrapper .upload-image input{\n        padding: 0.8rem;\n        width: 100%;\n        border-radius: 2px;\n    }\n\n    .oa-save{\n        background: #563d7c;\n        color: #fff;\n        border: 0;\n        border-radius: 2px;\n        padding: 0.6rem 1rem;\n        font-size: 1.4rem;\n        float: right;\n        margin: 1rem;\n        cursor: pointer;\n        margin-right: 0;\n    }", ""]);
 
 // exports
 
@@ -1333,5 +1377,12 @@ module.exports = __webpack_require__.p + "b06871f281fee6b241d60582ae9369b9.ttf";
 
 module.exports = __webpack_require__.p + "912ec66d7572ff821749319396470bde.svg";
 
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iNDE5LjVweCIgaGVpZ2h0PSIyOTcuNnB4IiB2aWV3Qm94PSIwIDAgNDE5LjUgMjk3LjYiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDQxOS41IDI5Ny42IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnIG9wYWNpdHk9IjAuNiI+DQoJPHBhdGggZmlsbD0iIzQ5NDk0OCIgZD0iTTIwOS44LDE2M0w3Ni45LDI5Ny42bC0xNS45LTE0LjJsMTM0LjYtMTMyLjlMNjAuOSwxNS45TDc2LjksMGwxMzIuOSwxMzQuNkwzNDQuNCwwbDE0LjIsMTQuMkwyMjMuOSwxNDguOA0KCQlsMTM0LjYsMTMyLjlsLTE1LjksMTUuOUwyMDkuOCwxNjN6Ii8+DQo8L2c+DQo8L3N2Zz4NCg=="
+
 /***/ })
 /******/ ]);
+//# sourceMappingURL=build.js.map

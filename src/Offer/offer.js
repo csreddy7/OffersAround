@@ -52,19 +52,38 @@ class CreateOffer {
 	}
 
 	showOfferInfo() {
-		document.querySelector(".offersAround").classList.add("hideDiv");
-		document.querySelector("#showOffer").classList.add("showDiv");
-
-		document.querySelector(".offer-content").innerHTML=this.offer.details;
-
+		const showOfferDialog=document.querySelector("#showOffer");
+		this.showDialog(showOfferDialog);
+		document.querySelector(".offer-content .offer-content-textarea").innerHTML=this.offer.details;
 	}
 
 	editOfferInfo(){
-
+		const editDialog=document.querySelector("#editOffer");
+		this.showDialog(editDialog);
 	}
 
-	deleteOffer(){
+	 showDialog(node){
+		const offersAround=document.querySelector(".offersAround");
 
+        offersAround.classList.remove("showDiv");
+		node.classList.remove("hideDiv");
+        offersAround.classList.add("hideDiv");
+		node.classList.add("showDiv");
+    }
+
+     hideDialog(node){
+		const offersAround=document.querySelector(".offersAround");
+        offersAround.classList.remove("hideDiv");
+		node.classList.remove("showDiv");
+        offersAround.classList.add("showDiv");
+        node.classList.add("hideDiv");       
+    }
+
+	deleteOffer(){
+		let result=confirm("Are you sure to delete this offer?");
+		if(result){
+			console.log("yes")
+		}
 	}
 	
 	showError(error){

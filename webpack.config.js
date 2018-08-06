@@ -5,6 +5,7 @@ module.exports = {
   output: {
     filename: './build/build.js'
   },
+  devtool: 'source-map',
   // plugins: [
     // new webpack.optimize.UglifyJsPlugin({minimize: false})
   // ],

@@ -14,7 +14,7 @@ var cookies=null;
 var secureService =require("./src/resources/utilities/security/secureService");
 var mongoClient=require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
-var dbUrl="mongodb://localhost:7272/OffersAround";
+var dbUrl="mongodb://localhost:7676/OffersAround";
 var compression = require('compression');
 
 app.use(compression());
@@ -285,5 +285,5 @@ var getCurrentTime=function(){
 	return new Date().getTime();
 }
 
-app.listen(80);
-console.log("server listening at 80");
+app.listen(7575);
+console.log("server listening at 7575");
