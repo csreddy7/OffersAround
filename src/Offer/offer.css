@@ -11,12 +11,12 @@
     border: 2px solid #eeeeee;
     margin-top: 1rem;
     display: flex;
-    padding: 0.6rem 0.3rem;
+    padding: 0.8rem 0.3rem;
 }
 
 
 .offer .offerName{
-    width: calc(100% - 90px);
+    width: 70%;
     font-size: 1.4rem;
     color: #9E9E9E;
     text-transform: capitalize;
@@ -27,26 +27,27 @@
 .offer .actions{
     display: flex;
     align-items: center;
+    width: 30%;
+    justify-content: space-around;
 }
 
 
-.fa-pencil-square-o::before{
-    font-size: 1.1rem;
-    color:#563d7c;
-    cursor: pointer;
-    margin:0.3rem;
+.edit-icon{
+    background-image: url("../resources/images/pencil.svg");
+    height:1.1rem;
+    width:1.1rem;
 }
 
-.fa-eye::before{
-    font-size: 1.2rem;
-    color:#563d7c;
-    cursor: pointer;
-    margin:0.3rem;
+
+.view-icon{
+    background-image: url("../resources/images/eye.png");
+    height:1.4rem;
+    width:1.4rem;
 }
 
-.fa-trash-o:before {
-    cursor: pointer;
-    color:#563d7c;
-    font-size: 1.2rem;
-    margin:0.3rem;
+.delete-icon{
+    background-image: url("../resources/images/trash.png");
+    height:1.1rem;
+    width:1.1rem;
 }
+

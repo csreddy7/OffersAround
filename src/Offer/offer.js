@@ -41,11 +41,11 @@ class CreateOffer {
 
 		offer.addEventListener("click", event => {
 			let target = event.target;
-			if (target.className.indexOf("view-offer") != -1) {
+			if (target.className.indexOf("view-icon") != -1) {
 				this.showOfferInfo();
-			} else if (target.className.indexOf("edit-offer") != -1) {
+			} else if (target.className.indexOf("edit-icon") != -1) {
 				this.editOfferInfo();
-			} else if (target.className.indexOf("delete-offer") != -1) {
+			} else if (target.className.indexOf("delete-icon") != -1) {
 				this.deleteOffer();
 			} 
 		});
