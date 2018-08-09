@@ -9,11 +9,14 @@
         <!-- 
             using normalize css to give default styles for all browsers 
         -->
-        <link href="/src/resources/css/normalize.css" rel="stylesheet" />
+        <link href="../resources/css/normalize.css" rel="stylesheet" />
         <!--
             global styles 
         -->
-        <link href="/styles.css" rel="stylesheet" />
+        <link href="../../styles.css" rel="stylesheet" />
+        <link href="main.css" rel="stylesheet" />
+        <link href="../resources/css/font-awesome.css" rel="stylesheet" />
+       
     </head>
     <body>
         <header class="float-clear">
@@ -34,9 +37,9 @@
                                     <label for="add-title">Content:</label>
                                     <div class="offer-content-textarea"></div>
                             </div>
-                            <div class="offer-images">
+                            <!-- <div class="offer-images">
                                 
-                            </div>
+                            </div> -->
                     </section>      
             </article>
             <article id="editOffer">
@@ -53,11 +56,11 @@
                                     <label for="add-title">Content:</label>
                                     <textarea class="offer-content-textarea" rows="6" id="add-content" ></textarea>
                             </div>
-                            <div class="upload-image">
+                            <!-- <div class="upload-image">
                                 <label for="add-image">Add Images:</label>
                                 <input type="file" accept=".jpg,.png,.jpeg"  multiple>
-                            </div>
-                            <button class="oa-save">
+                            </div> -->
+                            <button class="oa-save" id="saveOfferButton">
                                 Save
                             </button>
                     </section>      
@@ -76,11 +79,11 @@
                                     <label for="add-title">Content:</label>
                                     <textarea class="offer-content-textarea" rows="6" id="add-content" ></textarea>
                             </div>
-                            <div class="upload-image">
+                            <!-- <div class="upload-image">
                                 <label for="add-image">Add Images:</label>
                                 <input type="file" accept=".jpg,.png,.jpeg"  multiple>
-                            </div>
-                            <button class="oa-save">
+                            </div> -->
+                            <button class="oa-save" id="addOfferButton">
                                 Save
                             </button>
                     </section>                    
@@ -89,7 +92,7 @@
                 <section class="searchTab">
                     <input type="text" value=""  id="searchBox" placeholder="Search offers.." />
                     <a class="fa fa-search" title="search-offers" href="#" id="searchButton" ></a>
-                    <a class="fa fa-plus" title="add offer" href="#" id="addOfferButton" ></a>
+                    <a class="fa fa-plus" title="add offer" href="#" id="showAddOfferButton" ></a>
                 </section>
                 <section id="offersList">
                 </section>
@@ -99,7 +102,7 @@
         <footer class="float-clear">
             <p>copyright@csmerchandise.in</p>
         </footer>
-        <script async src="/build/build.js"></script>
+        <script async src="../../build/build.js"></script>
     </body>
 </html>
 

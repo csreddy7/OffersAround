@@ -15,8 +15,8 @@ html,body{
 }
 
 body{
-    background: #563d7c;
-    color: #fff;
+    background-color: #fff;
+    color: #a93e5b;
     font-size: 1rem;
 }
 
@@ -38,6 +38,11 @@ input{
 
 
 /*** header styles ****/
+
+header{
+    background-color: #a93e5b;
+    color: #fff;
+}
 
 header>h1{
     text-align: center;
@@ -64,8 +69,14 @@ footer{
     font-size: 1.2rem;
     font-weight: bold;
     line-height: 1.2rem;
+    background-color: #a93e5b;
+    color: #fff;
 }
 
+
+footer p{
+    margin: 1rem;
+}
 
 
 
@@ -82,9 +93,10 @@ footer{
     top: 50%;
     left: 50%;
     background: #fff;
-    color: purple;
+    color: #a93e5b;
     transform: translate(-50%,-50%);
     border-radius: 0.2rem;
+    box-shadow: 0 0 1px 1px #d0a2af;
 }
 
 
@@ -103,7 +115,7 @@ footer{
 }
 
 .login-container button{
-    background: #563d7c;
+    background: #a93e5b;
     color: #fff;
     border: 0;
     border-radius: 0.2rem;
@@ -117,6 +129,7 @@ footer{
 .login-container .register-link{
     vertical-align: middle;
     margin-left: 1rem;
+    color: #a93e5b;
 }
 
 
@@ -131,9 +144,10 @@ footer{
     top: 50%;
     left: 50%;
     background: #fff;
-    color: purple;
+    color: #a93e5b;
     transform: translate(-50%,-50%);
     border-radius: 0.2rem;
+    box-shadow: 0 0 1px 1px #d0a2af;
 }
 
 
@@ -152,7 +166,7 @@ footer{
 }
 
 .registration-container button{
-    background: #563d7c;
+    background: #a93e5b;
     color: #fff;
     border: 0;
     border-radius: 0.2rem;
@@ -163,7 +177,17 @@ footer{
     cursor: pointer;
 }
 
-
+.skip-link{
+    position: absolute;
+    bottom: 10%;
+    left: 35%;
+    text-decoration: none;
+    display: block;
+    padding: 0.8rem 2rem;
+    background: #a93e5b;
+    color: #fff;
+    border-radius: 1rem;
+}
 
 /*** animations *******/
 

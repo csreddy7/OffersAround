@@ -28,10 +28,10 @@ var obj={
 		return this.get("/getOffers?location="+localStorage.getItem("location"));
 	},
 
-	addOffer(offerName,locationName,offerContent){
+	addOffer(offerName,offerContent){
 			var data={
 	        	"offerName":offerName,
-	        	"locationName":locationName,
+	        	"locationName":localStorage.getItem("location"),
 				"offerContent":offerContent,
 				"createdBy":localStorage.getItem("userId")
 	        }

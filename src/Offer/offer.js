@@ -7,7 +7,7 @@ import "Offer/offer.css";
 class CreateOffer {
 	constructor(offer) {
 		this.offer=offer;
-		this.id = "offer-item-" + (++CreateOffer.offerNumber);
+		this.id = offer._id;
 		this.init();
 	}
 	init() {
@@ -40,24 +40,31 @@ class CreateOffer {
 	initializeEventHanders(offer) {
 
 		offer.addEventListener("click", event => {
+			event.stopPropagation();
 			let target = event.target;
 			if (target.className.indexOf("view-icon") != -1) {
 				this.showOfferInfo();
 			} else if (target.className.indexOf("edit-icon") != -1) {
-				this.editOfferInfo();
+				this.showEditDialog();
 			} else if (target.className.indexOf("delete-icon") != -1) {
 				this.deleteOffer();
 			} 
 		});
+
+		
 	}
 
 	showOfferInfo() {
+		document.querySelector("#showOffer .offer-content-textarea").innerHTML=this.offer.details;
+		document.querySelector("#showOffer .offer-title-input").innerHTML=this.offer.title;
 		const showOfferDialog=document.querySelector("#showOffer");
 		this.showDialog(showOfferDialog);
-		document.querySelector(".offer-content .offer-content-textarea").innerHTML=this.offer.details;
 	}
 
-	editOfferInfo(){
+	showEditDialog(){
+		localStorage.setItem("selectedOfferId",this.offer._id);
+		document.querySelector("#editOffer .offer-content-textarea").value=this.offer.details;
+		document.querySelector("#editOffer .offer-title-input").value=this.offer.title;
 		const editDialog=document.querySelector("#editOffer");
 		this.showDialog(editDialog);
 	}
@@ -82,7 +89,12 @@ class CreateOffer {
 	deleteOffer(){
 		let result=confirm("Are you sure to delete this offer?");
 		if(result){
-			console.log("yes")
+			ajax.deleteOffer(this.offer).then((response)=>{
+				console.log("offer deleted successfully");
+				document.location.reload();
+			},(err)=>{		
+				console.error("error while deleting offer");
+			});
 		}
 	}
 	
@@ -94,6 +106,6 @@ class CreateOffer {
 		}
 	}
 }
-CreateOffer.offerNumber = 0;
+
 
 export { CreateOffer }

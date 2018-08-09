@@ -2,11 +2,10 @@ import { commonService } from "utilities/common/commonService";
 import {obj as ajax } from 'utilities/xhr/ajax';
 import {CreateOffer} from 'Offer/offer';
 
-import 'main/main.css';
-import 'css/font-awesome.css';
 
 let offers=[];
 let offersList=document.querySelector("#offersList");
+
 function initMainView() {
   
     let locationObj=null;
@@ -49,10 +48,11 @@ function initializeHandlers(){
  // initializing event handlers
   
     const logoutIcon = document.querySelector("#logout"),
-    addOfferButton= document.querySelector("#addOfferButton"),
+    showAddOfferButton= document.querySelector("#showAddOfferButton"),
     searchBox = document.querySelector("#searchBox"),
     searchButton = document.querySelector("#searchButton"),
     offersAround=document.querySelector(".offersAround"),
+    addOfferButton=document.querySelector("#addOfferButton"),
     addOfferDialog=document.querySelector("#addOffer");
     
     searchButton.addEventListener("click", () => {
@@ -76,8 +76,22 @@ function initializeHandlers(){
         }
     }
       
-    addOfferButton.addEventListener("click", () => {
+    showAddOfferButton.addEventListener("click", () => {
         showDialog(addOfferDialog);
+    });
+
+    addOfferButton.addEventListener("click", () => {
+        let offerTitle=document.querySelector("#addOffer .offer-title-input").value;
+        let offerContent=document.querySelector("#addOffer .offer-content-textarea").value;
+
+        ajax.addOffer(offerTitle,offerContent).then((response)=>{
+            console.log("offer added successfully");
+            hideDialog(addOfferDialog);
+            document.location.reload();
+        },(err)=>{
+            
+            console.error("error while adding offer");
+        });
     });
 
     document.querySelector("#addOffer .close-icon").addEventListener("click", () => {
@@ -108,6 +122,23 @@ function initializeHandlers(){
         offersAround.classList.add("showDiv");
         node.classList.add("hideDiv");       
     }
+
+
+    let saveOfferButton=document.querySelector("#saveOfferButton");
+    saveOfferButton.addEventListener("click", (e) => {
+        const editDialog=document.querySelector("#editOffer");
+        let offerTitle=document.querySelector("#editOffer .offer-title-input").value;
+        let offerContent=document.querySelector("#editOffer .offer-content-textarea").value;
+        let offerId=localStorage.getItem("selectedOfferId");
+        ajax.editOffer(offerId,offerTitle,offerContent).then((response)=>{
+            console.log("offer edited successfully");
+            hideDialog(editDialog);
+            document.location.reload();
+        },(err)=>{		
+            console.error("error while adding offer");
+        });
+    });
+    
 
 }
 

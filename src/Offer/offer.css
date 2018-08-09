@@ -8,7 +8,7 @@
 .offer{
     width: 90%;
     margin: 0 auto;
-    border: 2px solid #eeeeee;
+    box-shadow: 0px 0px 1px 2px #ddd;
     margin-top: 1rem;
     display: flex;
     padding: 0.8rem 0.3rem;
@@ -34,20 +34,20 @@
 
 .edit-icon{
     background-image: url("../resources/images/pencil.svg");
-    height:1.1rem;
-    width:1.1rem;
+    height:1rem;
+    width:1rem;
 }
 
 
 .view-icon{
-    background-image: url("../resources/images/eye.png");
-    height:1.4rem;
-    width:1.4rem;
+    background-image: url("../resources/images/eye.svg");
+    height:1.1rem;
+    width:1.1rem;
 }
 
 .delete-icon{
-    background-image: url("../resources/images/trash.png");
-    height:1.1rem;
-    width:1.1rem;
+    background-image: url("../resources/images/trash.svg");
+    height:1rem;
+    width:1rem;
 }
 
